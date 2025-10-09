@@ -186,6 +186,7 @@ export function Projects() {
           </motion.div>
         )}
 
+        {/* Enhanced Project Grid */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {displayedProjects.map((project, index) => (
             <motion.div
@@ -199,85 +200,129 @@ export function Projects() {
                 stiffness: 100
               }}
               viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -12 }}
+              whileHover={{ y: -16 }}
             >
-              <Card className="group relative h-full overflow-hidden glass border-accent/20 transition-all duration-500 hover:border-accent/40 hover:shadow-2xl hover-glow">
-                {/* Animated background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+              <Card className="group relative h-full overflow-hidden glass border-accent/20 transition-all duration-700 hover:border-accent/40 hover:shadow-2xl hover-glow">
+                {/* Enhanced animated background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/8 via-primary/5 to-accent/8 opacity-0 transition-all duration-700 group-hover:opacity-100"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
                 
-                <CardContent className="relative p-0">
+                <CardContent className="relative p-0 h-full flex flex-col">
+                  {/* Enhanced Image Section */}
                   <div className="relative aspect-video overflow-hidden">
                     {project.image ? (
                       <Image
                         src={project.image || "/placeholder.svg"}
                         alt={project.title}
                         fill
-                        className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+                        className="object-cover transition-all duration-700 group-hover:scale-110"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center glass text-muted-foreground">
-                        <span className="text-sm font-medium">No image</span>
+                      <div className="flex h-full items-center justify-center glass text-muted-foreground bg-gradient-to-br from-accent/10 to-primary/5">
+                        <div className="text-center">
+                          <div className="h-12 w-12 mx-auto mb-2 rounded-full bg-accent/20 flex items-center justify-center">
+                            <span className="text-accent font-bold text-lg">{project.title.charAt(0)}</span>
+                          </div>
+                          <span className="text-sm font-medium">Project Preview</span>
+                        </div>
                       </div>
                     )}
-                    {/* Enhanced overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-all duration-500 group-hover:opacity-100"></div>
                     
-                    {/* Floating action buttons on hover */}
-                    <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 transition-all duration-500 group-hover:opacity-100">
+                    {/* Enhanced overlay with gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 transition-all duration-500 group-hover:opacity-100"></div>
+                    
+                    {/* Floating action buttons with better positioning */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 transition-all duration-500 group-hover:opacity-100">
                       {project.links?.live && (
-                        <Button size="sm" className="rounded-full bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30">
-                          <ExternalLink className="h-4 w-4" />
-                        </Button>
+                        <motion.div
+                          initial={{ scale: 0, rotate: -180 }}
+                          whileInView={{ scale: 1, rotate: 0 }}
+                          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                        >
+                          <Button 
+                            size="sm" 
+                            className="rounded-full bg-white/20 backdrop-blur-md text-white border-white/30 hover:bg-white/30 hover:scale-110 transition-all duration-300"
+                            asChild
+                          >
+                            <Link href={project.links.live} target="_blank">
+                              <ExternalLink className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                        </motion.div>
                       )}
                       {project.links?.github && (
-                        <Button size="sm" className="rounded-full bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30">
-                          <Github className="h-4 w-4" />
-                        </Button>
+                        <motion.div
+                          initial={{ scale: 0, rotate: 180 }}
+                          whileInView={{ scale: 1, rotate: 0 }}
+                          transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                        >
+                          <Button 
+                            size="sm" 
+                            className="rounded-full bg-white/20 backdrop-blur-md text-white border-white/30 hover:bg-white/30 hover:scale-110 transition-all duration-300"
+                            asChild
+                          >
+                            <Link href={project.links.github} target="_blank">
+                              <Github className="h-4 w-4" />
+                            </Link>
+                          </Button>
+                        </motion.div>
                       )}
+                    </div>
+                    
+                    {/* Status indicator */}
+                    <div className="absolute top-4 right-4 opacity-0 transition-all duration-500 group-hover:opacity-100">
+                      <div className="rounded-full bg-green-500/20 backdrop-blur-sm px-3 py-1 text-xs font-medium text-green-400 border border-green-500/30">
+                        Live
+                      </div>
                     </div>
                   </div>
 
-                  <div className="relative z-10 p-8">
-                    <h3 className="mb-3 text-xl font-bold text-foreground transition-colors duration-300 group-hover:text-accent">
-                      {project.title}
-                    </h3>
-                    
-                    <p className="mb-6 line-clamp-2 text-base leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
-                      {project.description}
-                    </p>
+                  {/* Enhanced Content Section */}
+                  <div className="relative z-10 p-6 flex-1 flex flex-col">
+                    <div className="flex-1">
+                      <h3 className="mb-3 text-xl font-bold text-foreground transition-colors duration-300 group-hover:text-accent">
+                        {project.title}
+                      </h3>
+                      
+                      <p className="mb-4 text-sm leading-relaxed text-muted-foreground/90 group-hover:text-foreground/80 transition-colors duration-300 line-clamp-3">
+                        {project.description}
+                      </p>
 
-                    <div className="mb-6 flex flex-wrap gap-2">
-                      {project.technologies?.slice(0, 3).map((tech: string, i: number) => (
-                        <Badge 
-                          key={i} 
-                          variant={tech === activeFilter ? "default" : "secondary"}
-                          className={`transition-all duration-300 font-medium ${
-                            tech === activeFilter 
-                              ? "bg-gradient-to-r from-accent to-primary text-white shadow-md" 
-                              : "glass border-accent/20 hover:border-accent/40 hover:bg-accent/10"
-                          }`}
-                        >
-                          {tech}
-                        </Badge>
-                      ))}
-                      {project.technologies?.length > 3 && (
-                        <Badge variant="outline" className="glass border-accent/20 font-medium">
-                          +{project.technologies.length - 3}
-                        </Badge>
-                      )}
+                      {/* Enhanced Technology Tags */}
+                      <div className="mb-6 flex flex-wrap gap-2">
+                        {project.technologies?.slice(0, 3).map((tech: string, i: number) => (
+                          <Badge 
+                            key={i} 
+                            variant={tech === activeFilter ? "default" : "secondary"}
+                            className={`text-xs transition-all duration-300 font-medium hover:scale-105 ${
+                              tech === activeFilter 
+                                ? "bg-gradient-to-r from-accent to-primary text-white shadow-md" 
+                                : "glass border-accent/20 hover:border-accent/40 hover:bg-accent/10"
+                            }`}
+                          >
+                            {tech}
+                          </Badge>
+                        ))}
+                        {project.technologies?.length > 3 && (
+                          <Badge variant="outline" className="glass border-accent/20 font-medium text-xs hover:bg-accent/5">
+                            +{project.technologies.length - 3}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    {/* Enhanced Action Buttons */}
+                    <div className="flex items-center gap-3 pt-4 border-t border-accent/10">
                       {project.links?.live && (
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="rounded-full glass border-accent/30 transition-all duration-300 hover:bg-accent/10 hover:scale-105" 
+                          className="flex-1 rounded-full glass border-accent/30 transition-all duration-300 hover:bg-accent/10 hover:scale-105 hover:border-accent/50" 
                           asChild
                         >
                           <Link href={project.links.live} target="_blank">
                             <ExternalLink className="mr-2 h-3 w-3" />
-                            Live Demo
+                            Demo
                           </Link>
                         </Button>
                       )}
@@ -285,7 +330,7 @@ export function Projects() {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          className="rounded-full glass border-accent/30 transition-all duration-300 hover:bg-accent/10 hover:scale-105" 
+                          className="flex-1 rounded-full glass border-accent/30 transition-all duration-300 hover:bg-accent/10 hover:scale-105 hover:border-accent/50" 
                           asChild
                         >
                           <Link href={project.links.github} target="_blank">

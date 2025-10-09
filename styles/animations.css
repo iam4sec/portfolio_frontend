@@ -252,6 +252,31 @@
   animation-duration: 1500ms;
 }
 
+/* Enhanced background utilities */
+.bg-size-200 {
+  background-size: 200% 200%;
+}
+
+.bg-pos-0 {
+  background-position: 0% 50%;
+}
+
+.bg-pos-100 {
+  background-position: 100% 50%;
+}
+
+/* Modern glass morphism variants */
+.glass-strong {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-strong {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
 /* Interaction states */
 .hover-lift {
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -263,4 +288,20 @@
 
 .hover-glow:hover {
   box-shadow: 0 10px 40px rgba(var(--accent), 0.3);
+}
+
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-rotate {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hover-rotate:hover {
+  transform: rotate(2deg);
 }

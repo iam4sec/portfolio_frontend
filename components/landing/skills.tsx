@@ -108,14 +108,17 @@ export function Skills() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <div className="mb-6 inline-block rounded-full glass px-6 py-2 text-sm font-medium text-accent border border-accent/20">
-            🚀 What I Do
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-6 py-3 text-sm font-medium text-accent border border-accent/20">
+            <div className="h-2 w-2 rounded-full bg-accent animate-pulse"></div>
+            <span>Skills & Expertise</span>
           </div>
-          <h2 className="mb-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent md:text-5xl lg:text-6xl">
-            Skills & Expertise
+          <h2 className="mb-6 text-5xl font-bold tracking-tight bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent md:text-6xl lg:text-7xl">
+            What I
+            <br />
+            <span className="text-muted-foreground/60">Bring to Life</span>
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-muted-foreground leading-relaxed">
-            Technologies and tools I work with to bring ideas to life
+          <p className="mx-auto max-w-3xl text-xl text-muted-foreground/80 leading-relaxed">
+            Technologies and tools I master to transform ideas into exceptional digital experiences
           </p>
         </motion.div>
 

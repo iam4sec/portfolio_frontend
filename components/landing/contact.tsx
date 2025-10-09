@@ -62,13 +62,16 @@ export function Contact() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <div className="mb-6 inline-block rounded-full glass px-6 py-2 text-sm font-medium text-accent border border-accent/20">
-            💬 Let's Connect
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-6 py-3 text-sm font-medium text-accent border border-accent/20">
+            <Mail className="h-4 w-4" />
+            <span>Let's Connect</span>
           </div>
-          <h2 className="mb-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent md:text-5xl lg:text-6xl">
-            Get in Touch
+          <h2 className="mb-6 text-5xl font-bold tracking-tight bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent md:text-6xl lg:text-7xl">
+            Ready to
+            <br />
+            <span className="text-muted-foreground/60">Start Something?</span>
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-muted-foreground leading-relaxed">
+          <p className="mx-auto max-w-3xl text-xl text-muted-foreground/80 leading-relaxed">
             Have a project in mind? Let's discuss how we can work together to bring your ideas to life.
           </p>
         </motion.div>
