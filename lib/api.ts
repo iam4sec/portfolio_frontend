@@ -24,12 +24,13 @@ class ApiClient {
 
   async request<T>(endpoint: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
     try {
+      const headers = options.headers && Object.keys(options.headers).length === 0 
+        ? {} // For FormData uploads, don't set default headers
+        : { ...this.getAuthHeaders(), ...options.headers }
+      
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         ...options,
-        headers: {
-          ...this.getAuthHeaders(),
-          ...options.headers,
-        },
+        headers,
       })
 
       const data = await response.json()
@@ -140,6 +141,10 @@ class ApiClient {
     return this.request("/experiences")
   }
 
+  async getExperienceById(id: string) {
+    return this.request(`/experiences/${id}`)
+  }
+
   async createExperience(data: any) {
     return this.request("/experiences", {
       method: "POST",
@@ -161,6 +166,10 @@ class ApiClient {
   // Education endpoints
   async getEducation() {
     return this.request("/education")
+  }
+
+  async getEducationById(id: string) {
+    return this.request(`/education/${id}`)
   }
 
   async createEducation(data: any) {
@@ -272,10 +281,60 @@ class ApiClient {
     })
   }
 
+  // Notification endpoints
+  async getNotifications() {
+    return this.request("/notifications")
+  }
+
+  async markNotificationAsRead(id: string) {
+    return this.request(`/notifications/${id}/read`, {
+      method: "PATCH",
+    })
+  }
+
+  async markAllNotificationsAsRead() {
+    return this.request("/notifications/read-all", {
+      method: "PATCH",
+    })
+  }
+
+  // Upload endpoints
+  async uploadImage(file: File) {
+    const formData = new FormData()
+    formData.append("image", file)
+    return this.request("/upload/image", {
+      method: "POST",
+      body: formData,
+      headers: {}, // Remove Content-Type to let browser set it for FormData
+    })
+  }
+
+  async uploadResume(file: File) {
+    const formData = new FormData()
+    formData.append("resume", file)
+    return this.request("/upload/resume", {
+      method: "POST",
+      body: formData,
+      headers: {}, // Remove Content-Type to let browser set it for FormData
+    })
+  }
+
+  // Subscriber endpoints
+  async unsubscribe(email: string) {
+    return this.request("/subscribers/unsubscribe", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    })
+  }
+
   // Achievement endpoints
   async getAchievements(params?: { category?: string; featured?: boolean }) {
     const queryString = params ? `?${new URLSearchParams(params as any).toString()}` : ""
     return this.request(`/achievements${queryString}`)
+  }
+
+  async getAchievementById(id: string) {
+    return this.request(`/achievements/${id}`)
   }
 
   async createAchievement(data: any) {
@@ -299,6 +358,10 @@ class ApiClient {
   // Volunteer endpoints
   async getVolunteers() {
     return this.request("/volunteers")
+  }
+
+  async getVolunteerById(id: string) {
+    return this.request(`/volunteers/${id}`)
   }
 
   async createVolunteer(data: any) {

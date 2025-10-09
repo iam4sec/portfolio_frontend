@@ -23,12 +23,37 @@ export function Skills() {
     fetchSkills()
   }, [])
 
-  const defaultSkills = [
-    { category: "Frontend", skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"], level: 95 },
-    { category: "Backend", skills: ["Node.js", "Python", "PostgreSQL", "MongoDB"], level: 88 },
-    { category: "Tools", skills: ["Git", "Docker", "AWS", "Figma"], level: 90 },
-    { category: "Soft Skills", skills: ["Leadership", "Problem Solving", "Communication"], level: 92 }
-  ]
+  const defaultSkills = {
+    categories: [
+      {
+        title: "Frontend",
+        skills: [
+          { name: "React", level: "Expert", years: "5+" },
+          { name: "Next.js", level: "Advanced", years: "3+" },
+          { name: "TypeScript", level: "Advanced", years: "4+" },
+          { name: "Tailwind CSS", level: "Expert", years: "3+" }
+        ]
+      },
+      {
+        title: "Backend",
+        skills: [
+          { name: "Node.js", level: "Advanced", years: "4+" },
+          { name: "Python", level: "Intermediate", years: "2+" },
+          { name: "PostgreSQL", level: "Advanced", years: "3+" },
+          { name: "MongoDB", level: "Advanced", years: "3+" }
+        ]
+      },
+      {
+        title: "Tools & DevOps",
+        skills: [
+          { name: "Git", level: "Expert", years: "5+" },
+          { name: "Docker", level: "Intermediate", years: "2+" },
+          { name: "AWS", level: "Intermediate", years: "2+" },
+          { name: "Figma", level: "Advanced", years: "3+" }
+        ]
+      }
+    ]
+  }
 
   if (loading) {
     return (
@@ -47,7 +72,7 @@ export function Skills() {
     )
   }
 
-  const skills = skillsData?.length ? skillsData : defaultSkills
+  const skills = skillsData?.categories ? skillsData : defaultSkills
 
   return (
     <section id="skills" className="py-20 px-6 bg-gradient-to-b from-white to-slate-50">
@@ -61,37 +86,27 @@ export function Skills() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {skills.map((category: any, index: number) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {skills.categories.map((category: any, index: number) => (
             <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200/50 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">{category.category}</h3>
+              <h3 className="text-2xl font-bold text-slate-900 mb-6">{category.title}</h3>
               
-              <div className="space-y-4 mb-6">
-                {category.skills.map((skill: string, skillIndex: number) => (
-                  <div key={skillIndex} className="flex items-center justify-between">
-                    <span className="font-medium text-slate-700">{skill}</span>
-                    <div className="flex space-x-1">
-                      {[...Array(5)].map((_, i) => (
-                        <div key={i} className={`w-2 h-2 rounded-full ${
-                          i < Math.floor((category.level || 80) / 20) ? 'bg-blue-500' : 'bg-slate-200'
-                        }`}></div>
-                      ))}
+              <div className="space-y-4">
+                {category.skills.map((skill: any, skillIndex: number) => (
+                  <div key={skillIndex} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
+                    <div>
+                      <span className="font-medium text-slate-800">{skill.name}</span>
+                      <div className="text-xs text-slate-500">{skill.years} experience</div>
                     </div>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      skill.level === 'Expert' ? 'bg-green-100 text-green-700' :
+                      skill.level === 'Advanced' ? 'bg-blue-100 text-blue-700' :
+                      'bg-yellow-100 text-yellow-700'
+                    }`}>
+                      {skill.level}
+                    </span>
                   </div>
                 ))}
-              </div>
-
-              <div className="relative">
-                <div className="flex justify-between text-sm text-slate-600 mb-2">
-                  <span>Proficiency</span>
-                  <span>{category.level || 80}%</span>
-                </div>
-                <div className="w-full bg-slate-200 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-1000"
-                    style={{ width: `${category.level || 80}%` }}
-                  ></div>
-                </div>
               </div>
             </div>
           ))}
