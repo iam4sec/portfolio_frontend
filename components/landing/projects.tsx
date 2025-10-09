@@ -1,27 +1,22 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, ArrowRight, Briefcase } from "lucide-react"
+import { ExternalLink, Github, ArrowRight } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
 import { api } from "@/lib/api"
-import { motion } from "framer-motion"
+import Image from "next/image"
 
 export function Projects() {
   const [projects, setProjects] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-  const [activeFilter, setActiveFilter] = useState<string>("All")
-  const [visibleProjects, setVisibleProjects] = useState<number>(6)
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await api.getProjects({ featured: true })
+        const response = await api.getProjects()
         if (response.success) {
-          setProjects(response.data.slice(0, 10))
+          setProjects(response.data)
         }
       } catch (error) {
         console.error("Failed to fetch projects:", error)
@@ -32,30 +27,45 @@ export function Projects() {
     fetchProjects()
   }, [])
 
-  const allTechnologies = projects.reduce((acc: string[], project) => {
-    project.technologies?.forEach((tech: string) => {
-      if (!acc.includes(tech)) acc.push(tech);
-    });
-    return acc;
-  }, []);
-
-  const filteredProjects = activeFilter === "All" 
-    ? projects 
-    : projects.filter(project => 
-        project.technologies?.includes(activeFilter)
-      );
-
-  const displayedProjects = filteredProjects.slice(0, visibleProjects);
+  const defaultProjects = [
+    {
+      title: "E-Commerce Platform",
+      description: "Full-stack e-commerce solution with React, Node.js, and Stripe integration",
+      image: "/placeholder.jpg",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: true
+    },
+    {
+      title: "Task Management App",
+      description: "Collaborative project management tool with real-time updates",
+      image: "/placeholder.jpg",
+      technologies: ["Next.js", "TypeScript", "Prisma", "Socket.io"],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: true
+    },
+    {
+      title: "Analytics Dashboard",
+      description: "Data visualization dashboard with interactive charts and reports",
+      image: "/placeholder.jpg",
+      technologies: ["React", "D3.js", "Python", "FastAPI"],
+      liveUrl: "#",
+      githubUrl: "#",
+      featured: false
+    }
+  ]
 
   if (loading) {
     return (
-      <section id="projects" className="px-6 py-24">
-        <div className="mx-auto max-w-7xl">
+      <section id="projects" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
           <div className="animate-pulse space-y-8">
-            <div className="h-16 w-80 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto"></div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="h-96 bg-slate-200 dark:bg-slate-700 rounded-3xl"></div>
+            <div className="h-12 bg-slate-200 rounded w-64 mx-auto"></div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1,2,3].map(i => (
+                <div key={i} className="h-80 bg-slate-200 rounded-2xl"></div>
               ))}
             </div>
           </div>
@@ -64,212 +74,105 @@ export function Projects() {
     )
   }
 
-  if (projects.length === 0) {
-    return (
-      <section id="projects" className="px-6 py-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-3xl bg-slate-100 dark:bg-slate-800 p-12 text-center">
-            <p className="text-slate-600 dark:text-slate-400">No projects available at the moment.</p>
-          </div>
-        </div>
-      </section>
-    )
-  }
+  const displayProjects = projects.length ? projects : defaultProjects
 
   return (
-    <section id="projects" className="relative overflow-hidden px-6 py-24">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-purple-400/10 via-blue-400/8 to-transparent rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-gradient-to-tl from-blue-400/8 via-emerald-400/6 to-transparent rounded-full blur-3xl animate-morph"></div>
-      </div>
-      
-      <div className="mx-auto max-w-7xl">
-        <motion.div 
-          className="mb-20 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-950/20 px-6 py-3 text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">
-            <Briefcase className="h-4 w-4 text-purple-600 dark:text-purple-400" />
-            <span className="text-purple-700 dark:text-purple-300">My Work</span>
-          </div>
-          <h2 className="mb-6 text-5xl lg:text-7xl font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 dark:from-white dark:via-purple-100 dark:to-white bg-clip-text text-transparent">
-              Selected
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-purple-600 via-blue-600 to-emerald-600 bg-clip-text text-transparent">
-              Work
-            </span>
+    <section id="projects" className="py-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+            Featured Work
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Projects I've built and contributed to
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            A selection of projects that showcase my expertise and passion for creating exceptional digital experiences
           </p>
-        </motion.div>
-        
-        {allTechnologies.length > 0 && (
-          <motion.div 
-            className="mb-16 flex flex-wrap justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <Button
-              variant={activeFilter === "All" ? "default" : "outline"}
-              size="sm"
-              className={`rounded-2xl text-sm font-semibold transition-all duration-300 ${
-                activeFilter === "All" 
-                  ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg" 
-                  : "bg-white/50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70"
-              }`}
-              onClick={() => setActiveFilter("All")}
-            >
-              All
-            </Button>
-            {allTechnologies.slice(0, 8).map((tech, index) => (
-              <Button
-                key={index}
-                variant={activeFilter === tech ? "default" : "outline"}
-                size="sm"
-                className={`rounded-2xl text-sm font-semibold transition-all duration-300 ${
-                  activeFilter === tech 
-                    ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg" 
-                    : "bg-white/50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70"
-                }`}
-                onClick={() => setActiveFilter(tech)}
-              >
-                {tech}
-              </Button>
-            ))}
-          </motion.div>
-        )}
+        </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {displayedProjects.map((project, index) => (
-            <motion.div
-              key={project._id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -8 }}
-            >
-              <Card className="group h-full overflow-hidden bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300">
-                <CardContent className="p-0 h-full flex flex-col">
-                  <div className="relative aspect-video overflow-hidden">
-                    {project.image ? (
-                      <Image
-                        src={project.image || "/placeholder.svg"}
-                        alt={project.title}
-                        fill
-                        className="object-cover transition-all duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/20 dark:to-blue-900/20">
-                        <div className="text-center">
-                          <div className="h-16 w-16 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-                            <span className="text-white font-bold text-xl">{project.title.charAt(0)}</span>
-                          </div>
-                          <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Project Preview</span>
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
-                    <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      {project.links?.live && (
-                        <Button size="sm" className="rounded-full bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30" asChild>
-                          <Link href={project.links.live} target="_blank">
-                            <ExternalLink className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      )}
-                      {project.links?.github && (
-                        <Button size="sm" className="rounded-full bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30" asChild>
-                          <Link href={project.links.github} target="_blank">
-                            <Github className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      )}
-                    </div>
-                  </div>
+        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+          {displayProjects.filter(p => p.featured).map((project, index) => (
+            <div key={index} className="group bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-500">
+              <div className="relative overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  width={600}
+                  height={400}
+                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+              
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-slate-900 mb-3">{project.title}</h3>
+                <p className="text-slate-600 mb-4 leading-relaxed">{project.description}</p>
+                
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.technologies.map((tech: string, techIndex: number) => (
+                    <span key={techIndex} className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
 
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="mb-3 text-xl font-bold text-slate-900 dark:text-white">
-                      {project.title}
-                    </h3>
-                    
-                    <p className="mb-4 text-sm text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-                      {project.description}
-                    </p>
-
-                    <div className="mb-4 flex flex-wrap gap-2">
-                      {project.technologies?.slice(0, 3).map((tech: string, i: number) => (
-                        <Badge 
-                          key={i} 
-                          className={`text-xs ${
-                            tech === activeFilter 
-                              ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white" 
-                              : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
-                          }`}
-                        >
-                          {tech}
-                        </Badge>
-                      ))}
-                      {project.technologies?.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{project.technologies.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-
-                    <div className="flex gap-3">
-                      {project.links?.live && (
-                        <Button variant="outline" size="sm" className="flex-1 rounded-xl" asChild>
-                          <Link href={project.links.live} target="_blank">
-                            <ExternalLink className="mr-2 h-3 w-3" />
-                            Demo
-                          </Link>
-                        </Button>
-                      )}
-                      {project.links?.github && (
-                        <Button variant="outline" size="sm" className="flex-1 rounded-xl" asChild>
-                          <Link href={project.links.github} target="_blank">
-                            <Github className="mr-2 h-3 w-3" />
-                            Code
-                          </Link>
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                <div className="flex space-x-4">
+                  {project.liveUrl && (
+                    <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700" asChild>
+                      <Link href={project.liveUrl} target="_blank">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Live Demo
+                      </Link>
+                    </Button>
+                  )}
+                  {project.githubUrl && (
+                    <Button size="sm" variant="outline" asChild>
+                      <Link href={project.githubUrl} target="_blank">
+                        <Github className="w-4 h-4 mr-2" />
+                        Code
+                      </Link>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
 
-        {visibleProjects < filteredProjects.length && (
-          <motion.div 
-            className="mt-16 flex justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Button 
-              onClick={() => setVisibleProjects(prev => prev + 3)} 
-              variant="outline" 
-              className="group rounded-2xl bg-white/50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 px-8 py-3 text-base font-semibold hover:bg-white/70 dark:hover:bg-slate-800/70"
-            >
-              Load More Projects
-              <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </motion.div>
-        )}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {displayProjects.filter(p => !p.featured).map((project, index) => (
+            <div key={index} className="group bg-white rounded-xl p-6 shadow-lg border border-slate-200/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 className="text-xl font-bold text-slate-900 mb-3">{project.title}</h3>
+              <p className="text-slate-600 mb-4 text-sm">{project.description}</p>
+              
+              <div className="flex flex-wrap gap-1 mb-4">
+                {project.technologies.slice(0, 3).map((tech: string, techIndex: number) => (
+                  <span key={techIndex} className="px-2 py-1 bg-slate-100 text-slate-600 rounded text-xs">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex space-x-3">
+                {project.liveUrl && (
+                  <Link href={project.liveUrl} target="_blank" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+                    View Project
+                  </Link>
+                )}
+                {project.githubUrl && (
+                  <Link href={project.githubUrl} target="_blank" className="text-slate-600 hover:text-slate-700 text-sm font-medium">
+                    Code
+                  </Link>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Button size="lg" variant="outline" className="group">
+            View All Projects
+            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </div>
       </div>
     </section>
   )

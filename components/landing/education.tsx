@@ -1,11 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { GraduationCap, Calendar, MapPin, Award } from "lucide-react"
+import { GraduationCap, Calendar, Award, BookOpen } from "lucide-react"
 import { api } from "@/lib/api"
-import { motion } from "framer-motion"
 
 export function Education() {
   const [education, setEducation] = useState<any[]>([])
@@ -16,7 +13,7 @@ export function Education() {
       try {
         const response = await api.getEducation()
         if (response.success) {
-          setEducation(response.data.slice(0, 4))
+          setEducation(response.data)
         }
       } catch (error) {
         console.error("Failed to fetch education:", error)
@@ -27,15 +24,42 @@ export function Education() {
     fetchEducation()
   }, [])
 
+  const defaultEducation = [
+    {
+      degree: "Bachelor of Science in Computer Science",
+      institution: "University of Technology",
+      location: "San Francisco, CA",
+      year: "2019",
+      gpa: "3.8/4.0",
+      honors: ["Magna Cum Laude", "Dean's List"],
+      coursework: ["Data Structures", "Algorithms", "Software Engineering", "Database Systems"]
+    },
+    {
+      degree: "Full Stack Web Development Bootcamp",
+      institution: "Code Academy Pro",
+      location: "Online",
+      year: "2018",
+      gpa: null,
+      honors: ["Top 5% Graduate"],
+      coursework: ["React", "Node.js", "MongoDB", "Express.js"]
+    }
+  ]
+
+  const certifications = [
+    { name: "AWS Certified Solutions Architect", issuer: "Amazon Web Services", year: "2023" },
+    { name: "Google Cloud Professional Developer", issuer: "Google Cloud", year: "2022" },
+    { name: "React Advanced Certification", issuer: "Meta", year: "2022" }
+  ]
+
   if (loading) {
     return (
-      <section id="education" className="px-6 py-24">
-        <div className="mx-auto max-w-4xl">
+      <section id="education" className="py-20 px-6">
+        <div className="max-w-6xl mx-auto">
           <div className="animate-pulse space-y-8">
-            <div className="h-16 w-80 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto"></div>
-            <div className="space-y-6">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="h-48 bg-slate-200 dark:bg-slate-700 rounded-3xl"></div>
+            <div className="h-12 bg-slate-200 rounded w-48 mx-auto"></div>
+            <div className="grid lg:grid-cols-2 gap-8">
+              {[1,2].map(i => (
+                <div key={i} className="h-64 bg-slate-200 rounded-2xl"></div>
               ))}
             </div>
           </div>
@@ -44,108 +68,97 @@ export function Education() {
     )
   }
 
-  if (education.length === 0) return null
+  const displayEducation = education.length ? education : defaultEducation
 
   return (
-    <section id="education" className="relative overflow-hidden px-6 py-24">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-indigo-400/10 via-purple-400/8 to-transparent rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-gradient-to-tl from-purple-400/8 via-pink-400/6 to-transparent rounded-full blur-3xl animate-morph"></div>
-      </div>
-
-      <div className="mx-auto max-w-4xl">
-        <motion.div 
-          className="mb-20 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 px-6 py-3 text-sm font-medium border border-indigo-200/50 dark:border-indigo-700/50">
-            <GraduationCap className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-            <span className="text-indigo-700 dark:text-indigo-300">Education</span>
-          </div>
-          <h2 className="mb-6 text-5xl lg:text-7xl font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-900 dark:from-white dark:via-indigo-100 dark:to-white bg-clip-text text-transparent">
-              Academic
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Journey
-            </span>
+    <section id="education" className="py-20 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+            Education & Certifications
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Academic background and learning milestones
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            Continuous learning and professional development through formal education and industry certifications
           </p>
-        </motion.div>
+        </div>
 
-        <div className="space-y-8">
-          {education.map((edu, index) => (
-            <motion.div
-              key={edu._id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -4 }}
-            >
-              <Card className="group bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300">
-                <CardContent className="p-8">
-                  <div className="flex items-start gap-6">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center flex-shrink-0">
-                      <GraduationCap className="h-8 w-8 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{edu.degree}</h3>
-                          <p className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2">{edu.institution}</p>
-                          <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
-                            <div className="flex items-center gap-1">
-                              <MapPin className="h-4 w-4" />
-                              <span>{edu.location}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              <span>
-                                {new Date(edu.startDate).getFullYear()} - {edu.endDate ? new Date(edu.endDate).getFullYear() : 'Present'}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        {edu.type && (
-                          <Badge className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white">
-                            {edu.type}
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      {edu.description && (
-                        <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">{edu.description}</p>
-                      )}
-                      
-                      {edu.achievements && edu.achievements.length > 0 && (
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-2">
-                            <Award className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
-                            <span className="text-sm font-semibold text-slate-900 dark:text-white">Achievements</span>
-                          </div>
-                          <ul className="space-y-2">
-                            {edu.achievements.map((achievement: string, i: number) => (
-                              <li key={i} className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400">
-                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0"></div>
-                                {achievement}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
+        <div className="grid lg:grid-cols-2 gap-8 mb-16">
+          {displayEducation.map((edu, index) => (
+            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200/50 hover:shadow-xl transition-all duration-300">
+              <div className="flex items-start space-x-4 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <GraduationCap className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{edu.degree}</h3>
+                  <p className="text-slate-600 font-medium">{edu.institution}</p>
+                  <p className="text-slate-500 text-sm">{edu.location}</p>
+                </div>
+                <div className="flex items-center text-slate-500">
+                  <Calendar className="w-4 h-4 mr-1" />
+                  <span className="text-sm font-medium">{edu.year}</span>
+                </div>
+              </div>
+
+              {edu.gpa && (
+                <div className="mb-4">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium">
+                    GPA: {edu.gpa}
+                  </span>
+                </div>
+              )}
+
+              {edu.honors && edu.honors.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="font-semibold text-slate-900 mb-2 flex items-center">
+                    <Award className="w-4 h-4 mr-2" />
+                    Honors & Recognition
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {edu.honors.map((honor: string, honorIndex: number) => (
+                      <span key={honorIndex} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+                        {honor}
+                      </span>
+                    ))}
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                </div>
+              )}
+
+              {edu.coursework && edu.coursework.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-2 flex items-center">
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    Key Coursework
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {edu.coursework.map((course: string, courseIndex: number) => (
+                      <span key={courseIndex} className="px-2 py-1 bg-slate-100 text-slate-600 rounded text-sm">
+                        {course}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
+        </div>
+
+        <div className="bg-gradient-to-r from-slate-50 to-blue-50 rounded-2xl p-8">
+          <h3 className="text-2xl font-bold text-slate-900 mb-8 text-center">Professional Certifications</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            {certifications.map((cert, index) => (
+              <div key={index} className="bg-white rounded-xl p-6 shadow-md border border-slate-200/50 text-center hover:shadow-lg transition-all duration-300">
+                <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="font-bold text-slate-900 mb-2">{cert.name}</h4>
+                <p className="text-slate-600 text-sm mb-2">{cert.issuer}</p>
+                <span className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium">
+                  {cert.year}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,41 +1,68 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Calendar, MapPin, Building } from "lucide-react"
 import { api } from "@/lib/api"
-import { Briefcase, Calendar, MapPin } from "lucide-react"
-import { motion } from "framer-motion"
 
 export function Experience() {
   const [experiences, setExperiences] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchExperiences = async () => {
+    const fetchExperience = async () => {
       try {
         const response = await api.getExperiences()
         if (response.success) {
-          setExperiences(response.data.slice(0, 4))
+          setExperiences(response.data)
         }
       } catch (error) {
-        console.error("Failed to fetch experiences:", error)
+        console.error("Failed to fetch experience:", error)
       } finally {
         setLoading(false)
       }
     }
-    fetchExperiences()
+    fetchExperience()
   }, [])
+
+  const defaultExperience = [
+    {
+      title: "Senior Frontend Developer",
+      company: "Tech Innovations Inc.",
+      location: "San Francisco, CA",
+      startDate: "2022",
+      endDate: "Present",
+      description: "Lead frontend development for enterprise applications serving 100k+ users. Architected scalable React applications and mentored junior developers.",
+      achievements: ["Improved app performance by 40%", "Led team of 5 developers", "Implemented design system"]
+    },
+    {
+      title: "Full Stack Developer",
+      company: "Digital Solutions Ltd.",
+      location: "New York, NY",
+      startDate: "2020",
+      endDate: "2022",
+      description: "Developed full-stack web applications using React, Node.js, and PostgreSQL. Collaborated with cross-functional teams to deliver high-quality products.",
+      achievements: ["Built 15+ web applications", "Reduced deployment time by 60%", "Mentored 3 junior developers"]
+    },
+    {
+      title: "Frontend Developer",
+      company: "StartupXYZ",
+      location: "Austin, TX",
+      startDate: "2019",
+      endDate: "2020",
+      description: "Created responsive web interfaces and implemented modern JavaScript frameworks. Worked closely with designers to bring mockups to life.",
+      achievements: ["Launched 5 major features", "Improved user engagement by 25%", "Established testing practices"]
+    }
+  ]
 
   if (loading) {
     return (
-      <section id="experience" className="px-6 py-24">
-        <div className="mx-auto max-w-4xl">
+      <section id="experience" className="py-20 px-6 bg-gradient-to-b from-slate-50 to-white">
+        <div className="max-w-4xl mx-auto">
           <div className="animate-pulse space-y-8">
-            <div className="h-16 w-80 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto"></div>
+            <div className="h-12 bg-slate-200 rounded w-64 mx-auto"></div>
             <div className="space-y-6">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="h-48 bg-slate-200 dark:bg-slate-700 rounded-3xl"></div>
+              {[1,2,3].map(i => (
+                <div key={i} className="h-48 bg-slate-200 rounded-2xl"></div>
               ))}
             </div>
           </div>
@@ -44,102 +71,69 @@ export function Experience() {
     )
   }
 
+  const displayExperience = experiences.length ? experiences : defaultExperience
+
   return (
-    <section id="experience" className="relative overflow-hidden px-6 py-24">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-orange-400/10 via-red-400/8 to-transparent rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-red-400/8 via-pink-400/6 to-transparent rounded-full blur-3xl animate-morph"></div>
-      </div>
-
-      <div className="mx-auto max-w-4xl">
-        <motion.div 
-          className="mb-20 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <div className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/20 px-6 py-3 text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">
-            <Briefcase className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-            <span className="text-orange-700 dark:text-orange-300">Experience</span>
-          </div>
-          <h2 className="mb-6 text-5xl lg:text-7xl font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-slate-900 via-orange-900 to-slate-900 dark:from-white dark:via-orange-100 dark:to-white bg-clip-text text-transparent">
-              Professional
-            </span>
-            <br />
-            <span className="bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-clip-text text-transparent">
-              Journey
-            </span>
+    <section id="experience" className="py-20 px-6 bg-gradient-to-b from-slate-50 to-white">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
+            Professional Experience
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            My professional journey and career milestones
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            A journey of growth, innovation, and impactful contributions across diverse projects and teams
           </p>
-        </motion.div>
+        </div>
 
-        <div className="space-y-8">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp._id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -4 }}
-            >
-              <Card className="group bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300">
-                <CardContent className="p-8">
-                  <div className="flex items-start gap-6">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center flex-shrink-0">
-                      <Briefcase className="h-8 w-8 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">{exp.position}</h3>
-                          <p className="text-lg font-semibold text-orange-600 dark:text-orange-400 mb-2">{exp.company}</p>
-                          <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
-                            <div className="flex items-center gap-1">
-                              <MapPin className="h-4 w-4" />
-                              <span>{exp.location}</span>
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              <span>{exp.duration || "Duration not specified"}</span>
-                            </div>
-                          </div>
+        <div className="relative">
+          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500"></div>
+          
+          <div className="space-y-12">
+            {displayExperience.map((exp, index) => (
+              <div key={index} className="relative">
+                <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-white shadow-lg"></div>
+                
+                <div className="ml-20 bg-white rounded-2xl p-8 shadow-lg border border-slate-200/50 hover:shadow-xl transition-all duration-300">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900 mb-2">{exp.title}</h3>
+                      <div className="flex items-center space-x-4 text-slate-600">
+                        <div className="flex items-center">
+                          <Building className="w-4 h-4 mr-2" />
+                          <span className="font-medium">{exp.company}</span>
                         </div>
-                        {exp.current && (
-                          <Badge className="bg-gradient-to-r from-emerald-500 to-green-500 text-white">
-                            Current
-                          </Badge>
-                        )}
+                        <div className="flex items-center">
+                          <MapPin className="w-4 h-4 mr-2" />
+                          <span>{exp.location}</span>
+                        </div>
                       </div>
-                      
-                      <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">{exp.description}</p>
-                      
-                      <div className="flex flex-wrap gap-2">
-                        {exp.technologies?.slice(0, 8).map((tech: string, i: number) => (
-                          <Badge 
-                            key={i} 
-                            variant="outline"
-                            className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-600"
-                          >
-                            {tech}
-                          </Badge>
-                        ))}
-                        {exp.technologies?.length > 8 && (
-                          <Badge variant="outline" className="text-slate-500 dark:text-slate-400">
-                            +{exp.technologies.length - 8} more
-                          </Badge>
-                        )}
-                      </div>
+                    </div>
+                    
+                    <div className="flex items-center mt-2 lg:mt-0">
+                      <Calendar className="w-4 h-4 mr-2 text-slate-500" />
+                      <span className="text-slate-600 font-medium">
+                        {exp.startDate} - {exp.endDate}
+                      </span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+
+                  <p className="text-slate-700 leading-relaxed mb-6">{exp.description}</p>
+
+                  <div>
+                    <h4 className="font-semibold text-slate-900 mb-3">Key Achievements:</h4>
+                    <ul className="space-y-2">
+                      {exp.achievements.map((achievement: string, achIndex: number) => (
+                        <li key={achIndex} className="flex items-start">
+                          <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                          <span className="text-slate-600">{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
