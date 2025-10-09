@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
 import { api } from "@/lib/api"
-import { Skeleton } from "@/components/ui/skeleton"
 import { motion } from "framer-motion"
+import { Code, Palette, Database, Globe, Zap, Star } from "lucide-react"
 
 export function Skills() {
   const [skills, setSkills] = useState<any>(null)
@@ -29,7 +28,6 @@ export function Skills() {
         setLoading(false)
       }
     }
-
     fetchSkills()
   }, [])
 
@@ -43,61 +41,41 @@ export function Skills() {
     }
   }
 
-  const getColorByLevel = (level: string) => {
-    switch (level.toLowerCase()) {
-      case 'expert': return 'bg-accent'
-      case 'advanced': return 'bg-accent/80'
-      case 'intermediate': return 'bg-accent/60'
-      case 'beginner': return 'bg-accent/40'
-      default: return 'bg-accent/60'
-    }
+  const getCategoryIcon = (title: string) => {
+    const lower = title.toLowerCase()
+    if (lower.includes('frontend') || lower.includes('ui')) return Code
+    if (lower.includes('design')) return Palette
+    if (lower.includes('backend') || lower.includes('database')) return Database
+    if (lower.includes('web')) return Globe
+    return Zap
   }
 
   if (loading) {
     return (
-      <section id="skills" className="bg-muted/30 px-6 py-20">
+      <section id="skills" className="px-6 py-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
-            <Skeleton className="mx-auto h-10 w-64" />
-            <Skeleton className="mx-auto mt-4 h-6 w-80" />
-          </div>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="overflow-hidden">
-                <CardContent className="p-6">
-                  <Skeleton className="mb-6 h-6 w-40" />
-                  {[1, 2, 3, 4].map((j) => (
-                    <div key={j} className="mb-4 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <Skeleton className="h-4 w-24" />
-                        <Skeleton className="h-4 w-16" />
-                      </div>
-                      <Skeleton className="h-2 w-full" />
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            ))}
+          <div className="animate-pulse space-y-8">
+            <div className="h-16 w-80 bg-slate-200 dark:bg-slate-700 rounded-2xl mx-auto"></div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="h-80 bg-slate-200 dark:bg-slate-700 rounded-3xl"></div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
     )
   }
 
-  if (!skills?.categories?.length) {
-    return null
-  }
+  if (!skills?.categories?.length) return null
 
   const activeSkills = skills.categories.find((cat: any) => cat.title === activeCategory)
 
   return (
-    <section id="skills" className="relative overflow-hidden px-6 py-32">
-      {/* Enhanced background with mesh gradient */}
-      <div className="absolute inset-0 -z-20 bg-gradient-to-br from-background via-muted/10 to-background"></div>
-      <div className="absolute inset-0 -z-10 opacity-40">
-        <div className="absolute -top-32 right-[5%] h-96 w-96 rounded-full bg-gradient-to-br from-accent/20 to-primary/10 blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 left-[10%] h-80 w-80 rounded-full bg-gradient-to-tl from-accent/15 to-secondary/20 blur-3xl animate-morph"></div>
-        <div className="absolute top-1/2 left-1/2 h-64 w-64 rounded-full bg-gradient-to-r from-primary/10 to-accent/15 blur-2xl animate-pulse-ring"></div>
+    <section id="skills" className="relative overflow-hidden px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-emerald-400/10 via-blue-400/8 to-transparent rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-purple-400/8 via-pink-400/6 to-transparent rounded-full blur-3xl animate-morph"></div>
       </div>
       
       <div className="mx-auto max-w-7xl">
@@ -108,53 +86,52 @@ export function Skills() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full glass px-6 py-3 text-sm font-medium text-accent border border-accent/20">
-            <div className="h-2 w-2 rounded-full bg-accent animate-pulse"></div>
-            <span>Skills & Expertise</span>
+          <div className="mb-6 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-950/20 dark:to-blue-950/20 px-6 py-3 text-sm font-medium border border-emerald-200/50 dark:border-emerald-700/50">
+            <Star className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <span className="text-emerald-700 dark:text-emerald-300">Skills & Expertise</span>
           </div>
-          <h2 className="mb-6 text-5xl font-bold tracking-tight bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent md:text-6xl lg:text-7xl">
-            What I
+          <h2 className="mb-6 text-5xl lg:text-7xl font-bold tracking-tight">
+            <span className="bg-gradient-to-r from-slate-900 via-emerald-900 to-slate-900 dark:from-white dark:via-emerald-100 dark:to-white bg-clip-text text-transparent">
+              What I
+            </span>
             <br />
-            <span className="text-muted-foreground/60">Bring to Life</span>
+            <span className="bg-gradient-to-r from-emerald-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Bring to Life
+            </span>
           </h2>
-          <p className="mx-auto max-w-3xl text-xl text-muted-foreground/80 leading-relaxed">
+          <p className="mx-auto max-w-3xl text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
             Technologies and tools I master to transform ideas into exceptional digital experiences
           </p>
         </motion.div>
 
-        {/* Enhanced category tabs */}
         <motion.div 
-          className="mb-16 flex flex-wrap justify-center gap-3"
+          className="mb-16 flex flex-wrap justify-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          {skills.categories.map((category: any, index: number) => (
-            <motion.button
-              key={index}
-              onClick={() => setActiveCategory(category.title)}
-              className={`relative rounded-full px-8 py-3 text-sm font-semibold transition-all duration-500 hover:scale-105 ${
-                activeCategory === category.title
-                  ? "glass text-accent shadow-lg border border-accent/30 hover-glow"
-                  : "glass text-muted-foreground hover:text-accent border border-border/50"
-              }`}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category.title}
-              {activeCategory === category.title && (
-                <motion.div 
-                  layoutId="activeTab" 
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-accent/20 to-primary/20"
-                  transition={{ type: "spring", duration: 0.6 }}
-                />
-              )}
-            </motion.button>
-          ))}
+          {skills.categories.map((category: any, index: number) => {
+            const IconComponent = getCategoryIcon(category.title)
+            return (
+              <motion.button
+                key={index}
+                onClick={() => setActiveCategory(category.title)}
+                className={`relative flex items-center gap-3 rounded-2xl px-6 py-3 text-sm font-semibold transition-all duration-300 ${
+                  activeCategory === category.title
+                    ? "bg-gradient-to-r from-emerald-500 to-blue-500 text-white shadow-lg"
+                    : "bg-white/50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:bg-white/70 dark:hover:bg-slate-800/70 border border-slate-200/50 dark:border-slate-700/50"
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <IconComponent className="h-4 w-4" />
+                {category.title}
+              </motion.button>
+            )
+          })}
         </motion.div>
 
-        {/* Skills grid with animation */}
         <motion.div 
           key={activeCategory}
           initial={{ opacity: 0 }}
@@ -165,54 +142,43 @@ export function Skills() {
           {activeSkills?.skills.map((skill: any, skillIndex: number) => (
             <motion.div 
               key={skillIndex}
-              initial={{ opacity: 0, y: 30, scale: 0.9 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ 
-                duration: 0.6, 
-                delay: skillIndex * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: skillIndex * 0.1 }}
               viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -8, scale: 1.02 }}
+              whileHover={{ y: -8 }}
             >
-              <Card className="group relative overflow-hidden glass border-accent/20 transition-all duration-500 hover:border-accent/40 hover:shadow-2xl hover-glow">
-                {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-                
-                <CardContent className="relative p-8">
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors duration-300">{skill.name}</h3>
-                    <Badge 
-                      variant={skill.level.toLowerCase() === 'expert' ? 'default' : 'outline'} 
-                      className={`font-semibold transition-all duration-300 ${
-                        skill.level.toLowerCase() === 'expert' 
-                          ? 'bg-gradient-to-r from-accent to-primary text-white' 
-                          : 'border-accent/30 text-accent'
-                      }`}
-                    >
+              <Card className="group h-full bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{skill.name}</h3>
+                    <Badge className={`${
+                      skill.level.toLowerCase() === 'expert' 
+                        ? 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white' 
+                        : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+                    }`}>
                       {skill.level}
                     </Badge>
                   </div>
                   
-                  <div className="mb-6">
-                    <div className="mb-3 flex items-center justify-between">
-                      <span className="text-sm font-medium text-muted-foreground">{skill.years}</span>
-                      <span className="text-sm font-bold text-accent">{getSkillLevel(skill.level)}%</span>
+                  <div className="mb-4">
+                    <div className="mb-2 flex items-center justify-between">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">{skill.years}</span>
+                      <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{getSkillLevel(skill.level)}%</span>
                     </div>
-                    <div className="h-3 overflow-hidden rounded-full bg-muted/50 backdrop-blur-sm">
+                    <div className="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
                       <motion.div 
-                        className="h-full rounded-full bg-gradient-to-r from-accent to-primary shadow-lg"
+                        className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-blue-500"
                         initial={{ width: 0 }}
                         whileInView={{ width: `${getSkillLevel(skill.level)}%` }}
-                        transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
+                        transition={{ duration: 1.5, delay: 0.3 }}
                         viewport={{ once: true }}
                       />
                     </div>
                   </div>
                   
                   {skill.description && (
-                    <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                       {skill.description}
                     </p>
                   )}

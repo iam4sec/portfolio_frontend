@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Github, Linkedin, Mail, Download, Sparkles, Code, Palette } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail, Download, Sparkles, Code, Palette, Zap } from "lucide-react"
 import Link from "next/link"
 import { api } from "@/lib/api"
 import Image from "next/image"
@@ -10,7 +10,6 @@ import { motion } from "framer-motion"
 
 export function Hero() {
   const [profile, setProfile] = useState<any>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -20,231 +19,231 @@ export function Hero() {
           setProfile(response.data)
         }
       } catch (error) {
-        console.error("[v0] Failed to fetch profile:", error)
+        console.error("Failed to fetch profile:", error)
       }
     }
-
     fetchProfile()
   }, [])
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
-  }
-
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Interactive cursor follower */}
-      <div 
-        className="pointer-events-none fixed z-30 h-6 w-6 rounded-full bg-accent/20 blur-sm transition-all duration-300 ease-out"
-        style={{
-          left: mousePosition.x - 12,
-          top: mousePosition.y - 12,
-        }}
-      />
-      
-      {/* Enhanced hero grid layout */}
-      <div className="mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-12 lg:gap-20">
-        {/* Content Section - Enhanced Typography */}
-        <motion.div 
-          className="lg:col-span-7 space-y-8"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Status Badge */}
-          <motion.div variants={itemVariants}>
-            <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm font-medium text-accent border border-accent/20 backdrop-blur-xl">
-              <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse"></div>
-              <Sparkles className="h-4 w-4" />
-              <span>{profile?.role || "Available for work"}</span>
-            </div>
-          </motion.div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Hero-specific background elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-400/20 via-purple-400/15 to-transparent rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-emerald-400/15 via-blue-400/10 to-transparent rounded-full blur-3xl animate-morph"></div>
+      </div>
 
-          {/* Main Heading with Enhanced Typography */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h1 className="text-6xl font-bold tracking-tight lg:text-8xl xl:text-9xl">
-              <span className="block bg-gradient-to-r from-foreground via-accent to-primary bg-clip-text text-transparent">
-                {profile?.name?.split(' ')[0] || "Creative"}
-              </span>
-              <span className="block text-muted-foreground/80">
-                {profile?.name?.split(' ').slice(1).join(' ') || "Developer"}
-              </span>
-            </h1>
-            
-            <div className="flex items-center gap-4 text-xl font-medium text-accent">
-              <Code className="h-6 w-6" />
-              <span>{profile?.title || "Full Stack Developer"}</span>
-              <Palette className="h-6 w-6" />
-            </div>
-          </motion.div>
-
-          {/* Enhanced Description */}
-          <motion.p 
-            variants={itemVariants}
-            className="max-w-2xl text-xl leading-relaxed text-muted-foreground/90"
-          >
-            {profile?.bio ||
-              "Crafting exceptional digital experiences through innovative design and robust engineering. Passionate about creating solutions that make a difference."}
-          </motion.p>
-
-          {/* CTA Buttons with Enhanced Design */}
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          {/* Left Content - Enhanced */}
           <motion.div 
-            variants={itemVariants}
-            className="flex flex-wrap items-center gap-4"
+            className="lg:col-span-7 space-y-8"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <Button 
-              size="lg" 
-              className="group relative overflow-hidden rounded-full bg-gradient-to-r from-accent via-primary to-accent bg-[length:200%_100%] bg-[position:0%_50%] px-8 py-4 text-base font-semibold shadow-2xl transition-all duration-500 hover:bg-[position:100%_50%] hover:scale-105 hover:shadow-accent/25" 
-              asChild
+            {/* Status Badge */}
+            <motion.div 
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-gradient-to-r from-emerald-500/10 via-blue-500/10 to-purple-500/10 border border-emerald-500/20 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
             >
-              <Link href="#projects">
-                <span className="relative z-10 flex items-center gap-2">
-                  View My Work
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary via-accent to-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-              </Link>
-            </Button>
+              <div className="relative">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <div className="absolute inset-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping opacity-75"></div>
+              </div>
+              <span className="text-sm font-medium bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+                {profile?.role || "Available for work"}
+              </span>
+            </motion.div>
             
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="rounded-full glass border-accent/30 px-8 py-4 text-base font-semibold backdrop-blur-xl transition-all duration-300 hover:scale-105 hover:border-accent/50 hover:bg-accent/5" 
-              asChild
-            >
-              <Link href="#contact">Let's Connect</Link>
-            </Button>
-            
-            {profile?.resume && (
-              <Button 
-                size="lg" 
-                variant="ghost" 
-                className="rounded-full glass px-8 py-4 text-base font-semibold transition-all duration-300 hover:scale-105 hover:bg-accent/5" 
-                asChild
+            {/* Main Heading */}
+            <div className="space-y-4">
+              <motion.h1 
+                className="text-6xl lg:text-8xl font-bold leading-[0.9] tracking-tight"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
               >
-                <Link href={profile.resume} target="_blank">
-                  <Download className="mr-2 h-5 w-5" />
-                  Resume
+                <span className="block bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 dark:from-white dark:via-blue-100 dark:to-white bg-clip-text text-transparent">
+                  {profile?.name?.split(' ')[0] || "John"}
+                </span>
+                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">
+                  {profile?.name?.split(' ').slice(1).join(' ') || "Doe"}
+                </span>
+              </motion.h1>
+              
+              <motion.h2 
+                className="text-2xl lg:text-4xl font-light text-slate-600 dark:text-slate-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+              >
+                {profile?.title || "Senior Frontend Developer"}
+              </motion.h2>
+            </div>
+
+            {/* Bio */}
+            <motion.p 
+              className="text-lg lg:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+            >
+              {profile?.bio || "Passionate about creating exceptional digital experiences with modern web technologies and user-centered design."}
+            </motion.p>
+
+            {/* Action Buttons */}
+            <motion.div 
+              className="flex flex-wrap gap-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+            >
+              <Button size="lg" className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300" asChild>
+                <Link href="#projects">
+                  <Sparkles className="mr-2 h-5 w-5" />
+                  View My Work
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-            )}
+              
+              <Button size="lg" variant="outline" className="border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/20 transition-all duration-300" asChild>
+                <Link href="#contact">Let's Connect</Link>
+              </Button>
+              
+              {profile?.resume && (
+                <Button size="lg" variant="ghost" className="hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300" asChild>
+                  <Link href={profile.resume} target="_blank">
+                    <Download className="mr-2 h-4 w-4" />
+                    Resume
+                  </Link>
+                </Button>
+              )}
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div 
+              className="flex items-center gap-6 pt-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
+            >
+              {profile?.social?.github && (
+                <Link 
+                  href={profile.social.github} 
+                  target="_blank" 
+                  className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-300 hover:scale-110"
+                >
+                  <Github className="h-5 w-5" />
+                </Link>
+              )}
+              {profile?.social?.linkedin && (
+                <Link 
+                  href={profile.social.linkedin} 
+                  target="_blank" 
+                  className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-300 hover:scale-110"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </Link>
+              )}
+              {profile?.email && (
+                <Link 
+                  href={`mailto:${profile.email}`} 
+                  className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-all duration-300 hover:scale-110"
+                >
+                  <Mail className="h-5 w-5" />
+                </Link>
+              )}
+            </motion.div>
           </motion.div>
 
-          {/* Social Links with Enhanced Hover Effects */}
+          {/* Right Content - Completely Redesigned */}
           <motion.div 
-            variants={itemVariants}
-            className="flex items-center gap-4"
+            className="lg:col-span-5 relative"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {profile?.social?.github && (
-              <Link
-                href={profile.social.github}
-                target="_blank"
-                className="group relative rounded-full glass p-4 text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-accent"
-              >
-                <Github className="h-6 w-6 transition-transform group-hover:rotate-12" />
-                <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"></div>
-              </Link>
-            )}
-            {profile?.social?.linkedin && (
-              <Link
-                href={profile.social.linkedin}
-                target="_blank"
-                className="group relative rounded-full glass p-4 text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-accent"
-              >
-                <Linkedin className="h-6 w-6 transition-transform group-hover:rotate-12" />
-                <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"></div>
-              </Link>
-            )}
-            {profile?.email && (
-              <Link
-                href={`mailto:${profile.email}`}
-                className="group relative rounded-full glass p-4 text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-accent"
-              >
-                <Mail className="h-6 w-6 transition-transform group-hover:rotate-12" />
-                <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"></div>
-              </Link>
-            )}
-          </motion.div>
-        </motion.div>
-        
-        {/* Enhanced Visual Section */}
-        <motion.div 
-          className="lg:col-span-5 flex justify-center"
-          initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
-          animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <div className="group relative">
-            {/* Animated background elements */}
-            <div className="absolute -inset-8 rounded-full bg-gradient-to-r from-accent/20 via-primary/15 to-accent/20 blur-2xl animate-pulse-ring"></div>
-            <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-accent/30 to-primary/20 blur-xl animate-float"></div>
-            
-            {/* Main image container with 3D effect */}
-            <div className="relative h-96 w-96 overflow-hidden rounded-3xl bg-gradient-to-br from-accent/20 via-primary/15 to-accent/10 p-1 shadow-2xl transition-all duration-700 hover:shadow-accent/30 group-hover:scale-105">
-              <div className="h-full w-full overflow-hidden rounded-3xl bg-gradient-to-br from-background/5 to-transparent backdrop-blur-sm">
-                <Image
-                  src={profile?.image || "/placeholder-user.jpg"}
-                  alt={profile?.name || "Profile"}
-                  fill
-                  className="object-cover transition-all duration-700 group-hover:scale-110"
-                  priority
-                />
+            <div className="relative max-w-md mx-auto">
+              {/* Main Profile Image */}
+              <div className="relative">
+                <div className="w-80 h-80 mx-auto rounded-3xl overflow-hidden bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 p-2">
+                  <div className="w-full h-full rounded-2xl overflow-hidden">
+                    <Image
+                      src={profile?.image || "/placeholder-user.jpg"}
+                      alt={profile?.name || "Profile"}
+                      width={320}
+                      height={320}
+                      className="object-cover w-full h-full"
+                      priority
+                    />
+                  </div>
+                </div>
                 
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-accent/10 via-transparent to-primary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                {/* Floating Elements */}
+                <motion.div 
+                  className="absolute -top-4 -right-4 bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-xl border border-slate-200 dark:border-slate-700"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <Code className="h-6 w-6 text-blue-600" />
+                </motion.div>
+                
+                <motion.div 
+                  className="absolute -bottom-4 -left-4 bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-xl border border-slate-200 dark:border-slate-700"
+                  animate={{ y: [0, 10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                >
+                  <Palette className="h-6 w-6 text-purple-600" />
+                </motion.div>
+                
+                <motion.div 
+                  className="absolute top-1/2 -right-8 bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-xl border border-slate-200 dark:border-slate-700"
+                  animate={{ x: [0, 10, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                >
+                  <Zap className="h-6 w-6 text-emerald-600" />
+                </motion.div>
+              </div>
+              
+              {/* Stats Cards */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex gap-4">
+                <motion.div 
+                  className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-200 dark:border-slate-700 text-center min-w-[80px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1, duration: 0.6 }}
+                >
+                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">5+</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Years</div>
+                </motion.div>
+                
+                <motion.div 
+                  className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-200 dark:border-slate-700 text-center min-w-[80px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.2, duration: 0.6 }}
+                >
+                  <div className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">50+</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Projects</div>
+                </motion.div>
+                
+                <motion.div 
+                  className="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-lg border border-slate-200 dark:border-slate-700 text-center min-w-[80px]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.4, duration: 0.6 }}
+                >
+                  <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">100%</div>
+                  <div className="text-xs text-slate-500 dark:text-slate-400">Quality</div>
+                </motion.div>
               </div>
             </div>
-            
-            {/* Floating decorative elements */}
-            <div className="absolute -right-6 -top-6 h-12 w-12 rounded-full bg-gradient-to-br from-accent to-primary animate-bounce-subtle delay-200 shadow-lg"></div>
-            <div className="absolute -bottom-4 -left-4 h-8 w-8 rounded-full bg-gradient-to-br from-primary to-accent animate-float delay-500 shadow-lg"></div>
-            <div className="absolute right-4 top-1/3 h-6 w-6 rounded-full bg-accent/60 animate-pulse-ring delay-1000"></div>
-          </div>
-        </motion.div>
-      </div>
-      
-      {/* Enhanced scroll indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-      >
-        <div className="flex flex-col items-center gap-3 text-muted-foreground">
-          <span className="text-sm font-medium tracking-wide">Discover More</span>
-          <div className="relative h-8 w-5 rounded-full border-2 border-current/30">
-            <div className="absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-current animate-bounce"></div>
-          </div>
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

@@ -1,11 +1,10 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Github, Linkedin, Mail, Sparkles, ArrowUp, Heart } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowUp, Heart, Zap } from "lucide-react"
 import Link from "next/link"
 import { api } from "@/lib/api"
 import { motion } from "framer-motion"
@@ -24,10 +23,9 @@ export function Footer() {
           setProfile(response.data)
         }
       } catch (error) {
-        console.error("[v0] Failed to fetch profile:", error)
+        console.error("Failed to fetch profile:", error)
       }
     }
-
     fetchProfile()
   }, [])
 
@@ -56,17 +54,14 @@ export function Footer() {
   }
 
   return (
-    <footer className="relative overflow-hidden border-t border-accent/20 bg-gradient-to-b from-background to-muted/20 px-6 py-16">
-      {/* Background elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -bottom-20 left-[10%] h-64 w-64 rounded-full bg-gradient-to-br from-accent/10 to-primary/5 blur-3xl animate-float"></div>
-        <div className="absolute -top-10 right-[15%] h-48 w-48 rounded-full bg-gradient-to-tl from-primary/8 to-accent/6 blur-2xl animate-pulse-ring"></div>
+    <footer className="relative overflow-hidden border-t border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-b from-slate-50/50 to-white dark:from-slate-900/50 dark:to-slate-950 px-6 py-16">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-400/10 via-purple-400/8 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-1/4 w-48 h-48 bg-gradient-to-tl from-emerald-400/8 via-blue-400/6 to-transparent rounded-full blur-2xl"></div>
       </div>
       
       <div className="mx-auto max-w-7xl">
-        {/* Main Footer Content */}
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand Section */}
           <motion.div 
             className="lg:col-span-2"
             initial={{ opacity: 0, y: 20 }}
@@ -75,92 +70,81 @@ export function Footer() {
             viewport={{ once: true }}
           >
             <div className="mb-6 flex items-center gap-3">
-              <div className="relative">
-                <Sparkles className="h-8 w-8 text-accent animate-pulse" />
-                <div className="absolute inset-0 h-8 w-8 text-accent animate-ping opacity-20"></div>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                <Zap className="h-5 w-5 text-white" />
               </div>
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
                 {profile?.name || "Portfolio"}
               </h3>
             </div>
-            <p className="mb-6 max-w-md text-base leading-relaxed text-muted-foreground/90">
+            <p className="mb-6 max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-400">
               {profile?.bio?.slice(0, 180) || "Building exceptional digital experiences with passion, precision, and purpose. Let's create something amazing together."}
             </p>
             
-            {/* Enhanced Social Links */}
             <div className="flex items-center gap-4">
               {profile?.social?.github && (
                 <Link
                   href={profile.social.github}
                   target="_blank"
-                  className="group relative rounded-full glass p-3 text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-accent"
+                  className="group w-12 h-12 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300 hover:scale-110"
                 >
-                  <Github className="h-5 w-5 transition-transform group-hover:rotate-12" />
-                  <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"></div>
+                  <Github className="h-5 w-5" />
                 </Link>
               )}
               {profile?.social?.linkedin && (
                 <Link
                   href={profile.social.linkedin}
                   target="_blank"
-                  className="group relative rounded-full glass p-3 text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-accent"
+                  className="group w-12 h-12 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300 hover:scale-110"
                 >
-                  <Linkedin className="h-5 w-5 transition-transform group-hover:rotate-12" />
-                  <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"></div>
+                  <Linkedin className="h-5 w-5" />
                 </Link>
               )}
               {profile?.email && (
                 <Link
                   href={`mailto:${profile.email}`}
-                  className="group relative rounded-full glass p-3 text-muted-foreground transition-all duration-300 hover:scale-110 hover:text-accent"
+                  className="group w-12 h-12 rounded-xl bg-white/50 dark:bg-slate-800/50 border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300 hover:scale-110"
                 >
-                  <Mail className="h-5 w-5 transition-transform group-hover:rotate-12" />
-                  <div className="absolute inset-0 rounded-full bg-accent/10 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-110"></div>
+                  <Mail className="h-5 w-5" />
                 </Link>
               )}
             </div>
           </motion.div>
 
-          {/* Quick Links */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h4 className="mb-6 text-lg font-semibold text-foreground">Quick Links</h4>
+            <h4 className="mb-6 text-lg font-semibold text-slate-900 dark:text-white">Quick Links</h4>
             <ul className="space-y-3">
               {[
                 { href: "#about", label: "About" },
                 { href: "#projects", label: "Projects" },
                 { href: "/blog", label: "Blog" },
                 { href: "#contact", label: "Contact" },
-              ].map((link, index) => (
-                <motion.li 
-                  key={link.href}
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
+              ].map((link) => (
+                <li key={link.href}>
                   <Link 
                     href={link.href} 
-                    className="text-muted-foreground transition-all duration-300 hover:text-accent hover:font-medium"
+                    className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-300"
                   >
                     {link.label}
                   </Link>
-                </motion.li>
+                </li>
               ))}
             </ul>
           </motion.div>
 
-          {/* Newsletter */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="mb-6 text-lg font-semibold text-foreground">Stay Updated</h4>
-            <p className="mb-4 text-sm text-muted-foreground">
+            <h4 className="mb-6 text-lg font-semibold text-slate-900 dark:text-white">Stay Updated</h4>
+            <p className="mb-4 text-sm text-slate-600 dark:text-slate-400">
               Get notified about new projects and insights.
             </p>
             <form onSubmit={handleSubscribe} className="space-y-3">
@@ -171,51 +155,45 @@ export function Footer() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
-                className="glass border-accent/20 bg-background/50 transition-all duration-300 focus:border-accent/50 focus:bg-background/80"
+                className="bg-white/50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 focus:border-blue-500 dark:focus:border-blue-400"
               />
               <Button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-accent to-primary transition-all duration-300 hover:scale-105 hover:shadow-lg" 
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white transition-all duration-300" 
                 disabled={loading}
               >
                 {loading ? "Subscribing..." : "Subscribe"}
               </Button>
               {message && (
-                <motion.p 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className={`text-xs ${
-                    message.includes('Thank you') ? 'text-green-600' : 'text-red-600'
-                  }`}
-                >
+                <p className={`text-xs ${
+                  message.includes('Thank you') ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'
+                }`}>
                   {message}
-                </motion.p>
+                </p>
               )}
             </form>
           </motion.div>
         </div>
 
-        {/* Bottom Section */}
         <motion.div 
-          className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-accent/20 pt-8 md:flex-row"
+          className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-slate-200/50 dark:border-slate-700/50 pt-8 md:flex-row"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
             <span>&copy; {new Date().getFullYear()} {profile?.name || "Portfolio"}.</span>
             <span>Made with</span>
             <Heart className="h-4 w-4 text-red-500 animate-pulse" />
             <span>and lots of coffee</span>
           </div>
           
-          {/* Back to Top Button */}
           <Button
             variant="outline"
             size="sm"
             onClick={scrollToTop}
-            className="group rounded-full glass border-accent/30 transition-all duration-300 hover:scale-105 hover:border-accent/50"
+            className="group rounded-xl bg-white/50 dark:bg-slate-800/50 border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-300"
           >
             <ArrowUp className="h-4 w-4 transition-transform group-hover:-translate-y-1" />
             <span className="ml-2">Back to Top</span>

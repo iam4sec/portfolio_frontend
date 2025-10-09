@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Moon, Sun, Sparkles } from "lucide-react"
+import { Menu, X, Moon, Sun, Zap, Circle } from "lucide-react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -70,9 +70,9 @@ export function Navbar() {
 
   return (
     <motion.nav
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-700 ${
+      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? "glass-strong border-b border-accent/20 shadow-2xl backdrop-blur-xl" 
+          ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 shadow-lg" 
           : "bg-transparent"
       }`}
       initial={{ y: -100 }}
@@ -80,23 +80,24 @@ export function Navbar() {
       transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        {/* Enhanced Logo */}
+        {/* Modern Logo */}
         <Link 
           href="/" 
-          className="group relative flex items-center gap-2 text-xl font-bold"
+          className="group relative flex items-center gap-3 text-xl font-bold"
         >
           <div className="relative">
-            <Sparkles className="h-6 w-6 text-accent animate-pulse" />
-            <div className="absolute inset-0 h-6 w-6 text-accent animate-ping opacity-20"></div>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+              <Zap className="h-4 w-4 text-white" />
+            </div>
+            <div className="absolute inset-0 w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 opacity-20 animate-pulse"></div>
           </div>
-          <span className="bg-gradient-to-r from-accent via-primary to-accent bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
             Portfolio
           </span>
-          <span className="absolute -bottom-1 left-8 h-[3px] w-0 rounded-full bg-gradient-to-r from-accent to-primary transition-all duration-500 group-hover:w-[calc(100%-2rem)]"></span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
           {navLinks.map((link, index) => (
             <motion.div
               key={link.href}
@@ -107,18 +108,20 @@ export function Navbar() {
               <Link
                 href={link.href}
                 onClick={(e) => handleSmoothScroll(e, link.href)}
-                className={`group relative px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 ${
+                className={`group relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 ${
                   activeSection === link.id
-                    ? "text-accent"
-                    : "text-muted-foreground hover:text-accent"
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/20"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
                 }`}
               >
-                {link.label}
-                <span className={`absolute -bottom-1 left-1/2 h-[2px] rounded-full bg-gradient-to-r from-accent to-primary transition-all duration-300 ${
-                  activeSection === link.id
-                    ? "w-8 -translate-x-1/2"
-                    : "w-0 -translate-x-1/2 group-hover:w-8"
-                }`}></span>
+                <span className="relative z-10">{link.label}</span>
+                {activeSection === link.id && (
+                  <motion.div
+                    className="absolute inset-0 bg-blue-100 dark:bg-blue-900/30 rounded-lg"
+                    layoutId="activeSection"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
               </Link>
             </motion.div>
           ))}
@@ -129,11 +132,12 @@ export function Navbar() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8 }}
+              className="ml-4"
             >
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="ml-4 rounded-full glass border border-accent/20 transition-all duration-300 hover:scale-110 hover:border-accent/40 hover:bg-accent/10"
+                className="relative w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 hover:scale-105"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               >
                 <AnimatePresence mode="wait">
@@ -145,7 +149,7 @@ export function Navbar() {
                       exit={{ rotate: 90, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <Sun className="h-5 w-5 text-accent" />
+                      <Sun className="h-4 w-4 text-amber-500" />
                     </motion.div>
                   ) : (
                     <motion.div
@@ -155,7 +159,7 @@ export function Navbar() {
                       exit={{ rotate: -90, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <Moon className="h-5 w-5 text-accent" />
+                      <Moon className="h-4 w-4 text-slate-700" />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -165,17 +169,17 @@ export function Navbar() {
         </div>
 
         {/* Mobile Controls */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-3 md:hidden">
           {mounted && (
             <Button 
               variant="ghost" 
               size="icon" 
-              className="rounded-full glass border border-accent/20 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
               {theme === 'dark' ? 
-                <Sun className="h-5 w-5 text-accent" /> : 
-                <Moon className="h-5 w-5 text-accent" />
+                <Sun className="h-4 w-4 text-amber-500" /> : 
+                <Moon className="h-4 w-4 text-slate-700" />
               }
             </Button>
           )}
@@ -183,7 +187,7 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full glass border border-accent/20 transition-all duration-300 hover:scale-110"
+            className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <AnimatePresence mode="wait">
@@ -195,7 +199,7 @@ export function Navbar() {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className="h-5 w-5 text-accent" />
+                  <X className="h-4 w-4 text-slate-700 dark:text-slate-300" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -205,7 +209,7 @@ export function Navbar() {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu className="h-5 w-5 text-accent" />
+                  <Menu className="h-4 w-4 text-slate-700 dark:text-slate-300" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -217,7 +221,7 @@ export function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="absolute left-0 right-0 glass-strong border-t border-accent/20 md:hidden"
+            className="absolute left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-700/50 md:hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -234,8 +238,9 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={(e) => handleSmoothScroll(e, link.href)}
-                    className="block py-3 px-4 text-base font-medium text-muted-foreground transition-all duration-300 hover:text-accent hover:translate-x-2 hover:bg-accent/5 rounded-lg"
+                    className="flex items-center gap-3 py-3 px-4 text-base font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all duration-300"
                   >
+                    <Circle className="h-2 w-2 fill-current" />
                     {link.label}
                   </Link>
                 </motion.div>
