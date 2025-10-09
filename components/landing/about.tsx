@@ -104,18 +104,18 @@ export function About() {
           </p>
         </motion.div>
 
-        {/* Modern Grid Layout */}
+        {/* Simplified Layout */}
         <motion.div 
-          className="grid gap-8 lg:grid-cols-12 lg:grid-rows-3"
+          className="max-w-4xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
         >
           {/* Main Story Card */}
-          <motion.div variants={itemVariants} className="lg:col-span-8 lg:row-span-2">
-            <Card className="h-full bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-500 group">
-              <CardContent className="p-8 h-full flex flex-col justify-center">
+          <motion.div variants={itemVariants}>
+            <Card className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-slate-200/50 dark:border-slate-700/50 hover:bg-white/70 dark:hover:bg-slate-800/70 transition-all duration-500">
+              <CardContent className="p-8">
                 <div className="space-y-6">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
@@ -144,119 +144,7 @@ export function About() {
             </Card>
           </motion.div>
 
-          {/* Skills Cards */}
-          <motion.div variants={itemVariants} className="lg:col-span-4 lg:row-span-1">
-            <Card className="h-full bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-blue-200/50 dark:border-blue-700/50 hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-950/50 dark:hover:to-blue-900/50 transition-all duration-300 group">
-              <CardContent className="p-6 h-full flex flex-col justify-center">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                    <Code2 className="h-8 w-8 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Code Craft</h4>
-                    <p className="text-slate-600 dark:text-slate-400">Writing clean, efficient code that scales</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
 
-          <motion.div variants={itemVariants} className="lg:col-span-4 lg:row-span-1">
-            <Card className="h-full bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/30 dark:to-purple-900/30 border-purple-200/50 dark:border-purple-700/50 hover:from-purple-100 hover:to-purple-200 dark:hover:from-purple-950/50 dark:hover:to-purple-900/50 transition-all duration-300 group">
-              <CardContent className="p-6 h-full flex flex-col justify-center">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                    <Palette className="h-8 w-8 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Design Focus</h4>
-                    <p className="text-slate-600 dark:text-slate-400">User-centered design thinking</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="lg:col-span-4 lg:row-span-1">
-            <Card className="h-full bg-gradient-to-br from-emerald-50 to-emerald-100 dark:from-emerald-950/30 dark:to-emerald-900/30 border-emerald-200/50 dark:border-emerald-700/50 hover:from-emerald-100 hover:to-emerald-200 dark:hover:from-emerald-950/50 dark:hover:to-emerald-900/50 transition-all duration-300 group">
-              <CardContent className="p-6 h-full flex flex-col justify-center">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
-                    <Lightbulb className="h-8 w-8 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">Innovation</h4>
-                    <p className="text-slate-600 dark:text-slate-400">Always exploring new possibilities</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Stats Row */}
-          <motion.div variants={itemVariants} className="lg:col-span-3 lg:row-span-1">
-            <Card className="h-full bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-950/30 dark:to-orange-900/30 border-amber-200/50 dark:border-amber-700/50 transition-all duration-300">
-              <CardContent className="p-6 h-full flex flex-col justify-center">
-                <div className="text-center space-y-3">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
-                    <Coffee className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Daily Fuel</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Coffee & Code</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="lg:col-span-3 lg:row-span-1">
-            <Card className="h-full bg-gradient-to-br from-rose-50 to-pink-100 dark:from-rose-950/30 dark:to-pink-900/30 border-rose-200/50 dark:border-rose-700/50 transition-all duration-300">
-              <CardContent className="p-6 h-full flex flex-col justify-center">
-                <div className="text-center space-y-3">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center">
-                    <Globe className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Global Impact</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Worldwide Reach</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="lg:col-span-3 lg:row-span-1">
-            <Card className="h-full bg-gradient-to-br from-indigo-50 to-blue-100 dark:from-indigo-950/30 dark:to-blue-900/30 border-indigo-200/50 dark:border-indigo-700/50 transition-all duration-300">
-              <CardContent className="p-6 h-full flex flex-col justify-center">
-                <div className="text-center space-y-3">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-indigo-500 to-blue-500 flex items-center justify-center">
-                    <Users className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Collaboration</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Team Player</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="lg:col-span-3 lg:row-span-1">
-            <Card className="h-full bg-gradient-to-br from-violet-50 to-purple-100 dark:from-violet-950/30 dark:to-purple-900/30 border-violet-200/50 dark:border-violet-700/50 transition-all duration-300">
-              <CardContent className="p-6 h-full flex flex-col justify-center">
-                <div className="text-center space-y-3">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
-                    <Award className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-slate-900 dark:text-white">Excellence</h4>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Quality First</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
         </motion.div>
 
         {/* Expertise Section */}
