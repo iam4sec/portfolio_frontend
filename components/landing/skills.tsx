@@ -91,56 +91,63 @@ export function Skills() {
   const activeSkills = skills.categories.find((cat: any) => cat.title === activeCategory)
 
   return (
-    <section id="skills" className="relative bg-gradient-to-b from-background via-muted/20 to-muted/30 px-6 py-24">
-      {/* Background elements */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-20 right-[5%] h-64 w-64 rounded-full bg-accent/5 blur-3xl"></div>
-        <div className="absolute bottom-20 left-[10%] h-40 w-40 rounded-full bg-accent/10 blur-3xl"></div>
+    <section id="skills" className="relative overflow-hidden px-6 py-32">
+      {/* Enhanced background with mesh gradient */}
+      <div className="absolute inset-0 -z-20 bg-gradient-to-br from-background via-muted/10 to-background"></div>
+      <div className="absolute inset-0 -z-10 opacity-40">
+        <div className="absolute -top-32 right-[5%] h-96 w-96 rounded-full bg-gradient-to-br from-accent/20 to-primary/10 blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 left-[10%] h-80 w-80 rounded-full bg-gradient-to-tl from-accent/15 to-secondary/20 blur-3xl animate-morph"></div>
+        <div className="absolute top-1/2 left-1/2 h-64 w-64 rounded-full bg-gradient-to-r from-primary/10 to-accent/15 blur-2xl animate-pulse-ring"></div>
       </div>
       
       <div className="mx-auto max-w-7xl">
         <motion.div 
-          className="mb-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-20 text-center"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+          <div className="mb-6 inline-block rounded-full glass px-6 py-2 text-sm font-medium text-accent border border-accent/20">
+            🚀 What I Do
+          </div>
+          <h2 className="mb-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent md:text-5xl lg:text-6xl">
             Skills & Expertise
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+          <p className="mx-auto max-w-3xl text-xl text-muted-foreground leading-relaxed">
             Technologies and tools I work with to bring ideas to life
           </p>
         </motion.div>
 
-        {/* Category tabs */}
+        {/* Enhanced category tabs */}
         <motion.div 
-          className="mb-12 flex flex-wrap justify-center gap-2"
+          className="mb-16 flex flex-wrap justify-center gap-3"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true, margin: "-100px" }}
         >
           {skills.categories.map((category: any, index: number) => (
-            <button
+            <motion.button
               key={index}
               onClick={() => setActiveCategory(category.title)}
-              className={`relative rounded-full px-6 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent/10 ${
+              className={`relative rounded-full px-8 py-3 text-sm font-semibold transition-all duration-500 hover:scale-105 ${
                 activeCategory === category.title
-                  ? "bg-accent/20 text-accent shadow-sm"
-                  : "bg-muted/40 text-muted-foreground"
+                  ? "glass text-accent shadow-lg border border-accent/30 hover-glow"
+                  : "glass text-muted-foreground hover:text-accent border border-border/50"
               }`}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
               {category.title}
               {activeCategory === category.title && (
-                <motion.span 
+                <motion.div 
                   layoutId="activeTab" 
-                  className="absolute inset-0 rounded-full border border-accent/30"
-                  transition={{ type: "spring", duration: 0.5 }}
-                ></motion.span>
+                  className="absolute inset-0 rounded-full bg-gradient-to-r from-accent/20 to-primary/20"
+                  transition={{ type: "spring", duration: 0.6 }}
+                />
               )}
-            </button>
+            </motion.button>
           ))}
         </motion.div>
 
@@ -155,39 +162,56 @@ export function Skills() {
           {activeSkills?.skills.map((skill: any, skillIndex: number) => (
             <motion.div 
               key={skillIndex}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: skillIndex * 0.1 }}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: skillIndex * 0.1,
+                type: "spring",
+                stiffness: 100
+              }}
               viewport={{ once: true, margin: "-50px" }}
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -8, scale: 1.02 }}
             >
-              <Card className="overflow-hidden border-border/50 bg-card/70 backdrop-blur-sm transition-all hover:border-accent/30 hover:shadow-lg">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium text-foreground">{skill.name}</h3>
-                    <Badge variant={skill.level.toLowerCase() === 'expert' ? 'default' : 'outline'} className="font-medium">
+              <Card className="group relative overflow-hidden glass border-accent/20 transition-all duration-500 hover:border-accent/40 hover:shadow-2xl hover-glow">
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-primary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                
+                <CardContent className="relative p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors duration-300">{skill.name}</h3>
+                    <Badge 
+                      variant={skill.level.toLowerCase() === 'expert' ? 'default' : 'outline'} 
+                      className={`font-semibold transition-all duration-300 ${
+                        skill.level.toLowerCase() === 'expert' 
+                          ? 'bg-gradient-to-r from-accent to-primary text-white' 
+                          : 'border-accent/30 text-accent'
+                      }`}
+                    >
                       {skill.level}
                     </Badge>
                   </div>
                   
-                  <div className="mt-4">
-                    <div className="mb-1 flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">{skill.years}</span>
-                      <span className="text-xs font-medium text-accent">{getSkillLevel(skill.level)}%</span>
+                  <div className="mb-6">
+                    <div className="mb-3 flex items-center justify-between">
+                      <span className="text-sm font-medium text-muted-foreground">{skill.years}</span>
+                      <span className="text-sm font-bold text-accent">{getSkillLevel(skill.level)}%</span>
                     </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-muted">
+                    <div className="h-3 overflow-hidden rounded-full bg-muted/50 backdrop-blur-sm">
                       <motion.div 
-                        className={`h-full rounded-full ${getColorByLevel(skill.level)}`}
+                        className="h-full rounded-full bg-gradient-to-r from-accent to-primary shadow-lg"
                         initial={{ width: 0 }}
                         whileInView={{ width: `${getSkillLevel(skill.level)}%` }}
-                        transition={{ duration: 1, delay: 0.2 }}
+                        transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
                         viewport={{ once: true }}
                       />
                     </div>
                   </div>
                   
                   {skill.description && (
-                    <p className="mt-4 text-sm text-muted-foreground">{skill.description}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
+                      {skill.description}
+                    </p>
                   )}
                 </CardContent>
               </Card>

@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/landing/navbar"
 import { Hero } from "@/components/landing/hero"
+import { About } from "@/components/landing/about"
 import { Skills } from "@/components/landing/skills"
 import { Projects } from "@/components/landing/projects"
 import { Experience } from "@/components/landing/experience"
@@ -10,6 +11,7 @@ import { Blogs } from "@/components/landing/blogs"
 import { Newsletter } from "@/components/landing/newsletter"
 import { Contact } from "@/components/landing/contact"
 import { Footer } from "@/components/landing/footer"
+import { ScrollToTopButton } from "@/components/ui/scroll-to-top-button"
 import { Suspense } from "react"
 
 // Add Loading fallback components
@@ -22,23 +24,27 @@ const SectionLoading = () => (
 export default function HomePage() {
   return (
     <div className="min-h-screen overflow-hidden scroll-smooth">
-      {/* Animated gradient background */}
-      <div 
-        className="fixed inset-0 -z-50 bg-background opacity-80" 
-        style={{
-          backgroundImage: `
-            radial-gradient(circle at 10% 20%, var(--accent) / 0.03 0%, transparent 20%),
-            radial-gradient(circle at 90% 50%, var(--accent) / 0.05 0%, transparent 25%),
-            radial-gradient(circle at 40% 80%, var(--accent) / 0.03 0%, transparent 35%)
-          `,
-        }}
-      />
+      {/* Enhanced animated background */}
+      <div className="fixed inset-0 -z-50 bg-background"></div>
+      <div className="fixed inset-0 -z-40 opacity-60 gradient-mesh animate-gradient"></div>
+      
+      {/* Floating particles */}
+      <div className="fixed inset-0 -z-30 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 h-1 w-1 rounded-full bg-accent/60 animate-float delay-0"></div>
+        <div className="absolute top-1/3 right-1/3 h-2 w-2 rounded-full bg-primary/40 animate-bounce-subtle delay-1000"></div>
+        <div className="absolute bottom-1/4 left-1/3 h-1 w-1 rounded-full bg-accent/50 animate-pulse delay-500"></div>
+        <div className="absolute top-2/3 right-1/4 h-1 w-1 rounded-full bg-primary/60 animate-float delay-700"></div>
+      </div>
       
       <Navbar />
       
       {/* Main content with improved spacing */}
       <main className="relative">
         <Hero />
+        
+        <Suspense fallback={<SectionLoading />}>
+          <About />
+        </Suspense>
         
         <Suspense fallback={<SectionLoading />}>
           <Skills />
@@ -79,31 +85,8 @@ export default function HomePage() {
       
       <Footer />
       
-      {/* Back to top button */}
-      <button 
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-accent/80 text-white shadow-lg opacity-0 transition-all duration-300 hover:bg-accent focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 scroll-visible"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="m18 15-6-6-6 6"/>
-        </svg>
-      </button>
-      
-      {/* Add inline script for scroll button visibility */}
-      <script 
-        dangerouslySetInnerHTML={{ 
-          __html: `
-            document.addEventListener('scroll', function() {
-              const scrollButton = document.querySelector('.scroll-visible');
-              if (window.scrollY > 500) {
-                scrollButton.classList.add('opacity-100');
-              } else {
-                scrollButton.classList.remove('opacity-100');
-              }
-            });
-          ` 
-        }} 
-      />
+      {/* Back to top button - now using a client component */}
+      <ScrollToTopButton />
     </div>
   )
 }

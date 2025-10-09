@@ -49,6 +49,7 @@ export function Navbar() {
   }
 
   const navLinks = [
+    { href: "#about", label: "About" },
     { href: "#skills", label: "Skills" },
     { href: "#projects", label: "Work" },
     { href: "#experience", label: "Experience" },
@@ -58,19 +59,19 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? "border-b border-border bg-background/90 backdrop-blur-xl shadow-sm" 
+          ? "glass border-b border-accent/20 shadow-xl" 
           : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link 
           href="/" 
-          className="group relative text-xl font-semibold text-foreground"
+          className="group relative text-xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent"
         >
           <span className="relative z-10">Portfolio</span>
-          <span className="absolute bottom-0 left-0 h-[6px] w-0 rounded-full bg-accent/30 transition-all duration-300 group-hover:w-full"></span>
+          <span className="absolute -bottom-1 left-0 h-[3px] w-0 rounded-full bg-gradient-to-r from-accent to-primary transition-all duration-500 group-hover:w-full"></span>
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -79,10 +80,10 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={(e) => handleSmoothScroll(e, link.href)}
-              className="group relative text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="group relative text-sm font-medium text-muted-foreground transition-all duration-300 hover:text-accent hover:scale-105"
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-accent transition-all group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-gradient-to-r from-accent to-primary rounded-full transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
           
@@ -91,10 +92,13 @@ export function Navbar() {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="rounded-full hover:bg-accent/10"
+              className="rounded-full glass transition-all duration-300 hover:scale-110 hover-glow"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {theme === 'dark' ? 
+                <Sun className="h-5 w-5 text-accent transition-transform hover:rotate-180" /> : 
+                <Moon className="h-5 w-5 text-accent transition-transform hover:rotate-180" />
+              }
             </Button>
           )}
         </div>
@@ -105,28 +109,34 @@ export function Navbar() {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="rounded-full hover:bg-accent/10"
+              className="rounded-full glass transition-all duration-300 hover:scale-110"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
-              {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              {theme === 'dark' ? 
+                <Sun className="h-5 w-5 text-accent" /> : 
+                <Moon className="h-5 w-5 text-accent" />
+              }
             </Button>
           )}
           
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full hover:bg-accent/10"
+            className="rounded-full glass transition-all duration-300 hover:scale-110"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMobileMenuOpen ? 
+              <X className="h-5 w-5 text-accent transition-transform rotate-180" /> : 
+              <Menu className="h-5 w-5 text-accent" />
+            }
           </Button>
         </div>
       </div>
 
-      {/* Mobile menu with animation */}
+      {/* Enhanced mobile menu */}
       <div
-        className={`absolute left-0 right-0 border-t border-border bg-background/95 backdrop-blur-lg transition-all duration-300 md:hidden ${
-          isMobileMenuOpen ? "max-h-[300px] opacity-100" : "max-h-0 overflow-hidden opacity-0"
+        className={`absolute left-0 right-0 glass border-t border-accent/20 transition-all duration-500 md:hidden ${
+          isMobileMenuOpen ? "max-h-[400px] opacity-100" : "max-h-0 overflow-hidden opacity-0"
         }`}
       >
         <div className="px-6 py-4">
@@ -135,7 +145,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={(e) => handleSmoothScroll(e, link.href)}
-              className="block py-3 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="block py-4 text-base font-medium text-muted-foreground transition-all duration-300 hover:text-accent hover:translate-x-2"
             >
               {link.label}
             </Link>

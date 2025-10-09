@@ -136,6 +136,22 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
       "github": "github_url",
       "linkedin": "linkedin_url"
     },
+    "about": {
+      "title": "Transforming Ideas Into Digital Reality",
+      "subtitle": "A passionate solution architect with 3+ years of expertise in enterprise-level development",
+      "journey": "With a strong foundation in software engineering...",
+      "values": ["Excellence", "Innovation", "Collaboration", "Continuous Learning", "User-Centric"],
+      "expertise": [
+        {
+          "title": "Frontend Development",
+          "description": "Creating responsive and user-friendly interfaces using modern frameworks"
+        },
+        {
+          "title": "Backend Architecture",
+          "description": "Building scalable and maintainable server-side applications"
+        }
+      ]
+    },
     "skills": {
       "categories": [
         {
@@ -164,6 +180,89 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 {
   "success": true,
   "data": { /* updated profile data */ }
+}
+```
+
+### Get About Section
+- **GET** `/api/v1/profile/about`
+- **Description:** Get about section information
+- **Authentication:** None
+- **Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "title": "Transforming Ideas Into Digital Reality",
+    "subtitle": "A passionate solution architect with 3+ years of expertise in enterprise-level development",
+    "journey": "With a strong foundation in software engineering...",
+    "values": ["Excellence", "Innovation", "Collaboration", "Continuous Learning", "User-Centric"],
+    "expertise": [
+      {
+        "title": "Frontend Development",
+        "description": "Creating responsive and user-friendly interfaces using modern frameworks"
+      },
+      {
+        "title": "Backend Architecture",
+        "description": "Building scalable and maintainable server-side applications"
+      }
+    ]
+  }
+}
+```
+
+### Update About Section
+- **PUT** `/api/v1/profile/about`
+- **Description:** Update about section information
+- **Authentication:** None
+- **Request Body:** (Same structure as GET response data)
+- **Response:**
+```json
+{
+  "success": true,
+  "data": { /* updated about section data */ }
+}
+```
+
+### Manage Expertise
+- **POST** `/api/v1/profile/about/expertise/add`
+- **Description:** Add a new expertise item
+- **Authentication:** None
+- **Request Body:**
+```json
+{
+  "title": "Cloud Architecture",
+  "description": "Designing and implementing cloud-based solutions for scalability"
+}
+```
+- **Response:**
+```json
+{
+  "success": true,
+  "data": { /* updated expertise array */ }
+}
+```
+
+- **PUT** `/api/v1/profile/about/expertise/update`
+- **Description:** Update an existing expertise item
+- **Authentication:** None
+- **Request Body:**
+```json
+{
+  "oldTitle": "Cloud Architecture",
+  "expertise": {
+    "title": "Cloud Solutions",
+    "description": "Updated description here"
+  }
+}
+```
+
+- **DELETE** `/api/v1/profile/about/expertise/delete`
+- **Description:** Delete an expertise item
+- **Authentication:** None
+- **Request Body:**
+```json
+{
+  "title": "Cloud Architecture"
 }
 ```
 
@@ -248,13 +347,13 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get paginated list of published blogs
 - **Authentication:** None
 - **Query Parameters:**
-  - `page` (optional): Page number (default: 1)
-  - `limit` (optional): Items per page (default: 10, max: 50)
-  - `category` (optional): Filter by category
-  - `featured` (optional): Filter featured blogs (true/false)
-  - `trending` (optional): Filter trending blogs (true/false)
-  - `search` (optional): Search in title, excerpt, tags
-  - `sort` (optional): Sort order (default: -publishDate)
+    - `page` (optional): Page number (default: 1)
+    - `limit` (optional): Items per page (default: 10, max: 50)
+    - `category` (optional): Filter by category
+    - `featured` (optional): Filter featured blogs (true/false)
+    - `trending` (optional): Filter trending blogs (true/false)
+    - `search` (optional): Search in title, excerpt, tags
+    - `sort` (optional): Sort order (default: -publishDate)
 - **Response:**
 ```json
 {
@@ -294,7 +393,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get single blog post with full content
 - **Authentication:** None
 - **Parameters:**
-  - `slug` (required): Blog slug
+    - `slug` (required): Blog slug
 - **Response:**
 ```json
 {
@@ -386,7 +485,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get blogs related to specific blog
 - **Authentication:** None
 - **Parameters:**
-  - `slug` (required): Blog slug
+    - `slug` (required): Blog slug
 - **Response:**
 ```json
 {
@@ -400,7 +499,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get SEO metadata for blog
 - **Authentication:** None
 - **Parameters:**
-  - `slug` (required): Blog slug
+    - `slug` (required): Blog slug
 - **Response:**
 ```json
 {
@@ -480,7 +579,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update existing blog post
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Blog ID
+    - `id` (required): Blog ID
 - **Request Body:** (Same as create blog)
 - **Response:**
 ```json
@@ -495,7 +594,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete blog post
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Blog ID
+    - `id` (required): Blog ID
 - **Response:**
 ```json
 {
@@ -513,11 +612,11 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get paginated list of projects
 - **Authentication:** None
 - **Query Parameters:**
-  - `category` (optional): Filter by category
-  - `featured` (optional): Filter featured projects (true/false)
-  - `status` (optional): Filter by status (default: active)
-  - `page` (optional): Page number (default: 1)
-  - `limit` (optional): Items per page (default: 10)
+    - `category` (optional): Filter by category
+    - `featured` (optional): Filter featured projects (true/false)
+    - `status` (optional): Filter by status (default: active)
+    - `page` (optional): Page number (default: 1)
+    - `limit` (optional): Items per page (default: 10)
 - **Response:**
 ```json
 {
@@ -560,7 +659,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get single project details
 - **Authentication:** None
 - **Parameters:**
-  - `id` (required): Project ID
+    - `id` (required): Project ID
 - **Response:**
 ```json
 {
@@ -609,7 +708,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update existing project
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Project ID
+    - `id` (required): Project ID
 - **Request Body:** (Same as create project)
 - **Response:**
 ```json
@@ -625,7 +724,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete project
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Project ID
+    - `id` (required): Project ID
 - **Response:**
 ```json
 {
@@ -671,7 +770,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get single experience details
 - **Authentication:** None
 - **Parameters:**
-  - `id` (required): Experience ID
+    - `id` (required): Experience ID
 - **Response:**
 ```json
 {
@@ -713,7 +812,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update existing experience
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Experience ID
+    - `id` (required): Experience ID
 - **Request Body:** (Same as create experience)
 - **Response:**
 ```json
@@ -729,7 +828,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete experience
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Experience ID
+    - `id` (required): Experience ID
 - **Response:**
 ```json
 {
@@ -747,7 +846,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get all education entries
 - **Authentication:** None
 - **Query Parameters:**
-  - `type` (optional): Filter by education type
+    - `type` (optional): Filter by education type
 - **Response:**
 ```json
 {
@@ -774,7 +873,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get single education entry
 - **Authentication:** None
 - **Parameters:**
-  - `id` (required): Education ID (must be valid MongoDB ObjectId)
+    - `id` (required): Education ID (must be valid MongoDB ObjectId)
 - **Response:**
 ```json
 {
@@ -802,12 +901,12 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 }
 ```
 - **Validation Rules:**
-  - `degree`: Required, not empty
-  - `institution`: Required, not empty
-  - `location`: Required, not empty
-  - `startDate`: Required, valid ISO8601 date
-  - `endDate`: Optional, valid ISO8601 date
-  - `type`: Optional, must be one of: Degree, Certification, Course, Training, Workshop
+    - `degree`: Required, not empty
+    - `institution`: Required, not empty
+    - `location`: Required, not empty
+    - `startDate`: Required, valid ISO8601 date
+    - `endDate`: Optional, valid ISO8601 date
+    - `type`: Optional, must be one of: Degree, Certification, Course, Training, Workshop
 - **Response:**
 ```json
 {
@@ -821,7 +920,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update existing education entry
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Education ID (must be valid MongoDB ObjectId)
+    - `id` (required): Education ID (must be valid MongoDB ObjectId)
 - **Request Body:** (Same as create education)
 - **Response:**
 ```json
@@ -836,7 +935,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete education entry
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Education ID (must be valid MongoDB ObjectId)
+    - `id` (required): Education ID (must be valid MongoDB ObjectId)
 - **Response:**
 ```json
 {
@@ -854,8 +953,8 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get all achievements
 - **Authentication:** None
 - **Query Parameters:**
-  - `category` (optional): Filter by category
-  - `featured` (optional): Filter featured achievements (true/false)
+    - `category` (optional): Filter by category
+    - `featured` (optional): Filter featured achievements (true/false)
 - **Response:**
 ```json
 {
@@ -908,7 +1007,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update existing achievement
 - **Authentication:** None
 - **Parameters:**
-  - `id` (required): Achievement ID
+    - `id` (required): Achievement ID
 - **Request Body:** (Same as create achievement)
 - **Response:**
 ```json
@@ -923,7 +1022,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete achievement
 - **Authentication:** None
 - **Parameters:**
-  - `id` (required): Achievement ID
+    - `id` (required): Achievement ID
 - **Response:**
 ```json
 {
@@ -993,7 +1092,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update existing volunteer experience
 - **Authentication:** None
 - **Parameters:**
-  - `id` (required): Volunteer ID
+    - `id` (required): Volunteer ID
 - **Request Body:** (Same as create volunteer)
 - **Response:**
 ```json
@@ -1008,7 +1107,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete volunteer experience
 - **Authentication:** None
 - **Parameters:**
-  - `id` (required): Volunteer ID
+    - `id` (required): Volunteer ID
 - **Response:**
 ```json
 {
@@ -1036,10 +1135,10 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 }
 ```
 - **Validation Rules:**
-  - `fullName`: Required, 2-100 characters
-  - `email`: Required, valid email format
-  - `subject`: Required, 5-200 characters
-  - `message`: Required, 10-2000 characters
+    - `fullName`: Required, 2-100 characters
+    - `email`: Required, valid email format
+    - `subject`: Required, 5-200 characters
+    - `message`: Required, 10-2000 characters
 - **Response:**
 ```json
 {
@@ -1057,9 +1156,9 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get paginated list of contacts
 - **Authentication:** Bearer Token (Admin)
 - **Query Parameters:**
-  - `status` (optional): Filter by status (new, read, replied, archived)
-  - `page` (optional): Page number (default: 1)
-  - `limit` (optional): Items per page (default: 10)
+    - `status` (optional): Filter by status (new, read, replied, archived)
+    - `page` (optional): Page number (default: 1)
+    - `limit` (optional): Items per page (default: 10)
 - **Response:**
 ```json
 {
@@ -1090,7 +1189,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get single contact details
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Contact ID
+    - `id` (required): Contact ID
 - **Response:**
 ```json
 {
@@ -1104,7 +1203,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update contact status
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Contact ID
+    - `id` (required): Contact ID
 - **Request Body:**
 ```json
 {
@@ -1126,7 +1225,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete contact
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Contact ID
+    - `id` (required): Contact ID
 - **Response:**
 ```json
 {
@@ -1151,7 +1250,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 }
 ```
 - **Validation Rules:**
-  - `email`: Required, valid email format
+    - `email`: Required, valid email format
 - **Response (New Subscriber):**
 ```json
 {
@@ -1211,9 +1310,9 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get paginated list of subscribers
 - **Authentication:** Bearer Token (Admin)
 - **Query Parameters:**
-  - `status` (optional): Filter by status (active, unsubscribed)
-  - `page` (optional): Page number (default: 1)
-  - `limit` (optional): Items per page (default: 20)
+    - `status` (optional): Filter by status (active, unsubscribed)
+    - `page` (optional): Page number (default: 1)
+    - `limit` (optional): Items per page (default: 20)
 - **Response:**
 ```json
 {
@@ -1240,7 +1339,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete subscriber
 - **Authentication:** Bearer Token (Admin)
 - **Parameters:**
-  - `id` (required): Subscriber ID
+    - `id` (required): Subscriber ID
 - **Response:**
 ```json
 {
@@ -1258,7 +1357,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Get all categories
 - **Authentication:** None
 - **Query Parameters:**
-  - `type` (optional): Filter by category type (blog, project)
+    - `type` (optional): Filter by category type (blog, project)
 - **Response:**
 ```json
 {
@@ -1308,7 +1407,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Update existing category
 - **Authentication:** Bearer Token
 - **Parameters:**
-  - `id` (required): Category ID
+    - `id` (required): Category ID
 - **Request Body:** (Same as create category)
 - **Response:**
 ```json
@@ -1324,7 +1423,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Delete category
 - **Authentication:** Bearer Token
 - **Parameters:**
-  - `id` (required): Category ID
+    - `id` (required): Category ID
 - **Response:**
 ```json
 {
@@ -1368,7 +1467,7 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Description:** Mark single notification as read
 - **Authentication:** Bearer Token
 - **Parameters:**
-  - `id` (required): Notification ID
+    - `id` (required): Notification ID
 - **Response:**
 ```json
 {
@@ -1516,8 +1615,8 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Authentication:** None
 - **Content-Type:** `multipart/form-data`
 - **Request Body:**
-  - `image` (file): Image file (jpg, jpeg, png, gif, webp)
-  - Max size: 5MB
+    - `image` (file): Image file (jpg, jpeg, png, gif, webp)
+    - Max size: 5MB
 - **Response:**
 ```json
 {
@@ -1538,8 +1637,8 @@ Most admin endpoints require JWT authentication via `Authorization: Bearer <toke
 - **Authentication:** None
 - **Content-Type:** `multipart/form-data`
 - **Request Body:**
-  - `resume` (file): Resume file (pdf, doc, docx)
-  - Max size: 10MB
+    - `resume` (file): Resume file (pdf, doc, docx)
+    - Max size: 10MB
 - **Response:**
 ```json
 {

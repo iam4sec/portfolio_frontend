@@ -109,52 +109,79 @@ export function Projects() {
   }
 
   return (
-    <section id="projects" className="relative px-6 py-24">
-      {/* Background elements */}
+    <section id="projects" className="relative overflow-hidden px-6 py-32">
+      {/* Enhanced background */}
+      <div className="absolute inset-0 -z-20 bg-gradient-to-b from-muted/5 via-background to-muted/10"></div>
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-20 bottom-40 h-64 w-64 rounded-full bg-accent/5 blur-3xl"></div>
-        <div className="absolute -right-10 top-20 h-80 w-80 rounded-full bg-accent/5 blur-3xl"></div>
+        <div className="absolute -left-32 bottom-40 h-96 w-96 rounded-full bg-gradient-to-r from-accent/10 to-primary/5 blur-3xl animate-float delay-0"></div>
+        <div className="absolute -right-20 top-20 h-80 w-80 rounded-full bg-gradient-to-l from-primary/8 to-accent/12 blur-3xl animate-morph"></div>
+        <div className="absolute top-1/3 left-1/3 h-64 w-64 rounded-full bg-gradient-to-br from-accent/5 to-secondary/10 blur-2xl animate-pulse-ring"></div>
       </div>
       
       <div className="mx-auto max-w-7xl">
         <motion.div 
-          className="mb-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
+          className="mb-20 text-center"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">Selected Work</h2>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">Projects I've built and contributed to</p>
+          <div className="mb-6 inline-block rounded-full glass px-6 py-2 text-sm font-medium text-accent border border-accent/20">
+            💼 My Work
+          </div>
+          <h2 className="mb-6 text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground via-accent to-foreground bg-clip-text text-transparent md:text-5xl lg:text-6xl">
+            Selected Work
+          </h2>
+          <p className="mx-auto max-w-3xl text-xl text-muted-foreground leading-relaxed">
+            Projects I've built and contributed to
+          </p>
         </motion.div>
         
-        {/* Technology filters */}
+        {/* Enhanced technology filters */}
         {allTechnologies.length > 0 && (
           <motion.div 
-            className="mb-10 flex flex-wrap justify-center gap-2"
+            className="mb-16 flex flex-wrap justify-center gap-3"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <Button
-              variant={activeFilter === "All" ? "secondary" : "ghost"}
-              size="sm"
-              className="rounded-full text-sm font-medium"
-              onClick={() => setActiveFilter("All")}
-            >
-              All
-            </Button>
-            {allTechnologies.slice(0, 8).map((tech, index) => (
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
-                key={index}
-                variant={activeFilter === tech ? "secondary" : "ghost"}
+                variant={activeFilter === "All" ? "default" : "ghost"}
                 size="sm"
-                className="rounded-full text-sm font-medium"
-                onClick={() => setActiveFilter(tech)}
+                className={`rounded-full text-sm font-semibold transition-all duration-300 ${
+                  activeFilter === "All" 
+                    ? "glass bg-gradient-to-r from-accent to-primary text-white shadow-lg hover-glow" 
+                    : "glass border border-border/50 hover:border-accent/30 hover:text-accent"
+                }`}
+                onClick={() => setActiveFilter("All")}
               >
-                {tech}
+                All
               </Button>
+            </motion.div>
+            {allTechnologies.slice(0, 8).map((tech, index) => (
+              <motion.div 
+                key={index}
+                whileHover={{ scale: 1.05 }} 
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <Button
+                  variant={activeFilter === tech ? "default" : "ghost"}
+                  size="sm"
+                  className={`rounded-full text-sm font-semibold transition-all duration-300 ${
+                    activeFilter === tech 
+                      ? "glass bg-gradient-to-r from-accent to-primary text-white shadow-lg hover-glow" 
+                      : "glass border border-border/50 hover:border-accent/30 hover:text-accent"
+                  }`}
+                  onClick={() => setActiveFilter(tech)}
+                >
+                  {tech}
+                </Button>
+              </motion.div>
             ))}
           </motion.div>
         )}
@@ -163,59 +190,91 @@ export function Projects() {
           {displayedProjects.map((project, index) => (
             <motion.div
               key={project._id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                duration: 0.7, 
+                delay: index * 0.1,
+                type: "spring",
+                stiffness: 100
+              }}
               viewport={{ once: true, margin: "-50px" }}
+              whileHover={{ y: -12 }}
             >
-              <Card className="group relative h-full overflow-hidden border-border/60 bg-card/60 backdrop-blur-sm transition-all duration-300 hover:border-accent/30 hover:shadow-xl">
-                <CardContent className="p-0">
+              <Card className="group relative h-full overflow-hidden glass border-accent/20 transition-all duration-500 hover:border-accent/40 hover:shadow-2xl hover-glow">
+                {/* Animated background gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-primary/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+                
+                <CardContent className="relative p-0">
                   <div className="relative aspect-video overflow-hidden">
                     {project.image ? (
                       <Image
                         src={project.image || "/placeholder.svg"}
                         alt={project.title}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
                       />
                     ) : (
-                      <div className="flex h-full items-center justify-center bg-muted/70 text-muted-foreground">
-                        <span className="text-sm">No image</span>
+                      <div className="flex h-full items-center justify-center glass text-muted-foreground">
+                        <span className="text-sm font-medium">No image</span>
                       </div>
                     )}
-                    {/* Overlay gradient on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                    {/* Enhanced overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-all duration-500 group-hover:opacity-100"></div>
+                    
+                    {/* Floating action buttons on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 transition-all duration-500 group-hover:opacity-100">
+                      {project.links?.live && (
+                        <Button size="sm" className="rounded-full bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30">
+                          <ExternalLink className="h-4 w-4" />
+                        </Button>
+                      )}
+                      {project.links?.github && (
+                        <Button size="sm" className="rounded-full bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30">
+                          <Github className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="relative z-10 p-6">
-                    <h3 className="mb-2 text-xl font-semibold text-foreground transition-colors group-hover:text-accent">
+                  <div className="relative z-10 p-8">
+                    <h3 className="mb-3 text-xl font-bold text-foreground transition-colors duration-300 group-hover:text-accent">
                       {project.title}
                     </h3>
                     
-                    <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mb-6 line-clamp-2 text-base leading-relaxed text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
                       {project.description}
                     </p>
 
-                    <div className="mb-4 flex flex-wrap gap-2">
+                    <div className="mb-6 flex flex-wrap gap-2">
                       {project.technologies?.slice(0, 3).map((tech: string, i: number) => (
                         <Badge 
                           key={i} 
                           variant={tech === activeFilter ? "default" : "secondary"}
-                          className="transition-all duration-300 hover:bg-accent/20"
+                          className={`transition-all duration-300 font-medium ${
+                            tech === activeFilter 
+                              ? "bg-gradient-to-r from-accent to-primary text-white shadow-md" 
+                              : "glass border-accent/20 hover:border-accent/40 hover:bg-accent/10"
+                          }`}
                         >
                           {tech}
                         </Badge>
                       ))}
                       {project.technologies?.length > 3 && (
-                        <Badge variant="outline" className="bg-background/50">
+                        <Badge variant="outline" className="glass border-accent/20 font-medium">
                           +{project.technologies.length - 3}
                         </Badge>
                       )}
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-3">
                       {project.links?.live && (
-                        <Button variant="outline" size="sm" className="rounded-full transition-all hover:bg-accent/10" asChild>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="rounded-full glass border-accent/30 transition-all duration-300 hover:bg-accent/10 hover:scale-105" 
+                          asChild
+                        >
                           <Link href={project.links.live} target="_blank">
                             <ExternalLink className="mr-2 h-3 w-3" />
                             Live Demo
@@ -223,7 +282,12 @@ export function Projects() {
                         </Button>
                       )}
                       {project.links?.github && (
-                        <Button variant="outline" size="sm" className="rounded-full transition-all hover:bg-accent/10" asChild>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="rounded-full glass border-accent/30 transition-all duration-300 hover:bg-accent/10 hover:scale-105" 
+                          asChild
+                        >
                           <Link href={project.links.github} target="_blank">
                             <Github className="mr-2 h-3 w-3" />
                             Code
@@ -240,19 +304,19 @@ export function Projects() {
 
         {visibleProjects < filteredProjects.length && (
           <motion.div 
-            className="mt-12 flex justify-center"
+            className="mt-16 flex justify-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
             <Button 
               onClick={loadMoreProjects} 
               variant="outline" 
-              className="rounded-full border-accent/30 bg-accent/5 px-8 transition-all hover:bg-accent/10"
+              className="group rounded-full glass border-accent/30 px-10 py-3 text-base font-semibold transition-all duration-300 hover:scale-105 hover-glow"
             >
-              Load More 
-              <ArrowRight className="ml-2 h-4 w-4" />
+              Load More Projects
+              <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
             </Button>
           </motion.div>
         )}
