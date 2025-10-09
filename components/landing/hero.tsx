@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Github, Linkedin, Mail, Download, Sparkles, MapPin } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail, Download, MapPin, Star } from "lucide-react"
 import Link from "next/link"
 import { api } from "@/lib/api"
 import Image from "next/image"
-import { motion } from "framer-motion"
 
 export function Hero() {
   const [profile, setProfile] = useState<any>(null)
@@ -26,92 +25,60 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20">
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="text-center space-y-8">
-          {/* Profile Image */}
-          <motion.div 
-            className="relative mx-auto w-32 h-32 mb-8"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
-              <Image
-                src={profile?.image || "/placeholder-user.jpg"}
-                alt={profile?.name || "Profile"}
-                width={128}
-                height={128}
-                className="object-cover w-full h-full"
-                priority
-              />
-            </div>
-            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-900 flex items-center justify-center">
-              <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-            </div>
-          </motion.div>
-          
-          {/* Main Content */}
-          <motion.div 
-            className="space-y-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            <div className="space-y-4">
-              <h1 className="text-5xl lg:text-7xl font-bold tracking-tight">
-                <span className="block text-slate-900 dark:text-white">
-                  {profile?.name || "John Doe"}
+    <section className="pt-32 pb-20 px-6 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 via-transparent to-purple-50/50"></div>
+      
+      <div className="max-w-7xl mx-auto relative">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-200/50">
+                <Star className="w-4 h-4 text-emerald-600 mr-2" />
+                <span className="text-sm font-medium text-emerald-700">Available for new projects</span>
+              </div>
+              
+              <h1 className="text-5xl lg:text-7xl font-bold text-slate-900 leading-tight">
+                <span className="block">{profile?.name || "John"}</span>
+                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+                  {profile?.name?.split(' ')[1] || "Doe"}
                 </span>
               </h1>
               
-              <h2 className="text-xl lg:text-2xl text-slate-600 dark:text-slate-400 font-medium">
+              <h2 className="text-2xl lg:text-3xl text-slate-600 font-light">
                 {profile?.title || "Senior Frontend Developer"}
               </h2>
               
               {profile?.location && (
-                <div className="flex items-center justify-center gap-2 text-slate-500 dark:text-slate-500">
-                  <MapPin className="h-4 w-4" />
-                  <span className="text-sm">{profile.location}</span>
+                <div className="flex items-center text-slate-500">
+                  <MapPin className="h-5 w-5 mr-2" />
+                  <span className="text-lg">{profile.location}</span>
                 </div>
               )}
             </div>
 
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              {profile?.bio || "Passionate about creating exceptional digital experiences with modern web technologies and user-centered design."}
+            <p className="text-xl text-slate-600 leading-relaxed max-w-xl">
+              {profile?.bio || "Crafting exceptional digital experiences through innovative design and robust engineering. Transforming complex problems into elegant solutions."}
             </p>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap justify-center gap-4 pt-4">
-              <Button size="lg" className="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100" asChild>
+            <div className="flex flex-wrap gap-4">
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300" asChild>
                 <Link href="#projects">
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  View My Work
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  Explore My Work
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               
-              <Button size="lg" variant="outline" className="border-slate-300 dark:border-slate-600" asChild>
-                <Link href="#contact">Get In Touch</Link>
+              <Button size="lg" variant="outline" className="border-2 border-slate-300 hover:border-slate-400 hover:bg-slate-50" asChild>
+                <Link href="#contact">Let's Connect</Link>
               </Button>
-              
-              {profile?.resume && (
-                <Button size="lg" variant="ghost" asChild>
-                  <Link href={profile.resume} target="_blank">
-                    <Download className="mr-2 h-4 w-4" />
-                    Resume
-                  </Link>
-                </Button>
-              )}
             </div>
 
-            {/* Social Links */}
-            <div className="flex justify-center gap-4 pt-6">
+            <div className="flex items-center space-x-6 pt-4">
               {profile?.social?.github && (
                 <Link 
                   href={profile.social.github} 
                   target="_blank" 
-                  className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
                 >
                   <Github className="h-5 w-5" />
                 </Link>
@@ -120,7 +87,7 @@ export function Hero() {
                 <Link 
                   href={profile.social.linkedin} 
                   target="_blank" 
-                  className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
                 >
                   <Linkedin className="h-5 w-5" />
                 </Link>
@@ -128,13 +95,53 @@ export function Hero() {
               {profile?.email && (
                 <Link 
                   href={`mailto:${profile.email}`} 
-                  className="p-3 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
                 >
                   <Mail className="h-5 w-5" />
                 </Link>
               )}
+              {profile?.resume && (
+                <Link 
+                  href={profile.resume} 
+                  target="_blank"
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
+                >
+                  <Download className="h-5 w-5" />
+                </Link>
+              )}
             </div>
-          </motion.div>
+          </div>
+
+          <div className="relative">
+            <div className="relative w-full max-w-lg mx-auto">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
+              <div className="relative bg-white rounded-3xl p-8 shadow-2xl border border-slate-200/50">
+                <Image
+                  src={profile?.image || "/placeholder-user.jpg"}
+                  alt={profile?.name || "Profile"}
+                  width={400}
+                  height={400}
+                  className="w-full h-auto rounded-2xl"
+                  priority
+                />
+                
+                <div className="mt-6 grid grid-cols-3 gap-4 text-center">
+                  <div className="space-y-1">
+                    <div className="text-2xl font-bold text-slate-900">50+</div>
+                    <div className="text-sm text-slate-600">Projects</div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-2xl font-bold text-slate-900">5+</div>
+                    <div className="text-sm text-slate-600">Years</div>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="text-2xl font-bold text-slate-900">100+</div>
+                    <div className="text-sm text-slate-600">Clients</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
