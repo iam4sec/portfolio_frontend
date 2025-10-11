@@ -28,10 +28,16 @@ class ApiClient {
         ? {} // For FormData uploads, don't set default headers
         : { ...this.getAuthHeaders(), ...options.headers }
       
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10s timeout
+      
       const response = await fetch(`${this.baseUrl}${endpoint}`, {
         ...options,
         headers,
+        signal: controller.signal,
       })
+      
+      clearTimeout(timeoutId)
 
       const data = await response.json()
 
@@ -216,6 +222,13 @@ class ApiClient {
 
   async deleteContact(id: string) {
     return this.request(`/contacts/${id}`, { method: "DELETE" })
+  }
+
+  async replyToContact(id: string, subject: string, message: string) {
+    return this.request(`/contacts/${id}/reply`, {
+      method: "POST",
+      body: JSON.stringify({ subject, message }),
+    })
   }
 
   // Subscriber endpoints

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { AdminHeader } from "@/components/admin/admin-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -26,7 +27,7 @@ export default function ContactsPage() {
       const params = statusFilter !== "all" ? { status: statusFilter, limit: 20 } : { limit: 20 }
       const response = await api.getContacts(params)
       if (response.success) {
-        setContacts(response.data)
+        setContacts(response.data || [])
         setPagination(response.pagination)
       }
     } catch (error) {
@@ -61,28 +62,30 @@ export default function ContactsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Contacts</h1>
-          <p className="text-muted-foreground">Manage contact form submissions</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4" />
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-32">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="new">New</SelectItem>
-              <SelectItem value="read">Read</SelectItem>
-              <SelectItem value="replied">Replied</SelectItem>
-              <SelectItem value="archived">Archived</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+    <div className="flex h-full flex-col">
+      <AdminHeader 
+        title="Contacts" 
+        description="Manage contact form submissions"
+        action={
+          <div className="flex items-center gap-2">
+            <Filter className="h-4 w-4" />
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="new">New</SelectItem>
+                <SelectItem value="read">Read</SelectItem>
+                <SelectItem value="replied">Replied</SelectItem>
+                <SelectItem value="archived">Archived</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        }
+      />
+
+      <div className="flex-1 p-6">
 
       <div className="space-y-4">
         {contacts.map((contact) => (
@@ -124,17 +127,18 @@ export default function ContactsPage() {
             </CardContent>
           </Card>
         ))}
-      </div>
+        </div>
 
-      {contacts.length === 0 && (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Mail className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium mb-2">No contacts found</h3>
-            <p className="text-muted-foreground">Contact submissions will appear here.</p>
-          </CardContent>
-        </Card>
-      )}
+        {contacts.length === 0 && (
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <Mail className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium mb-2">No contacts found</h3>
+              <p className="text-muted-foreground">Contact submissions will appear here.</p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   )
 }

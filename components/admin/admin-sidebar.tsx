@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useState } from "react"
 import { cn } from "@/lib/utils"
 import {
   LayoutDashboard,
@@ -16,6 +17,7 @@ import {
   Settings,
   LogOut,
   Tags,
+  Code,
 } from "lucide-react"
 import { useAuth } from "@/hooks/use-auth"
 import { Button } from "@/components/ui/button"
@@ -25,6 +27,7 @@ const navigation = [
   { name: "Blogs", href: "/admin/blogs", icon: FileText },
   { name: "Projects", href: "/admin/projects", icon: FolderKanban },
   { name: "Categories", href: "/admin/categories", icon: Tags },
+  { name: "Skills", href: "/admin/skills", icon: Code },
   { name: "Experience", href: "/admin/experience", icon: Briefcase },
   { name: "Education", href: "/admin/education", icon: GraduationCap },
   { name: "Achievements", href: "/admin/achievements", icon: Trophy },
@@ -37,6 +40,7 @@ const navigation = [
 export function AdminSidebar() {
   const pathname = usePathname()
   const { logout, user } = useAuth()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   return (
     <div className="flex h-screen w-64 flex-col border-r border-border bg-card">
@@ -70,9 +74,17 @@ export function AdminSidebar() {
           <p className="text-sm font-medium text-foreground">{user?.username}</p>
           <p className="text-xs text-muted-foreground">{user?.role}</p>
         </div>
-        <Button variant="outline" className="w-full bg-transparent" onClick={logout}>
+        <Button 
+          variant="outline" 
+          className="w-full bg-transparent" 
+          onClick={async () => {
+            setIsLoggingOut(true)
+            await logout()
+          }}
+          disabled={isLoggingOut}
+        >
           <LogOut className="mr-2 h-4 w-4" />
-          Logout
+          {isLoggingOut ? "Logging out..." : "Logout"}
         </Button>
       </div>
     </div>

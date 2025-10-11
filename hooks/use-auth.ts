@@ -32,14 +32,16 @@ export function useAuth() {
   }
 
   const logout = async () => {
+    // Immediate cleanup for better UX
+    removeAuthToken()
+    setUserState(null)
+    router.push("/login")
+    
+    // API call in background
     try {
       await api.logout()
     } catch (error) {
       console.error("[v0] Logout error:", error)
-    } finally {
-      removeAuthToken()
-      setUserState(null)
-      router.push("/login")
     }
   }
 
