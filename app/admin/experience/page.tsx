@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { api } from "@/lib/api"
-import { Edit, Trash2 } from "lucide-react"
+import { Plus, Edit, Trash2 } from "lucide-react"
+import Link from "next/link"
 
 export default function ExperiencePage() {
   const [experiences, setExperiences] = useState<any[]>([])
@@ -50,7 +51,18 @@ export default function ExperiencePage() {
 
   return (
     <div className="flex h-full flex-col">
-      <AdminHeader title="Experience" description="Manage work experience" />
+      <AdminHeader 
+        title="Experience" 
+        description="Manage work experience"
+        action={
+          <Button asChild>
+            <Link href="/admin/experience/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Experience
+            </Link>
+          </Button>
+        }
+      />
 
       <div className="flex-1 space-y-4 p-6">
         {experiences.length === 0 ? (
