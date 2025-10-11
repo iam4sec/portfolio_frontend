@@ -91,23 +91,25 @@ export function About() {
           className="space-y-8"
         >
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            <p className="text-xl leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-400">
               {aboutData?.journey || 
                 "With a strong foundation in software engineering and a passion for innovation, I specialize in creating digital solutions that bridge the gap between complex technical requirements and intuitive user experiences."}
             </p>
-            <p className="text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-400">
               I believe in writing clean, maintainable code and staying current with emerging technologies. 
               My approach combines technical expertise with creative problem-solving to deliver solutions that not only work flawlessly but also delight users.
             </p>
           </div>
 
           {/* Core Values */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Sparkles className="w-6 h-6 text-blue-500" />
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
               Core Values
             </h3>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-4">
               {values.map((value: string, index: number) => (
                 <motion.span
                   key={value}
@@ -115,7 +117,7 @@ export function About() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200/50 dark:border-blue-700/50"
+                  className="px-5 py-3 bg-gradient-to-r from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 text-emerald-700 dark:text-emerald-300 rounded-2xl text-sm font-semibold border border-emerald-200/50 dark:border-emerald-700/50 shadow-lg hover:shadow-emerald-500/10 transition-all duration-300 hover:scale-105"
                 >
                   {value}
                 </motion.span>
@@ -143,15 +145,17 @@ export function About() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group p-6 bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-slate-200/50 dark:border-slate-700/50 hover:border-blue-300/50 dark:hover:border-blue-600/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10"
+                  className="group p-6 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-3xl border border-gray-200/50 dark:border-gray-700/50 hover:border-emerald-300/50 dark:hover:border-emerald-600/50 transition-all duration-300 hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1"
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-3xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-3xl font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
                       {stat.value}
                     </span>
-                    <IconComponent className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform duration-300" />
+                    <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                    </div>
                   </div>
-                  <span className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                  <span className="text-sm font-semibold text-gray-600 dark:text-gray-400">
                     {stat.label}
                   </span>
                 </motion.div>
@@ -160,15 +164,23 @@ export function About() {
           </div>
 
           {/* Expertise Areas */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Coffee className="w-6 h-6 text-blue-500" />
+          <div className="space-y-6">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl">
+                <Coffee className="w-5 h-5 text-white" />
+              </div>
               Expertise
             </h3>
             <div className="space-y-4">
               {expertise.map((item: any, index: number) => {
                 const icons = [Palette, Code2, Zap]
                 const IconComponent = item.icon || icons[index] || Code2
+                const colors = [
+                  { bg: 'bg-emerald-100 dark:bg-emerald-900/30', text: 'text-emerald-600 dark:text-emerald-400', border: 'hover:border-emerald-300/50 dark:hover:border-emerald-600/50' },
+                  { bg: 'bg-teal-100 dark:bg-teal-900/30', text: 'text-teal-600 dark:text-teal-400', border: 'hover:border-teal-300/50 dark:hover:border-teal-600/50' },
+                  { bg: 'bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-600 dark:text-amber-400', border: 'hover:border-amber-300/50 dark:hover:border-amber-600/50' }
+                ]
+                const colorScheme = colors[index % colors.length]
                 return (
                   <motion.div
                     key={index}
@@ -176,17 +188,17 @@ export function About() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="group p-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-sm rounded-xl border border-slate-200/30 dark:border-slate-700/30 hover:border-blue-300/50 dark:hover:border-blue-600/50 transition-all duration-300"
+                    className={`group p-5 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-200/30 dark:border-gray-700/30 ${colorScheme.border} transition-all duration-300 hover:shadow-lg hover:-translate-y-1`}
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                        <IconComponent className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 ${colorScheme.bg} rounded-xl group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                        <IconComponent className={`w-5 h-5 ${colorScheme.text}`} />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold text-slate-900 dark:text-white mb-1">
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-2">
                           {item.title}
                         </h4>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                           {item.description}
                         </p>
                       </div>

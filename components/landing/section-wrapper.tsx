@@ -46,14 +46,14 @@ export function SectionWrapper({
             )}
           >
             {title && (
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white mb-4">
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 dark:from-blue-400 dark:via-purple-400 dark:to-cyan-300 bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 dark:text-white mb-6">
+                <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-500 dark:from-emerald-400 dark:via-teal-400 dark:to-amber-300 bg-clip-text text-transparent">
                   {title}
                 </span>
               </h2>
             )}
             {subtitle && (
-              <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-3xl leading-relaxed">
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-4xl leading-relaxed">
                 {subtitle}
               </p>
             )}
@@ -62,9 +62,10 @@ export function SectionWrapper({
         {children}
       </div>
       
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-32 h-32 bg-blue-200/10 dark:bg-blue-800/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-200/10 dark:bg-purple-800/10 rounded-full blur-3xl" />
+      {/* Modern Decorative Elements */}
+      <div className="absolute top-10 left-10 w-40 h-40 bg-emerald-200/8 dark:bg-emerald-800/8 rounded-3xl rotate-12 blur-3xl" />
+      <div className="absolute bottom-10 right-10 w-48 h-48 bg-amber-200/8 dark:bg-amber-800/8 rounded-2xl -rotate-12 blur-3xl" />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-teal-200/5 dark:bg-teal-800/5 rounded-full blur-2xl" />
     </motion.section>
   )
 }

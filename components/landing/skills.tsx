@@ -152,11 +152,11 @@ export function Skills() {
   const getLevelColor = (level: string) => {
     switch (level) {
       case "Expert":
-        return "from-green-500 to-emerald-600"
+        return "from-emerald-500 to-teal-600"
       case "Advanced":
-        return "from-blue-500 to-cyan-600"
+        return "from-teal-500 to-cyan-600"
       case "Intermediate":
-        return "from-yellow-500 to-orange-600"
+        return "from-amber-500 to-orange-600"
       default:
         return "from-gray-500 to-slate-600"
     }
@@ -200,10 +200,10 @@ export function Skills() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group px-6 py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-400/10 dark:to-purple-400/10 backdrop-blur-sm rounded-full border border-blue-200/30 dark:border-blue-700/30 hover:border-blue-300/50 dark:hover:border-blue-600/50 transition-all duration-300"
+                  className="group px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 dark:from-emerald-400/10 dark:to-teal-400/10 backdrop-blur-sm rounded-2xl border border-emerald-200/30 dark:border-emerald-700/30 hover:border-emerald-300/50 dark:hover:border-emerald-600/50 transition-all duration-300 shadow-lg hover:shadow-emerald-500/10"
                 >
-                  <span className="flex items-center gap-2 text-slate-700 dark:text-slate-300 font-medium">
-                    <TrendingUp className="w-4 h-4 text-blue-500 group-hover:scale-110 transition-transform duration-300" />
+                  <span className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-semibold">
+                    <TrendingUp className="w-4 h-4 text-emerald-500 group-hover:scale-110 transition-transform duration-300" />
                     {typeof highlight === 'string' ? highlight : highlight.title || 'Skill'}
                   </span>
                 </motion.div>
@@ -225,14 +225,14 @@ export function Skills() {
                 transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
                 className="group relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
-                <div className="relative bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-2xl p-6 hover:border-blue-300/50 dark:hover:border-blue-600/50 transition-all duration-300 h-full">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
+                <div className="relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-3xl p-8 hover:border-emerald-300/50 dark:hover:border-emerald-600/50 transition-all duration-300 h-full hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
                   {/* Category Header */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-                      <CategoryIcon className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-lg">
+                      <CategoryIcon className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
                       {category.title}
                     </h3>
                   </div>
@@ -253,39 +253,39 @@ export function Skills() {
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.5, delay: skillIndex * 0.1 }}
-                          className="group/skill relative p-3 bg-slate-50/50 dark:bg-slate-900/50 rounded-xl hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all duration-300 cursor-pointer"
+                          className="group/skill relative p-4 bg-gray-50/50 dark:bg-gray-900/50 rounded-2xl hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-300 cursor-pointer hover:shadow-lg hover:-translate-y-0.5"
                           onMouseEnter={() => setHoveredSkill(`${categoryIndex}-${skillIndex}`)}
                           onMouseLeave={() => setHoveredSkill(null)}
                         >
                           <div className="flex items-center gap-3">
                             {Icon && (
                               <div className="relative">
-                                <Icon className="w-8 h-8 text-blue-600 dark:text-blue-400 group-hover/skill:scale-110 transition-transform duration-300" />
+                                <Icon className="w-8 h-8 text-emerald-600 dark:text-emerald-400 group-hover/skill:scale-110 transition-transform duration-300" />
                                 {isHovered && (
-                                  <div className="absolute inset-0 bg-blue-500/20 rounded-full animate-ping" />
+                                  <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping" />
                                 )}
                               </div>
                             )}
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between mb-1">
-                                <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">
+                                <span className="font-bold text-gray-800 dark:text-gray-200 truncate">
                                   {skillName}
                                 </span>
-                                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                                <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">
                                   {skillYears}
                                 </span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <div className="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                <div className="flex-1 h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                   <motion.div
                                     initial={{ width: 0 }}
                                     whileInView={{ width: "100%" }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 1, delay: skillIndex * 0.1 }}
-                                    className={`h-full bg-gradient-to-r ${getLevelColor(skillLevel)} ${getLevelWidth(skillLevel)} rounded-full`}
+                                    className={`h-full bg-gradient-to-r ${getLevelColor(skillLevel)} ${getLevelWidth(skillLevel)} rounded-full shadow-sm`}
                                   />
                                 </div>
-                                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium min-w-fit">
+                                <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold min-w-fit">
                                   {skillLevel}
                                 </span>
                               </div>

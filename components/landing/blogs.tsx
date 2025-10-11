@@ -97,12 +97,18 @@ const BlogsComponent = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-          From the Blog
+      <div className="text-center mb-20">
+        <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-100/80 to-cyan-100/80 dark:from-teal-900/30 dark:to-cyan-900/30 text-teal-700 dark:text-teal-300 rounded-2xl text-sm font-semibold backdrop-blur-sm border border-teal-200/50 dark:border-teal-700/50 shadow-lg mb-8">
+          <span className="text-lg">📝</span>
+          <span>Latest Insights</span>
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
+          <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-500 dark:from-teal-400 dark:via-cyan-400 dark:to-emerald-300 bg-clip-text text-transparent">
+            From the Blog
+          </span>
         </h2>
-        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mt-4">
-          Sharing my thoughts on technology, development, and more.
+        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          Sharing insights, tutorials, and thoughts on modern web development and technology trends.
         </p>
       </div>
 
@@ -115,7 +121,7 @@ const BlogsComponent = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="group bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+            className="group bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200/50 dark:border-gray-700/50 rounded-3xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-teal-500/10 hover:-translate-y-3 hover:border-teal-300/50 dark:hover:border-teal-600/50"
           >
             <Link href={`/blog/${blog.slug}`}>
               <div className="relative h-56 overflow-hidden">
@@ -126,13 +132,13 @@ const BlogsComponent = () => {
                   objectFit="cover"
                   className="group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">
+                <div className="absolute top-4 right-4 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-bold rounded-xl shadow-lg">
                   {blog.category.name}
                 </div>
               </div>
-              <div className="p-6">
-                <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mb-2">
-                  <Calendar className="w-4 h-4 mr-2" />
+              <div className="p-8">
+                <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4 font-medium">
+                  <Calendar className="w-4 h-4 mr-2 text-teal-500" />
                   <span>
                     {new Date(blog.publishedAt).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -140,17 +146,17 @@ const BlogsComponent = () => {
                       day: "numeric",
                     })}
                   </span>
-                  <span className="mx-2">·</span>
-                  <Clock className="w-4 h-4 mr-1" />
+                  <span className="mx-3">·</span>
+                  <Clock className="w-4 h-4 mr-2 text-emerald-500" />
                   <span>{blog.readTime}</span>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
                   {blog.title}
                 </h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-4 text-sm">
+                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
                   {blog.excerpt}
                 </p>
-                <div className="text-blue-600 dark:text-blue-400 font-semibold flex items-center group-hover:gap-3 transition-all duration-300">
+                <div className="text-teal-600 dark:text-teal-400 font-bold flex items-center group-hover:gap-3 transition-all duration-300">
                   Read More <ArrowRight className="w-4 h-4 ml-1" />
                 </div>
               </div>
@@ -159,10 +165,10 @@ const BlogsComponent = () => {
         ))}
       </div>
 
-      <div className="text-center mt-16">
-        <Button asChild size="lg" variant="outline" className="rounded-full">
+      <div className="text-center mt-20">
+        <Button asChild size="lg" className="bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-teal-500/25 transition-all duration-300 transform hover:scale-105 px-8 py-4 text-lg font-semibold">
           <Link href="/blog">
-            View All Posts <ArrowRight className="ml-2 h-5 w-5" />
+            View All Posts <ArrowRight className="ml-3 h-5 w-5" />
           </Link>
         </Button>
       </div>

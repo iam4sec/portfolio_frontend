@@ -83,18 +83,25 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18">
-          {/* Enhanced Logo */}
+          {/* Modern Logo */}
           <Link
             href="/"
-            className="group flex items-center space-x-2 text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 dark:from-blue-400 dark:via-purple-400 dark:to-cyan-300 bg-clip-text text-transparent transition-all duration-300 hover:scale-105"
+            className="group flex items-center space-x-3 text-2xl font-black transition-all duration-300 hover:scale-105"
           >
-            <Sparkles className="w-6 h-6 text-blue-500 group-hover:rotate-12 transition-transform duration-300" />
-            <span>devarif</span>
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/25 transition-all duration-300">
+                <Sparkles className="w-5 h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
+              </div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full animate-pulse" />
+            </div>
+            <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 dark:from-emerald-400 dark:via-teal-400 dark:to-emerald-300 bg-clip-text text-transparent">
+              devarif
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <div className="flex items-center space-x-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-full p-1.5 border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
+            <div className="flex items-center space-x-1 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-2 border border-gray-200/50 dark:border-gray-700/50 shadow-xl shadow-gray-900/5">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
@@ -105,17 +112,17 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     onClick={e => handleSmoothScroll(e, link.href)}
-                    className={`relative px-4 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ${
+                    className={`relative px-5 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${
                       activeSection === link.id
-                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25"
-                        : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-700/80"
+                        ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/25"
+                        : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-gray-700/80"
                     }`}
                   >
                     {link.label}
                     {activeSection === link.id && (
                       <motion.div
                         layoutId="activeSection"
-                        className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full -z-10"
+                        className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl -z-10"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -132,7 +139,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 hover:bg-white/80 dark:hover:bg-slate-700/80 transition-all duration-300"
+                className="rounded-xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white/90 dark:hover:bg-gray-700/90 transition-all duration-300 shadow-lg"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               >
                 <motion.div
@@ -143,7 +150,7 @@ export function Navbar() {
                   {theme === "dark" ? (
                     <Sun className="h-5 w-5 text-amber-500" />
                   ) : (
-                    <Moon className="h-5 w-5 text-slate-600" />
+                    <Moon className="h-5 w-5 text-gray-600" />
                   )}
                 </motion.div>
               </Button>
@@ -152,9 +159,9 @@ export function Navbar() {
             {/* CTA Button */}
             <Button 
               asChild 
-              className="hidden md:flex bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 px-6"
+              className="hidden md:flex bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 px-6 font-semibold"
             >
-              <a href="#contact">Let's Talk</a>
+              <a href="#contact">Let's Connect</a>
             </Button>
 
             {/* Mobile Menu Toggle */}
@@ -162,7 +169,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50"
+                className="rounded-xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
                 <motion.div
@@ -191,7 +198,7 @@ export function Navbar() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden overflow-hidden"
           >
-            <div className="px-4 pt-2 pb-6 space-y-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200/20 dark:border-slate-700/20">
+            <div className="px-4 pt-2 pb-6 space-y-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border-t border-gray-200/20 dark:border-gray-700/20">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
@@ -204,20 +211,20 @@ export function Navbar() {
                     onClick={e => handleSmoothScroll(e, link.href)}
                     className={`block px-4 py-3 rounded-xl text-base font-semibold transition-all duration-300 ${
                       activeSection === link.id
-                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
-                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80"
+                        ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg"
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/80"
                     }`}
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
-              <div className="border-t border-slate-200 dark:border-slate-700 pt-4 mt-4">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
                 <Button 
                   asChild 
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl shadow-lg"
+                  className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-lg font-semibold"
                 >
-                  <a href="#contact">Let's Talk</a>
+                  <a href="#contact">Let's Connect</a>
                 </Button>
               </div>
             </div>

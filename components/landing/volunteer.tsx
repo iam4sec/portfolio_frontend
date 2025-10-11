@@ -78,12 +78,18 @@ const VolunteerComponent = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-          Community & Volunteer Work
+      <div className="text-center mb-20">
+        <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-100/80 to-green-100/80 dark:from-emerald-900/30 dark:to-green-900/30 text-emerald-700 dark:text-emerald-300 rounded-2xl text-sm font-semibold backdrop-blur-sm border border-emerald-200/50 dark:border-emerald-700/50 shadow-lg mb-8">
+          <span className="text-lg">❤️</span>
+          <span>Community Impact</span>
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
+          <span className="bg-gradient-to-r from-emerald-600 via-green-600 to-teal-500 dark:from-emerald-400 dark:via-green-400 dark:to-teal-300 bg-clip-text text-transparent">
+            Volunteer Work
+          </span>
         </h2>
-        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mt-4">
-          Giving back through technology and mentorship.
+        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          Contributing to the community through technology, mentorship, and meaningful initiatives.
         </p>
       </div>
 
@@ -96,23 +102,24 @@ const VolunteerComponent = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-2 hover:border-emerald-300/50 dark:hover:border-emerald-600/50"
           >
             <div className="flex items-start space-x-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-400 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Heart className="w-8 h-8 text-white" />
+              <div className="w-18 h-18 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                <Heart className="w-9 h-9 text-white" />
               </div>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-green-600 dark:text-green-400 mb-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-xl text-sm font-bold mb-3">
+                  <Clock className="w-3 h-3" />
                   {vol.duration}
-                </p>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                   {vol.role}
                 </h3>
-                <p className="text-md font-medium text-slate-700 dark:text-slate-300 mb-3">
+                <p className="text-lg font-semibold text-green-600 dark:text-green-400 mb-4">
                   {vol.organization}
                 </p>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                   {vol.description}
                 </p>
               </div>

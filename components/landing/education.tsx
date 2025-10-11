@@ -78,12 +78,18 @@ const EducationComponent = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-          Education
+      <div className="text-center mb-20">
+        <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-100/80 to-emerald-100/80 dark:from-teal-900/30 dark:to-emerald-900/30 text-teal-700 dark:text-teal-300 rounded-2xl text-sm font-semibold backdrop-blur-sm border border-teal-200/50 dark:border-teal-700/50 shadow-lg mb-8">
+          <span className="text-lg">🎓</span>
+          <span>Academic Foundation</span>
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
+          <span className="bg-gradient-to-r from-teal-600 via-emerald-600 to-amber-500 dark:from-teal-400 dark:via-emerald-400 dark:to-amber-300 bg-clip-text text-transparent">
+            Education
+          </span>
         </h2>
-        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mt-4">
-          My academic background and foundational learning.
+        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          The academic foundation that shaped my technical expertise and problem-solving approach.
         </p>
       </div>
 
@@ -96,23 +102,24 @@ const EducationComponent = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-2 hover:border-emerald-300/50 dark:hover:border-emerald-600/50"
           >
             <div className="flex items-start space-x-6">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center flex-shrink-0">
-                <GraduationCap className="w-8 h-8 text-white" />
+              <div className="w-18 h-18 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                <GraduationCap className="w-9 h-9 text-white" />
               </div>
               <div className="flex-1">
-                <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-xl text-sm font-bold mb-3">
+                  <Calendar className="w-3 h-3" />
                   {edu.year}
-                </p>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                   {edu.degree}
                 </h3>
-                <p className="text-md font-medium text-slate-700 dark:text-slate-300 mb-3">
+                <p className="text-lg font-semibold text-teal-600 dark:text-teal-400 mb-4">
                   {edu.institution}
                 </p>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
                   {edu.description}
                 </p>
               </div>

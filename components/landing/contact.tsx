@@ -80,13 +80,18 @@ const ContactComponent = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-          Get In Touch
+      <div className="text-center mb-20">
+        <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-100/80 to-teal-100/80 dark:from-emerald-900/30 dark:to-teal-900/30 text-emerald-700 dark:text-emerald-300 rounded-2xl text-sm font-semibold backdrop-blur-sm border border-emerald-200/50 dark:border-emerald-700/50 shadow-lg mb-8">
+          <span className="text-lg">💬</span>
+          <span>Let's Connect</span>
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
+          <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-500 dark:from-emerald-400 dark:via-teal-400 dark:to-cyan-300 bg-clip-text text-transparent">
+            Get In Touch
+          </span>
         </h2>
-        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mt-4">
-          Have a project in mind or just want to say hi? Feel free to reach
-          out.
+        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
         </p>
       </div>
 
@@ -101,15 +106,15 @@ const ContactComponent = () => {
           {contactInfo.map((info, index) => {
             const Icon = info.icon
             const content = (
-              <div className="flex items-center space-x-6 p-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Icon className="w-8 h-8 text-white" />
+              <div className="flex items-center space-x-6 p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200/50 dark:border-gray-700/50 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300/50 dark:hover:border-emerald-600/50">
+                <div className="w-18 h-18 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Icon className="w-9 h-9 text-white" />
                 </div>
                 <div>
-                  <div className="text-xl font-bold text-slate-900 dark:text-white">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
                     {info.label}
                   </div>
-                  <div className="text-slate-700 dark:text-slate-300 mt-1">
+                  <div className="text-gray-700 dark:text-gray-300 mt-2 text-lg">
                     {info.value}
                   </div>
                 </div>
@@ -140,12 +145,12 @@ const ContactComponent = () => {
         >
           <form
             onSubmit={handleSubmit}
-            className="space-y-6 p-8 bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl shadow-xl"
+            className="space-y-8 p-10 bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200/50 dark:border-gray-700/50 rounded-3xl shadow-2xl"
           >
             <div className="space-y-2">
               <label
                 htmlFor="name"
-                className="text-sm font-medium text-slate-800 dark:text-slate-200"
+                className="text-sm font-bold text-gray-800 dark:text-gray-200"
               >
                 Full Name
               </label>
@@ -157,13 +162,13 @@ const ContactComponent = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="dark:bg-gray-900/50"
+                className="dark:bg-gray-900/50 rounded-xl border-2 focus:border-emerald-500 transition-colors"
               />
             </div>
             <div className="space-y-2">
               <label
                 htmlFor="email"
-                className="text-sm font-medium text-slate-800 dark:text-slate-200"
+                className="text-sm font-bold text-gray-800 dark:text-gray-200"
               >
                 Email Address
               </label>
@@ -175,31 +180,31 @@ const ContactComponent = () => {
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="dark:bg-gray-900/50"
+                className="dark:bg-gray-900/50 rounded-xl border-2 focus:border-emerald-500 transition-colors"
               />
             </div>
             <div className="space-y-2">
               <label
                 htmlFor="message"
-                className="text-sm font-medium text-slate-800 dark:text-slate-200"
+                className="text-sm font-bold text-gray-800 dark:text-gray-200"
               >
                 Message
               </label>
               <Textarea
                 id="message"
                 name="message"
-                placeholder="Your message here..."
-                rows={5}
+                placeholder="Tell me about your project or just say hello..."
+                rows={6}
                 value={formData.message}
                 onChange={handleInputChange}
                 required
-                className="dark:bg-gray-900/50"
+                className="dark:bg-gray-900/50 rounded-xl border-2 focus:border-emerald-500 transition-colors"
               />
             </div>
             <div>
               <Button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-full"
+                className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 py-4 text-lg font-semibold"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

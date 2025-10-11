@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Trophy } from "lucide-react"
+import { Trophy, Calendar } from "lucide-react"
 import { api } from "@/lib/api"
 import SectionWrapper from "./section-wrapper"
 import { motion, Variants } from "framer-motion"
@@ -87,12 +87,18 @@ const AchievementsComponent = () => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-          Achievements & Recognition
+      <div className="text-center mb-20">
+        <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-100/80 to-orange-100/80 dark:from-amber-900/30 dark:to-orange-900/30 text-amber-700 dark:text-amber-300 rounded-2xl text-sm font-semibold backdrop-blur-sm border border-amber-200/50 dark:border-amber-700/50 shadow-lg mb-8">
+          <span className="text-lg">🏆</span>
+          <span>Recognition & Awards</span>
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6">
+          <span className="bg-gradient-to-r from-amber-600 via-orange-600 to-emerald-500 dark:from-amber-400 dark:via-orange-400 dark:to-emerald-300 bg-clip-text text-transparent">
+            Achievements
+          </span>
         </h2>
-        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mt-4">
-          Milestones that mark my journey of growth and excellence.
+        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+          Milestones and recognition that reflect my commitment to excellence and innovation.
         </p>
       </div>
 
@@ -105,21 +111,22 @@ const AchievementsComponent = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow duration-300"
+            className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-gray-200/50 dark:border-gray-700/50 rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 hover:-translate-y-2 hover:border-amber-300/50 dark:hover:border-amber-600/50"
           >
-            <div className="mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500">
-              <Trophy className="h-8 w-8 text-white" />
+            <div className="mb-8 inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg">
+              <Trophy className="h-10 w-10 text-white" />
             </div>
-            <p className="text-sm font-semibold text-orange-600 dark:text-orange-400 mb-1">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-xl text-sm font-bold mb-4">
+              <Calendar className="w-3 h-3" />
               {ach.year}
-            </p>
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
               {ach.title}
             </h3>
-            <p className="text-md font-medium text-slate-700 dark:text-slate-300 mb-3">
+            <p className="text-lg font-semibold text-orange-600 dark:text-orange-400 mb-4">
               {ach.organization}
             </p>
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
               {ach.description}
             </p>
           </motion.div>
