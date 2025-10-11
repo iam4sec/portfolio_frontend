@@ -24,31 +24,72 @@ const SectionLoading = () => (
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.3),transparent_50%)] pointer-events-none"></div>
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Enhanced Background with Multiple Layers */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-950" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(59,130,246,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(168,85,247,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(59,130,246,0.02)_50%,transparent_75%)]" />
+      </div>
       
+      {/* Floating Elements */}
+      <div className="fixed inset-0 -z-5 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-10 w-32 h-32 bg-blue-200/20 dark:bg-blue-800/20 rounded-full blur-xl animate-pulse" />
+        <div className="absolute top-40 right-20 w-24 h-24 bg-purple-200/20 dark:bg-purple-800/20 rounded-full blur-xl animate-pulse delay-1000" />
+        <div className="absolute bottom-40 left-1/4 w-40 h-40 bg-cyan-200/20 dark:bg-cyan-800/20 rounded-full blur-xl animate-pulse delay-2000" />
+      </div>
+
       <Navbar />
-      <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="relative w-full">
-        <Navbar />
+      
+      <main className="relative">
         <Hero />
-      </div>
-      <div className="w-full max-w-7xl p-4 md:p-16">
-        <About />
-        <Experience />
-        <Education />
-        <Skills />
-        <Projects />
-        <Achievements />
-        <Volunteer />
-        <Blogs />
-        <Contact />
-        <Newsletter />
-      </div>
-      <div className="w-full">
+        
+        {/* Content Sections with Enhanced Spacing */}
+        <div className="relative space-y-32 py-20">
+          <Suspense fallback={<SectionLoading />}>
+            <About />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Skills />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Experience />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Education />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Projects />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Achievements />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Volunteer />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Blogs />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Contact />
+          </Suspense>
+          
+          <Suspense fallback={<SectionLoading />}>
+            <Newsletter />
+          </Suspense>
+        </div>
+        
         <Footer />
-      </div>
-    </main>
+      </main>
 
       <ScrollToTopButton />
     </div>

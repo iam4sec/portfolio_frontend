@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Moon, Sun } from "lucide-react"
+import { Menu, X, Moon, Sun, Sparkles } from "lucide-react"
 import { useTheme } from "next-themes"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -20,10 +21,12 @@ export function Navbar() {
       setIsScrolled(window.scrollY > 20)
 
       const sections = [
+        "hero",
         "about",
         "skills",
-        "projects",
         "experience",
+        "projects",
+        "achievements",
         "contact",
       ]
       const current = sections.find(section => {
@@ -61,113 +64,166 @@ export function Navbar() {
   const navLinks = [
     { href: "#about", label: "About", id: "about" },
     { href: "#skills", label: "Skills", id: "skills" },
+    { href: "#experience", label: "Journey", id: "experience" },
     { href: "#projects", label: "Work", id: "projects" },
-    { href: "#experience", label: "Experience", id: "experience" },
+    { href: "#achievements", label: "Achievements", id: "achievements" },
     { href: "#contact", label: "Contact", id: "contact" },
   ]
 
   return (
-    <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-slate-200/50 dark:border-gray-800/50 shadow-sm"
+          ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/20 dark:border-slate-700/20 shadow-lg shadow-slate-900/5"
           : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-18">
+          {/* Enhanced Logo */}
           <Link
             href="/"
-            className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-400 dark:from-blue-400 dark:to-cyan-300 bg-clip-text text-transparent"
+            className="group flex items-center space-x-2 text-2xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 dark:from-blue-400 dark:via-purple-400 dark:to-cyan-300 bg-clip-text text-transparent transition-all duration-300 hover:scale-105"
           >
-            devarif
+            <Sparkles className="w-6 h-6 text-blue-500 group-hover:rotate-12 transition-transform duration-300" />
+            <span>devarif</span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-2 bg-slate-100/80 dark:bg-gray-800/80 rounded-full p-2">
-            {navLinks.map(link => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={e => handleSmoothScroll(e, link.href)}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
-                  activeSection === link.id
-                    ? "bg-white dark:bg-gray-900 text-slate-900 dark:text-white shadow-md"
-                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-gray-700/50"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center">
+            <div className="flex items-center space-x-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-full p-1.5 border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 + 0.3 }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={e => handleSmoothScroll(e, link.href)}
+                    className={`relative px-4 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 ${
+                      activeSection === link.id
+                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25"
+                        : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-700/80"
+                    }`}
+                  >
+                    {link.label}
+                    {activeSection === link.id && (
+                      <motion.div
+                        layoutId="activeSection"
+                        className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full -z-10"
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          {/* Right Side Actions */}
+          <div className="flex items-center space-x-3">
+            {/* Theme Toggle */}
             {mounted && (
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full"
+                className="rounded-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 hover:bg-white/80 dark:hover:bg-slate-700/80 transition-all duration-300"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               >
-                {theme === "dark" ? (
-                  <Sun className="h-5 w-5" />
-                ) : (
-                  <Moon className="h-5 w-5" />
-                )}
+                <motion.div
+                  initial={false}
+                  animate={{ rotate: theme === "dark" ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {theme === "dark" ? (
+                    <Sun className="h-5 w-5 text-amber-500" />
+                  ) : (
+                    <Moon className="h-5 w-5 text-slate-600" />
+                  )}
+                </motion.div>
               </Button>
             )}
 
-            <Button asChild className="hidden md:flex rounded-full">
-              <a href="#contact">Hire Me</a>
+            {/* CTA Button */}
+            <Button 
+              asChild 
+              className="hidden md:flex bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 px-6"
+            >
+              <a href="#contact">Let's Talk</a>
             </Button>
 
+            {/* Mobile Menu Toggle */}
             <div className="md:hidden">
               <Button
                 variant="ghost"
                 size="icon"
-                className="rounded-full"
+                className="rounded-full bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                <motion.div
+                  animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {isMobileMenuOpen ? (
+                    <X className="h-6 w-6" />
+                  ) : (
+                    <Menu className="h-6 w-6" />
+                  )}
+                </motion.div>
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen
-            ? "max-h-screen opacity-100"
-            : "max-h-0 opacity-0"
-        } overflow-hidden`}
-      >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md">
-          {navLinks.map(link => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={e => handleSmoothScroll(e, link.href)}
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
-                activeSection === link.id
-                  ? "bg-blue-500 text-white"
-                  : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-800"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="border-t border-slate-200 dark:border-gray-700 pt-4 mt-4">
-            <Button asChild className="w-full">
-              <a href="#contact">Hire Me</a>
-            </Button>
-          </div>
-        </div>
-      </div>
-    </nav>
+      {/* Enhanced Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden"
+          >
+            <div className="px-4 pt-2 pb-6 space-y-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200/20 dark:border-slate-700/20">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={e => handleSmoothScroll(e, link.href)}
+                    className={`block px-4 py-3 rounded-xl text-base font-semibold transition-all duration-300 ${
+                      activeSection === link.id
+                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
+                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <div className="border-t border-slate-200 dark:border-slate-700 pt-4 mt-4">
+                <Button 
+                  asChild 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white rounded-xl shadow-lg"
+                >
+                  <a href="#contact">Let's Talk</a>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.nav>
   )
 }
