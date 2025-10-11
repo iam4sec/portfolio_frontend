@@ -2,40 +2,24 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Calendar, Clock, ArrowRight, BookOpen, ExternalLink } from "lucide-react"
+import { Calendar, Clock, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { api } from "@/lib/api"
 import Image from "next/image"
+import SectionWrapper from "./section-wrapper"
+import { motion } from "framer-motion"
 
-export function Blogs() {
+const BlogsComponent = () => {
   const [blogs, setBlogs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        // Fetch featured blogs first, then regular blogs
-        const [featuredResponse, blogsResponse] = await Promise.all([
-          api.getFeaturedBlogs(),
-          api.getBlogs({ limit: 6, page: 1 })
-        ])
-        
-        const allBlogs = []
-        
-        if (featuredResponse.success) {
-          allBlogs.push(...featuredResponse.data.map((blog: any) => ({ ...blog, featured: true })))
+        const response = await api.getBlogs({ limit: 3, page: 1 })
+        if (response.success && (response.data as any).blogs) {
+          setBlogs((response.data as any).blogs)
         }
-        
-        if (blogsResponse.success && blogsResponse.data.blogs) {
-          // Add non-featured blogs that aren't already in featured list
-          const featuredSlugs = allBlogs.map(b => b.slug)
-          const regularBlogs = blogsResponse.data.blogs
-            .filter((blog: any) => !featuredSlugs.includes(blog.slug))
-            .slice(0, 4)
-          allBlogs.push(...regularBlogs)
-        }
-        
-        setBlogs(allBlogs)
       } catch (error) {
         console.error("Failed to fetch blogs:", error)
       } finally {
@@ -47,178 +31,143 @@ export function Blogs() {
 
   const defaultBlogs = [
     {
-      title: "Building Scalable React Applications: Best Practices for 2024",
-      excerpt: "Explore modern patterns and techniques for creating maintainable React applications that scale with your team and user base.",
+      title: "Building Scalable React Applications",
+      excerpt:
+        "Explore modern patterns for creating maintainable React applications.",
       publishedAt: "2024-01-15",
-      readTime: "8 min read",
-      category: "React",
+      readTime: "8 min",
+      category: { name: "React" },
       image: "/placeholder.jpg",
-      slug: "scalable-react-applications-2024",
-      featured: true
+      slug: "scalable-react-applications",
     },
     {
-      title: "The Future of Web Development: Trends to Watch",
-      excerpt: "From AI-powered development tools to new JavaScript frameworks, discover what's shaping the future of web development.",
+      title: "The Future of Web Development",
+      excerpt:
+        "From AI tools to new frameworks, discover what's next in web dev.",
       publishedAt: "2024-01-10",
-      readTime: "6 min read",
-      category: "Web Development",
+      readTime: "6 min",
+      category: { name: "Web Dev" },
       image: "/placeholder.jpg",
-      slug: "future-web-development-trends",
-      featured: true
+      slug: "future-web-development",
     },
     {
-      title: "Optimizing Core Web Vitals for Better User Experience",
-      excerpt: "A comprehensive guide to improving your website's performance metrics and user experience.",
+      title: "Optimizing Core Web Vitals",
+      excerpt:
+        "A guide to improving your site's performance and user experience.",
       publishedAt: "2024-01-05",
-      readTime: "10 min read",
-      category: "Performance",
+      readTime: "10 min",
+      category: { name: "Performance" },
       image: "/placeholder.jpg",
       slug: "optimizing-core-web-vitals",
-      featured: false
     },
-    {
-      title: "TypeScript Tips for React Developers",
-      excerpt: "Essential TypeScript patterns and best practices for React development.",
-      publishedAt: "2023-12-28",
-      readTime: "7 min read",
-      category: "TypeScript",
-      image: "/placeholder.jpg",
-      slug: "typescript-tips-react-developers",
-      featured: false
-    }
   ]
 
   if (loading) {
     return (
-      <section id="blogs" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="animate-pulse space-y-8">
-            <div className="h-12 bg-slate-200 rounded w-64 mx-auto"></div>
-            <div className="grid lg:grid-cols-2 gap-8">
-              {[1,2].map(i => (
-                <div key={i} className="h-80 bg-slate-200 rounded-2xl"></div>
-              ))}
-            </div>
+      <div className="max-w-6xl mx-auto">
+        <div className="animate-pulse space-y-8">
+          <div className="h-12 bg-slate-200 dark:bg-gray-700 rounded w-64 mx-auto"></div>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map(i => (
+              <div
+                key={i}
+                className="h-96 bg-slate-200 dark:bg-gray-700 rounded-2xl"
+              ></div>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
     )
   }
 
   const displayBlogs = blogs.length ? blogs : defaultBlogs
-  const featuredBlogs = displayBlogs.filter(blog => blog.featured)
-  const regularBlogs = displayBlogs.filter(blog => !blog.featured)
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.2,
+        type: "spring",
+        stiffness: 100,
+      },
+    }),
+  }
 
   return (
-    <section id="blogs" className="py-20 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-            Latest Writing
-          </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Sharing insights, tutorials, and thoughts on web development, technology trends, and best practices
-          </p>
-        </div>
+    <div className="max-w-7xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
+          From the Blog
+        </h2>
+        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mt-4">
+          Sharing my thoughts on technology, development, and more.
+        </p>
+      </div>
 
-        {featuredBlogs.length > 0 && (
-          <div className="grid lg:grid-cols-2 gap-8 mb-16">
-            {featuredBlogs.map((blog, index) => (
-              <article key={index} className="group bg-white rounded-2xl overflow-hidden shadow-lg border border-slate-200/50 hover:shadow-2xl transition-all duration-500">
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={blog.image}
-                    alt={blog.title}
-                    width={600}
-                    height={300}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-medium">
-                      {blog.category}
-                    </span>
-                  </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {displayBlogs.map((blog, index) => (
+          <motion.div
+            key={blog.slug}
+            custom={index}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="group bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+          >
+            <Link href={`/blog/${blog.slug}`}>
+              <div className="relative h-56 overflow-hidden">
+                <Image
+                  src={blog.image}
+                  alt={blog.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">
+                  {blog.category.name}
                 </div>
-                
-                <div className="p-8">
-                  <div className="flex items-center space-x-4 text-slate-500 text-sm mb-4">
-                    <div className="flex items-center">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      <span>{new Date(blog.publishDate || blog.publishedAt).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      <span>{blog.readTime}</span>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    {blog.title}
-                  </h3>
-                  
-                  <p className="text-slate-600 mb-6 leading-relaxed">{blog.excerpt}</p>
-
-                  <Link 
-                    href={`/blog/${blog.slug}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium group"
-                  >
-                    Read More
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-
-        {regularBlogs.length > 0 && (
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            {regularBlogs.map((blog, index) => (
-              <article key={index} className="group bg-white rounded-xl p-6 shadow-lg border border-slate-200/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">
-                    {blog.category}
+              </div>
+              <div className="p-6">
+                <div className="flex items-center text-sm text-slate-500 dark:text-slate-400 mb-2">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  <span>
+                    {new Date(blog.publishedAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
                   </span>
-                  <div className="flex items-center text-slate-500 text-sm">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>{blog.readTime}</span>
-                  </div>
+                  <span className="mx-2">·</span>
+                  <Clock className="w-4 h-4 mr-1" />
+                  <span>{blog.readTime}</span>
                 </div>
-
-                <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   {blog.title}
                 </h3>
-                
-                <p className="text-slate-600 mb-4 text-sm leading-relaxed">{blog.excerpt}</p>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-500 text-sm">
-                    {new Date(blog.publishDate || blog.publishedAt).toLocaleDateString()}
-                  </span>
-                  <Link 
-                    href={`/blog/${blog.slug}`}
-                    className="text-blue-600 hover:text-blue-700 font-medium text-sm"
-                  >
-                    Read Article
-                  </Link>
+                <p className="text-slate-600 dark:text-slate-300 mb-4 text-sm">
+                  {blog.excerpt}
+                </p>
+                <div className="text-blue-600 dark:text-blue-400 font-semibold flex items-center group-hover:gap-3 transition-all duration-300">
+                  Read More <ArrowRight className="w-4 h-4 ml-1" />
                 </div>
-              </article>
-            ))}
-          </div>
-        )}
-
-        <div className="text-center">
-          <Button size="lg" variant="outline" className="group" asChild>
-            <Link href="/blog">
-              <BookOpen className="mr-2 w-4 h-4" />
-              View All Articles
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
             </Link>
-          </Button>
-        </div>
-
-
+          </motion.div>
+        ))}
       </div>
-    </section>
+
+      <div className="text-center mt-16">
+        <Button asChild size="lg" variant="outline" className="rounded-full">
+          <Link href="/blog">
+            View All Posts <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+      </div>
+    </div>
   )
 }
+
+export const Blogs = SectionWrapper(BlogsComponent, "blogs")

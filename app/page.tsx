@@ -28,22 +28,28 @@ export default function HomePage() {
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.3),transparent_50%)] pointer-events-none"></div>
       
       <Navbar />
-      <main className="relative">
+      <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="relative w-full">
+        <Navbar />
         <Hero />
-        <div className="space-y-32 py-16">
-          <Suspense fallback={<SectionLoading />}><About /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Skills /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Projects /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Experience /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Education /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Achievements /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Volunteer /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Blogs /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Newsletter /></Suspense>
-          <Suspense fallback={<SectionLoading />}><Contact /></Suspense>
-        </div>
-      </main>
-      <Footer />
+      </div>
+      <div className="w-full max-w-7xl p-4 md:p-16">
+        <About />
+        <Experience />
+        <Education />
+        <Skills />
+        <Projects />
+        <Achievements />
+        <Volunteer />
+        <Blogs />
+        <Contact />
+        <Newsletter />
+      </div>
+      <div className="w-full">
+        <Footer />
+      </div>
+    </main>
+
       <ScrollToTopButton />
     </div>
   )

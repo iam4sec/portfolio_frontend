@@ -2,8 +2,39 @@
 
 import { useEffect, useState } from "react"
 import { api } from "@/lib/api"
+import SectionWrapper from "./section-wrapper"
+import { motion, Variants } from "framer-motion"
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiNodedotjs,
+  SiPython,
+  SiPostgresql,
+  SiMongodb,
+  SiGit,
+  SiDocker,
+  SiAmazonaws,
+  SiFigma,
+} from "react-icons/si"
 
-export function Skills() {
+const iconMap: { [key: string]: React.ElementType } = {
+  React: SiReact,
+  "Next.js": SiNextdotjs,
+  TypeScript: SiTypescript,
+  "Tailwind CSS": SiTailwindcss,
+  "Node.js": SiNodedotjs,
+  Python: SiPython,
+  PostgreSQL: SiPostgresql,
+  MongoDB: SiMongodb,
+  Git: SiGit,
+  Docker: SiDocker,
+  AWS: SiAmazonaws,
+  Figma: SiFigma,
+}
+
+const SkillsComponent = () => {
   const [skillsData, setSkillsData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -27,91 +58,102 @@ export function Skills() {
     categories: [
       {
         title: "Frontend",
-        skills: [
-          { name: "React", level: "Expert", years: "5+" },
-          { name: "Next.js", level: "Advanced", years: "3+" },
-          { name: "TypeScript", level: "Advanced", years: "4+" },
-          { name: "Tailwind CSS", level: "Expert", years: "3+" }
-        ]
+        skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
       },
       {
         title: "Backend",
-        skills: [
-          { name: "Node.js", level: "Advanced", years: "4+" },
-          { name: "Python", level: "Intermediate", years: "2+" },
-          { name: "PostgreSQL", level: "Advanced", years: "3+" },
-          { name: "MongoDB", level: "Advanced", years: "3+" }
-        ]
+        skills: ["Node.js", "Python", "PostgreSQL", "MongoDB"],
       },
       {
         title: "Tools & DevOps",
-        skills: [
-          { name: "Git", level: "Expert", years: "5+" },
-          { name: "Docker", level: "Intermediate", years: "2+" },
-          { name: "AWS", level: "Intermediate", years: "2+" },
-          { name: "Figma", level: "Advanced", years: "3+" }
-        ]
-      }
-    ]
+        skills: ["Git", "Docker", "AWS", "Figma"],
+      },
+    ],
   }
 
   if (loading) {
     return (
-      <section id="skills" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="animate-pulse space-y-8">
-            <div className="h-12 bg-slate-200 rounded w-48 mx-auto"></div>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[1,2,3,4].map(i => (
-                <div key={i} className="h-32 bg-slate-200 rounded-xl"></div>
-              ))}
-            </div>
+      <div className="max-w-6xl mx-auto">
+        <div className="animate-pulse space-y-8">
+          <div className="h-12 bg-slate-200 dark:bg-gray-700 rounded w-48 mx-auto"></div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map(i => (
+              <div
+                key={i}
+                className="h-48 bg-slate-200 dark:bg-gray-700 rounded-xl"
+              ></div>
+            ))}
           </div>
         </div>
-      </section>
+      </div>
     )
   }
 
   const skills = skillsData?.categories ? skillsData : defaultSkills
 
-  return (
-    <section id="skills" className="py-20 px-6 bg-gradient-to-b from-white to-slate-50">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-            Skills & Expertise
-          </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            A comprehensive toolkit built through years of hands-on experience
-          </p>
-        </div>
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.2,
+        type: "spring",
+        stiffness: 100,
+      },
+    }),
+  }
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skills.categories.map((category: any, index: number) => (
-            <div key={index} className="bg-white rounded-2xl p-8 shadow-lg border border-slate-200/50 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">{category.title}</h3>
-              
-              <div className="space-y-4">
-                {category.skills.map((skill: any, skillIndex: number) => (
-                  <div key={skillIndex} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors">
-                    <div>
-                      <span className="font-medium text-slate-800">{skill.name}</span>
-                      <div className="text-xs text-slate-500">{skill.years} experience</div>
-                    </div>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      skill.level === 'Expert' ? 'bg-green-100 text-green-700' :
-                      skill.level === 'Advanced' ? 'bg-blue-100 text-blue-700' :
-                      'bg-yellow-100 text-yellow-700'
-                    }`}>
-                      {skill.level}
+  return (
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
+          My Tech Stack
+        </h2>
+        <p className="text-lg text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mt-4">
+          Technologies I use to build modern, scalable, and robust web
+          applications.
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {skills.categories.map((category: any, index: number) => (
+          <motion.div
+            key={index}
+            custom={index}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-gray-700/50 rounded-2xl p-8 shadow-lg"
+          >
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">
+              {category.title}
+            </h3>
+            <div className="grid grid-cols-2 gap-6">
+              {category.skills.map((skill: any, skillIndex: number) => {
+                const skillName = typeof skill === "string" ? skill : skill.name
+                const Icon = iconMap[skillName]
+                return (
+                  <div
+                    key={skillIndex}
+                    className="flex flex-col items-center justify-center p-4 bg-slate-100/50 dark:bg-gray-900/50 rounded-lg hover:bg-slate-200/50 dark:hover:bg-gray-700/50 transition-colors"
+                  >
+                    {Icon && (
+                      <Icon className="w-10 h-10 text-blue-600 dark:text-blue-400 mb-2" />
+                    )}
+                    <span className="font-medium text-slate-800 dark:text-slate-200 text-center">
+                      {skillName}
                     </span>
                   </div>
-                ))}
-              </div>
+                )
+              })}
             </div>
-          ))}
-        </div>
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </div>
   )
 }
+
+export const Skills = SectionWrapper(SkillsComponent, "skills")

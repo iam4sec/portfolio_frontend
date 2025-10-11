@@ -2,10 +2,18 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Github, Linkedin, Mail, Download, MapPin, Star } from "lucide-react"
+import {
+  ArrowRight,
+  Github,
+  Linkedin,
+  Mail,
+  Download,
+  MapPin,
+} from "lucide-react"
 import Link from "next/link"
 import { api } from "@/lib/api"
 import Image from "next/image"
+import { motion, Variants } from "framer-motion"
 
 export function Hero() {
   const [profile, setProfile] = useState<any>(null)
@@ -24,125 +32,150 @@ export function Hero() {
     fetchProfile()
   }, [])
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  }
+
   return (
-    <section className="pt-32 pb-20 px-6 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 via-transparent to-purple-50/50"></div>
-      
-      <div className="max-w-7xl mx-auto relative">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
-            <div className="space-y-6">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-emerald-50 to-blue-50 border border-emerald-200/50">
-                <Star className="w-4 h-4 text-emerald-600 mr-2" />
-                <span className="text-sm font-medium text-emerald-700">Available for new projects</span>
-              </div>
-              
-              <h1 className="text-5xl lg:text-7xl font-bold text-slate-900 leading-tight">
-                <span className="block">{profile?.name || "John"}</span>
-                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                  {profile?.name?.split(' ')[1] || "Doe"}
-                </span>
-              </h1>
-              
-              <h2 className="text-2xl lg:text-3xl text-slate-600 font-light">
-                {profile?.title || "Senior Frontend Developer"}
-              </h2>
-              
-              {profile?.location && (
-                <div className="flex items-center text-slate-500">
-                  <MapPin className="h-5 w-5 mr-2" />
-                  <span className="text-lg">{profile.location}</span>
-                </div>
-              )}
-            </div>
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 sm:px-6 lg:px-8"
+    >
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-white dark:bg-gray-900" />
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200/50 dark:bg-blue-900/50 rounded-full filter blur-3xl opacity-50 animate-blob" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-200/50 dark:bg-purple-900/50 rounded-full filter blur-3xl opacity-50 animate-blob animation-delay-2000" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-200/50 dark:bg-cyan-900/50 rounded-full filter blur-3xl opacity-50 animate-blob animation-delay-4000" />
+      </div>
 
-            <p className="text-xl text-slate-600 leading-relaxed max-w-xl">
-              {profile?.bio || "Crafting exceptional digital experiences through innovative design and robust engineering. Transforming complex problems into elegant solutions."}
-            </p>
+      <div className="max-w-7xl mx-auto relative text-center">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col items-center"
+        >
+          <motion.div variants={itemVariants} className="mb-8">
+            <Image
+              src={profile?.avatar || "/placeholder-user.jpg"}
+              alt={profile?.name || "User"}
+              width={160}
+              height={160}
+              className="rounded-full border-4 border-white dark:border-gray-800 shadow-lg object-cover"
+            />
+          </motion.div>
 
-            <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300" asChild>
-                <Link href="#projects">
-                  Explore My Work
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              
-              <Button size="lg" variant="outline" className="border-2 border-slate-300 hover:border-slate-400 hover:bg-slate-50" asChild>
-                <Link href="#contact">Let's Connect</Link>
-              </Button>
-            </div>
+          <motion.h1
+            variants={itemVariants}
+            className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tighter"
+          >
+            <span className="block">Hi, I&apos;m </span>
+            <span className="block bg-gradient-to-r from-blue-600 to-cyan-400 dark:from-blue-400 dark:to-cyan-300 bg-clip-text text-transparent mt-2">
+              {profile?.name || "Ariful Islam"}
+            </span>
+          </motion.h1>
 
-            <div className="flex items-center space-x-6 pt-4">
-              {profile?.social?.github && (
-                <Link 
-                  href={profile.social.github} 
-                  target="_blank" 
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
-                >
-                  <Github className="h-5 w-5" />
-                </Link>
-              )}
-              {profile?.social?.linkedin && (
-                <Link 
-                  href={profile.social.linkedin} 
-                  target="_blank" 
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </Link>
-              )}
-              {profile?.email && (
-                <Link 
-                  href={`mailto:${profile.email}`} 
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
-                >
-                  <Mail className="h-5 w-5" />
-                </Link>
-              )}
-              {profile?.resume && (
-                <Link 
-                  href={profile.resume} 
-                  target="_blank"
-                  className="flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 transition-all duration-300 hover:scale-110"
-                >
-                  <Download className="h-5 w-5" />
-                </Link>
-              )}
-            </div>
-          </div>
+          <motion.p
+            variants={itemVariants}
+            className="mt-6 max-w-2xl text-lg sm:text-xl text-slate-600 dark:text-slate-300"
+          >
+            {profile?.title ||
+              "A passionate Full Stack Developer specializing in creating beautiful, functional, and user-centric web applications."}
+          </motion.p>
 
-          <div className="relative">
-            <div className="relative w-full max-w-lg mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
-              <div className="relative bg-white rounded-3xl p-8 shadow-2xl border border-slate-200/50">
-                <Image
-                  src={profile?.image || "/placeholder-user.jpg"}
-                  alt={profile?.name || "Profile"}
-                  width={400}
-                  height={400}
-                  className="w-full h-auto rounded-2xl"
-                  priority
-                />
-                
-                <div className="mt-6 grid grid-cols-3 gap-4 text-center">
-                  <div className="space-y-1">
-                    <div className="text-2xl font-bold text-slate-900">50+</div>
-                    <div className="text-sm text-slate-600">Projects</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-2xl font-bold text-slate-900">5+</div>
-                    <div className="text-sm text-slate-600">Years</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-2xl font-bold text-slate-900">100+</div>
-                    <div className="text-sm text-slate-600">Clients</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          {profile?.location && (
+            <motion.div
+              variants={itemVariants}
+              className="mt-4 flex items-center justify-center text-slate-500 dark:text-slate-400"
+            >
+              <MapPin className="h-5 w-5 mr-2" />
+              <span>{profile.location}</span>
+            </motion.div>
+          )}
+
+          <motion.div
+            variants={itemVariants}
+            className="mt-10 flex flex-wrap justify-center gap-4"
+          >
+            <Button
+              size="lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+              asChild
+            >
+              <Link href="#contact">
+                Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-full border-2 dark:border-slate-700 dark:hover:bg-slate-800 dark:text-slate-300"
+              asChild
+            >
+              <a
+                href={profile?.resumeUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download CV <Download className="ml-2 h-5 w-5" />
+              </a>
+            </Button>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="mt-12 flex items-center justify-center space-x-6"
+          >
+            {profile?.social?.github && (
+              <Link
+                href={profile.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+              >
+                <Github className="h-7 w-7" />
+              </Link>
+            )}
+            {profile?.social?.linkedin && (
+              <Link
+                href={profile.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+              >
+                <Linkedin className="h-7 w-7" />
+              </Link>
+            )}
+            {profile?.email && (
+              <Link
+                href={`mailto:${profile.email}`}
+                className="text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
+              >
+                <Mail className="h-7 w-7" />
+              </Link>
+            )}
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
