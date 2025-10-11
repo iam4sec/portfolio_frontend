@@ -11,6 +11,7 @@ import Link from "next/link"
 export default function BlogPostPage() {
   const params = useParams()
   const [blog, setBlog] = useState<any>(null)
+  const [relatedBlogs, setRelatedBlogs] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -19,9 +20,13 @@ export default function BlogPostPage() {
         const response = await api.getBlogBySlug(params.slug as string)
         if (response.success) {
           setBlog(response.data.blog)
+          // Set related blogs if available in response
+          if (response.data.recommendedBlogs) {
+            setRelatedBlogs(response.data.recommendedBlogs)
+          }
         }
       } catch (error) {
-        console.error("[v0] Failed to fetch blog:", error)
+        console.error("Failed to fetch blog:", error)
       } finally {
         setLoading(false)
       }
@@ -69,7 +74,7 @@ export default function BlogPostPage() {
         <div className="mb-8 flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
-            {new Date(blog.publishDate).toLocaleDateString()}
+            {new Date(blog.publishDate || blog.publishedAt).toLocaleDateString()}
           </div>
           <div className="flex items-center gap-1">
             <Clock className="h-4 w-4" />
@@ -93,6 +98,37 @@ export default function BlogPostPage() {
             </Badge>
           ))}
         </div>
+
+        {relatedBlogs.length > 0 && (
+          <div className="mt-16">
+            <h2 className="mb-6 text-2xl font-bold">Related Articles</h2>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {relatedBlogs.map((relatedBlog) => (
+                <Link
+                  key={relatedBlog._id}
+                  href={`/blog/${relatedBlog.slug}`}
+                  className="group block rounded-lg border p-4 transition-colors hover:bg-muted/50"
+                >
+                  <Badge variant="secondary" className="mb-2">
+                    {relatedBlog.category}
+                  </Badge>
+                  <h3 className="mb-2 font-semibold group-hover:text-primary">
+                    {relatedBlog.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {relatedBlog.excerpt}
+                  </p>
+                  <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3" />
+                    {new Date(relatedBlog.publishDate).toLocaleDateString()}
+                    <Clock className="h-3 w-3 ml-2" />
+                    {relatedBlog.readTime}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

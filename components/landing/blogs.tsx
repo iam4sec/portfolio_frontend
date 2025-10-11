@@ -14,10 +14,28 @@ export function Blogs() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await api.getBlogs()
-        if (response.success) {
-          setBlogs(response.data)
+        // Fetch featured blogs first, then regular blogs
+        const [featuredResponse, blogsResponse] = await Promise.all([
+          api.getFeaturedBlogs(),
+          api.getBlogs({ limit: 6, page: 1 })
+        ])
+        
+        const allBlogs = []
+        
+        if (featuredResponse.success) {
+          allBlogs.push(...featuredResponse.data.map((blog: any) => ({ ...blog, featured: true })))
         }
+        
+        if (blogsResponse.success && blogsResponse.data.blogs) {
+          // Add non-featured blogs that aren't already in featured list
+          const featuredSlugs = allBlogs.map(b => b.slug)
+          const regularBlogs = blogsResponse.data.blogs
+            .filter((blog: any) => !featuredSlugs.includes(blog.slug))
+            .slice(0, 4)
+          allBlogs.push(...regularBlogs)
+        }
+        
+        setBlogs(allBlogs)
       } catch (error) {
         console.error("Failed to fetch blogs:", error)
       } finally {
@@ -126,7 +144,7 @@ export function Blogs() {
                   <div className="flex items-center space-x-4 text-slate-500 text-sm mb-4">
                     <div className="flex items-center">
                       <Calendar className="w-4 h-4 mr-1" />
-                      <span>{new Date(blog.publishedAt).toLocaleDateString()}</span>
+                      <span>{new Date(blog.publishDate || blog.publishedAt).toLocaleDateString()}</span>
                     </div>
                     <div className="flex items-center">
                       <Clock className="w-4 h-4 mr-1" />
@@ -175,7 +193,7 @@ export function Blogs() {
 
                 <div className="flex items-center justify-between">
                   <span className="text-slate-500 text-sm">
-                    {new Date(blog.publishedAt).toLocaleDateString()}
+                    {new Date(blog.publishDate || blog.publishedAt).toLocaleDateString()}
                   </span>
                   <Link 
                     href={`/blog/${blog.slug}`}
@@ -205,9 +223,49 @@ export function Blogs() {
           <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
             Get notified when I publish new articles about web development, technology trends, and programming best practices.
           </p>
-          <Button className="bg-blue-600 hover:bg-blue-700">
-            Subscribe to Newsletter
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onKeyPress={async (e) => {
+                if (e.key === 'Enter') {
+                  const email = (e.target as HTMLInputElement).value
+                  if (email) {
+                    try {
+                      const response = await api.subscribe(email)
+                      if (response.success) {
+                        alert('Successfully subscribed!')
+                        ;(e.target as HTMLInputElement).value = ''
+                      }
+                    } catch (error) {
+                      alert('Subscription failed. Please try again.')
+                    }
+                  }
+                }
+              }}
+            />
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700"
+              onClick={async (e) => {
+                const input = (e.target as HTMLElement).parentElement?.querySelector('input') as HTMLInputElement
+                const email = input?.value
+                if (email) {
+                  try {
+                    const response = await api.subscribe(email)
+                    if (response.success) {
+                      alert('Successfully subscribed!')
+                      input.value = ''
+                    }
+                  } catch (error) {
+                    alert('Subscription failed. Please try again.')
+                  }
+                }
+              }}
+            >
+              Subscribe
+            </Button>
+          </div>
         </div>
       </div>
     </section>

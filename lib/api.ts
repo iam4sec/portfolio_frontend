@@ -269,6 +269,18 @@ class ApiClient {
     return this.request("/blogs/trending")
   }
 
+  async getRelatedBlogs(slug: string) {
+    return this.request(`/blogs/${slug}/related`)
+  }
+
+  async getBlogSEO(slug: string) {
+    return this.request(`/blogs/${slug}/seo`)
+  }
+
+  async getBlogSitemap() {
+    return this.request("/blogs/sitemap")
+  }
+
   // Settings endpoints
   async getSettings() {
     return this.request("/settings")
