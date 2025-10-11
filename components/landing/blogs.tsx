@@ -217,56 +217,7 @@ export function Blogs() {
           </Button>
         </div>
 
-        <div className="mt-16 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 text-center border border-blue-200/50">
-          <BookOpen className="w-16 h-16 mx-auto mb-4 text-blue-600" />
-          <h3 className="text-2xl font-bold text-slate-900 mb-4">Stay Updated</h3>
-          <p className="text-slate-600 mb-6 max-w-2xl mx-auto">
-            Get notified when I publish new articles about web development, technology trends, and programming best practices.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onKeyPress={async (e) => {
-                if (e.key === 'Enter') {
-                  const email = (e.target as HTMLInputElement).value
-                  if (email) {
-                    try {
-                      const response = await api.subscribe(email)
-                      if (response.success) {
-                        alert('Successfully subscribed!')
-                        ;(e.target as HTMLInputElement).value = ''
-                      }
-                    } catch (error) {
-                      alert('Subscription failed. Please try again.')
-                    }
-                  }
-                }
-              }}
-            />
-            <Button 
-              className="bg-blue-600 hover:bg-blue-700"
-              onClick={async (e) => {
-                const input = (e.target as HTMLElement).parentElement?.querySelector('input') as HTMLInputElement
-                const email = input?.value
-                if (email) {
-                  try {
-                    const response = await api.subscribe(email)
-                    if (response.success) {
-                      alert('Successfully subscribed!')
-                      input.value = ''
-                    }
-                  } catch (error) {
-                    alert('Subscription failed. Please try again.')
-                  }
-                }
-              }}
-            >
-              Subscribe
-            </Button>
-          </div>
-        </div>
+
       </div>
     </section>
   )
