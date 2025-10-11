@@ -6,6 +6,7 @@ import { AdminHeader } from "@/components/admin/admin-header"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
@@ -133,11 +134,9 @@ export default function NewVolunteerPage() {
 
               <div>
                 <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
+                <RichTextEditor
                   value={volunteer.description}
-                  onChange={(e) => setVolunteer({ ...volunteer, description: e.target.value })}
-                  rows={4}
+                  onChange={(value) => setVolunteer({ ...volunteer, description: value || "" })}
                   placeholder="Describe your volunteer work and impact..."
                 />
               </div>

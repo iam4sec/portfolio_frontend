@@ -6,6 +6,7 @@ import { AdminHeader } from "@/components/admin/admin-header"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { Switch } from "@/components/ui/switch"
@@ -130,11 +131,10 @@ export default function NewExperiencePage() {
 
               <div>
                 <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
+                <RichTextEditor
                   value={experience.description}
-                  onChange={(e) => setExperience({ ...experience, description: e.target.value })}
-                  rows={4}
+                  onChange={(value) => setExperience({ ...experience, description: value || "" })}
+                  placeholder="Describe your role and achievements..."
                 />
               </div>
 

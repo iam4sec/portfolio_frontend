@@ -6,6 +6,7 @@ import { AdminHeader } from "@/components/admin/admin-header"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { api } from "@/lib/api"
@@ -127,11 +128,9 @@ export default function NewEducationPage() {
 
               <div>
                 <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
+                <RichTextEditor
                   value={education.description}
-                  onChange={(e) => setEducation({ ...education, description: e.target.value })}
-                  rows={4}
+                  onChange={(value) => setEducation({ ...education, description: value || "" })}
                   placeholder="Relevant coursework, achievements, activities..."
                 />
               </div>
