@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { AdminHeader } from "@/components/admin/admin-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -57,16 +58,18 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Settings</h1>
-          <p className="text-muted-foreground">Manage application settings</p>
-        </div>
-        <Button onClick={handleSave} disabled={saving}>
-          {saving ? "Saving..." : "Save Changes"}
-        </Button>
-      </div>
+    <div className="flex h-full flex-col">
+      <AdminHeader 
+        title="Settings" 
+        description="Manage application settings"
+        action={
+          <Button onClick={handleSave} disabled={saving}>
+            {saving ? "Saving..." : "Save Changes"}
+          </Button>
+        }
+      />
+
+      <div className="flex-1 p-6">
 
       <div className="grid gap-6">
         <Card>
@@ -170,6 +173,7 @@ export default function SettingsPage() {
             </div>
           </CardContent>
         </Card>
+        </div>
       </div>
     </div>
   )

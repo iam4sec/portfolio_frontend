@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { AdminHeader } from "@/components/admin/admin-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -49,26 +50,28 @@ export default function SubscribersPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Subscribers</h1>
-          <p className="text-muted-foreground">Manage newsletter subscribers</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4" />
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-32">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All</SelectItem>
-              <SelectItem value="active">Active</SelectItem>
-              <SelectItem value="unsubscribed">Unsubscribed</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+    <div className="flex h-full flex-col">
+      <AdminHeader 
+        title="Subscribers" 
+        description="Manage newsletter subscribers"
+        action={
+          <div className="flex items-center gap-2">
+            <Filter className="h-4 w-4" />
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="active">Active</SelectItem>
+                <SelectItem value="unsubscribed">Unsubscribed</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        }
+      />
+
+      <div className="flex-1 p-6">
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {subscribers.map((subscriber) => (
@@ -96,17 +99,18 @@ export default function SubscribersPage() {
             </CardContent>
           </Card>
         ))}
-      </div>
+        </div>
 
-      {subscribers.length === 0 && (
-        <Card>
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Users className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-medium mb-2">No subscribers found</h3>
-            <p className="text-muted-foreground">Newsletter subscribers will appear here.</p>
-          </CardContent>
-        </Card>
-      )}
+        {subscribers.length === 0 && (
+          <Card>
+            <CardContent className="flex flex-col items-center justify-center py-12">
+              <Users className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-lg font-medium mb-2">No subscribers found</h3>
+              <p className="text-muted-foreground">Newsletter subscribers will appear here.</p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   )
 }
