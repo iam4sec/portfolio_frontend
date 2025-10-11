@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Trash2, Mail, Filter } from "lucide-react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { Trash2, Mail, Filter, Reply } from "lucide-react"
 import { api } from "@/lib/api"
 
 export default function ContactsPage() {
@@ -14,6 +18,8 @@ export default function ContactsPage() {
   const [loading, setLoading] = useState(true)
   const [statusFilter, setStatusFilter] = useState("all")
   const [pagination, setPagination] = useState<any>(null)
+  const [replyDialog, setReplyDialog] = useState({ open: false, contact: null as any })
+  const [replyForm, setReplyForm] = useState({ subject: "", message: "" })
 
   useEffect(() => {
     const token = localStorage.getItem("token")
@@ -54,6 +60,25 @@ export default function ContactsPage() {
       } catch (error) {
         console.error("Failed to delete contact:", error)
       }
+    }
+  }
+
+  const handleReply = (contact: any) => {
+    setReplyDialog({ open: true, contact })
+    setReplyForm({ 
+      subject: `Re: ${contact.subject}`, 
+      message: `Hi ${contact.fullName},\n\nThank you for reaching out. ` 
+    })
+  }
+
+  const sendReply = async () => {
+    try {
+      await api.replyToContact(replyDialog.contact._id, replyForm.subject, replyForm.message)
+      await handleStatusChange(replyDialog.contact._id, "replied")
+      setReplyDialog({ open: false, contact: null })
+      setReplyForm({ subject: "", message: "" })
+    } catch (error) {
+      console.error("Failed to send reply:", error)
     }
   }
 
@@ -119,6 +144,9 @@ export default function ContactsPage() {
                       <SelectItem value="archived">Archived</SelectItem>
                     </SelectContent>
                   </Select>
+                  <Button variant="ghost" size="sm" onClick={() => handleReply(contact)}>
+                    <Reply className="h-4 w-4" />
+                  </Button>
                   <Button variant="ghost" size="sm" onClick={() => handleDelete(contact._id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
@@ -139,6 +167,41 @@ export default function ContactsPage() {
           </Card>
         )}
       </div>
+
+      <Dialog open={replyDialog.open} onOpenChange={(open) => setReplyDialog({ open, contact: null })}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Reply to {replyDialog.contact?.fullName}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="subject">Subject</Label>
+              <Input 
+                id="subject"
+                value={replyForm.subject}
+                onChange={(e) => setReplyForm({...replyForm, subject: e.target.value})}
+              />
+            </div>
+            <div>
+              <Label htmlFor="message">Message</Label>
+              <Textarea 
+                id="message"
+                rows={8}
+                value={replyForm.message}
+                onChange={(e) => setReplyForm({...replyForm, message: e.target.value})}
+              />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button variant="outline" onClick={() => setReplyDialog({ open: false, contact: null })}>
+                Cancel
+              </Button>
+              <Button onClick={sendReply}>
+                Send Reply
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
