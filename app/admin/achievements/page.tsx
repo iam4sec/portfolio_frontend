@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { api } from "@/lib/api"
-import { Edit, Trash2 } from "lucide-react"
+import { Plus, Edit, Trash2 } from "lucide-react"
+import Link from "next/link"
 
 export default function AchievementsPage() {
   const [achievements, setAchievements] = useState<any[]>([])
@@ -50,7 +51,18 @@ export default function AchievementsPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <AdminHeader title="Achievements" description="Manage achievements and certifications" />
+      <AdminHeader 
+        title="Achievements" 
+        description="Manage achievements and certifications"
+        action={
+          <Button asChild>
+            <Link href="/admin/achievements/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Achievement
+            </Link>
+          </Button>
+        }
+      />
 
       <div className="flex-1 space-y-4 p-6">
         {achievements.length === 0 ? (
