@@ -5,7 +5,8 @@ import { AdminHeader } from "@/components/admin/admin-header"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { api } from "@/lib/api"
-import { Edit, Trash2 } from "lucide-react"
+import { Plus, Edit, Trash2 } from "lucide-react"
+import Link from "next/link"
 
 export default function EducationPage() {
   const [education, setEducation] = useState<any[]>([])
@@ -49,7 +50,18 @@ export default function EducationPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <AdminHeader title="Education" description="Manage education history" />
+      <AdminHeader 
+        title="Education" 
+        description="Manage education history"
+        action={
+          <Button asChild>
+            <Link href="/admin/education/new">
+              <Plus className="mr-2 h-4 w-4" />
+              Add Education
+            </Link>
+          </Button>
+        }
+      />
 
       <div className="flex-1 space-y-4 p-6">
         {education.length === 0 ? (
