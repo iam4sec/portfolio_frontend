@@ -9,9 +9,9 @@ import {
   Mail,
   Download,
   MapPin,
-  Sparkles,
   Code2,
   Palette,
+  Sparkles,
 } from "lucide-react"
 import Link from "next/link"
 import { api } from "@/lib/api"
@@ -49,31 +49,31 @@ export function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
       },
     },
   }
 
   const itemVariants: Variants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 40, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
         type: "spring",
-        stiffness: 100,
-        damping: 12,
+        stiffness: 80,
+        damping: 15,
       },
     },
   }
 
   const floatingVariants: Variants = {
     animate: {
-      y: [-10, 10, -10],
-      rotate: [0, 5, -5, 0],
+      y: [-8, 8, -8],
+      rotate: [0, 3, -3, 0],
       transition: {
-        duration: 6,
+        duration: 8,
         repeat: Infinity,
         ease: "easeInOut",
       },
@@ -83,45 +83,45 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center pt-20 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
-      {/* Interactive Mouse Follower */}
+      {/* Elegant Mouse Follower */}
       <div 
-        className="fixed pointer-events-none z-10 w-8 h-8 bg-emerald-500/15 rounded-full blur-sm transition-all duration-300 ease-out"
+        className="fixed pointer-events-none z-10 w-6 h-6 bg-[#6C63FF]/10 rounded-full blur-sm transition-all duration-500 ease-out"
         style={{
-          left: mousePosition.x - 16,
-          top: mousePosition.y - 16,
+          left: mousePosition.x - 12,
+          top: mousePosition.y - 12,
         }}
       />
 
-      {/* Floating Icons */}
+      {/* Professional Floating Elements */}
       <motion.div
         variants={floatingVariants}
         animate="animate"
-        className="absolute top-1/4 left-10 text-emerald-400/20 dark:text-emerald-600/20"
+        className="absolute top-1/4 left-12 text-[#0E0E52]/15 dark:text-[#6C63FF]/20"
       >
-        <div className="p-3 bg-emerald-100/50 dark:bg-emerald-900/30 rounded-2xl backdrop-blur-sm">
-          <Code2 className="w-6 h-6" />
+        <div className="p-4 bg-white/60 dark:bg-gray-800/60 rounded-3xl backdrop-blur-sm border border-white/20">
+          <Code2 className="w-7 h-7" />
         </div>
       </motion.div>
       <motion.div
         variants={floatingVariants}
         animate="animate"
-        className="absolute top-1/3 right-16 text-amber-400/20 dark:text-amber-600/20"
-        style={{ animationDelay: '2s' }}
+        className="absolute top-1/3 right-16 text-[#6C63FF]/15 dark:text-[#6C63FF]/20"
+        style={{ animationDelay: '3s' }}
       >
-        <div className="p-2 bg-amber-100/50 dark:bg-amber-900/30 rounded-xl backdrop-blur-sm">
-          <Palette className="w-5 h-5" />
+        <div className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-2xl backdrop-blur-sm border border-white/20">
+          <Palette className="w-6 h-6" />
         </div>
       </motion.div>
       <motion.div
         variants={floatingVariants}
         animate="animate"
-        className="absolute bottom-1/3 left-1/4 text-teal-400/20 dark:text-teal-600/20"
-        style={{ animationDelay: '4s' }}
+        className="absolute bottom-1/3 left-1/4 text-[#0E0E52]/15 dark:text-[#0E0E52]/20"
+        style={{ animationDelay: '6s' }}
       >
-        <div className="p-3 bg-teal-100/50 dark:bg-teal-900/30 rounded-2xl backdrop-blur-sm">
-          <Sparkles className="w-6 h-6" />
+        <div className="p-4 bg-white/60 dark:bg-gray-800/60 rounded-3xl backdrop-blur-sm border border-white/20">
+          <Sparkles className="w-7 h-7" />
         </div>
       </motion.div>
 
@@ -130,156 +130,113 @@ export function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid lg:grid-cols-2 gap-12 items-center"
+          className="text-center"
         >
-          {/* Left Content */}
-          <div className="text-center lg:text-left">
-            {/* Modern Typography */}
-            <motion.div variants={itemVariants} className="mb-8">
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-100/80 to-teal-100/80 dark:from-emerald-900/30 dark:to-teal-900/30 text-emerald-700 dark:text-emerald-300 rounded-2xl text-sm font-semibold backdrop-blur-sm border border-emerald-200/50 dark:border-emerald-700/50 shadow-lg">
-                <span className="text-lg">👋</span>
-                <span>Welcome to my digital universe</span>
-              </div>
-            </motion.div>
-
-            <motion.h1
-              variants={itemVariants}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 dark:text-white leading-none tracking-tight mb-8"
-            >
-              <span className="block mb-3 text-gray-700 dark:text-gray-300">Hi, I'm</span>
-              <span className="block bg-gradient-to-r from-emerald-600 via-teal-600 to-amber-500 dark:from-emerald-400 dark:via-teal-400 dark:to-amber-300 bg-clip-text text-transparent">
-                {profile?.name || "Ariful Islam"}
-              </span>
-            </motion.h1>
-
-            <motion.div
-              variants={itemVariants}
-              className="mb-10"
-            >
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-300 mb-6">
-                {profile?.role || "Full Stack Developer"}
-              </h2>
-              <p className="max-w-2xl mx-auto lg:mx-0 text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-                {profile?.bio || "Crafting digital experiences that blend innovation with functionality. Passionate about transforming complex ideas into elegant, scalable solutions that make a real impact."}
-              </p>
-            </motion.div>
-
-            {profile?.location && (
-              <motion.div
-                variants={itemVariants}
-                className="mb-12 flex items-center justify-center lg:justify-start text-gray-500 dark:text-gray-400"
-              >
-                <div className="flex items-center bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl px-6 py-3 border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
-                  <MapPin className="h-5 w-5 mr-3 text-emerald-500" />
-                  <span className="font-semibold">{profile.location}</span>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Modern CTA Buttons */}
-            <motion.div
-              variants={itemVariants}
-              className="mb-16 flex flex-wrap justify-center lg:justify-start gap-6"
-            >
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 px-10 py-4 text-lg font-semibold"
-                asChild
-              >
-                <Link href="#contact">
-                  Let's Collaborate <ArrowRight className="ml-3 h-5 w-5" />
-                </Link>
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-2xl border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 backdrop-blur-sm px-10 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
-                asChild
-              >
-                <a
-                  href={profile?.resumeUrl || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Resume <Download className="ml-3 h-5 w-5" />
-                </a>
-              </Button>
-            </motion.div>
-
-            {/* Modern Social Links */}
-            <motion.div
-              variants={itemVariants}
-              className="flex items-center justify-center lg:justify-start space-x-6"
-            >
-              {profile?.social?.github && (
-                <Link
-                  href={profile.social.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative p-4 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-emerald-500/10"
-                >
-                  <Github className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" />
-                </Link>
-              )}
-              {profile?.social?.linkedin && (
-                <Link
-                  href={profile.social.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative p-4 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-emerald-500/10"
-                >
-                  <Linkedin className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" />
-                </Link>
-              )}
-              {profile?.email && (
-                <Link
-                  href={`mailto:${profile.email}`}
-                  className="group relative p-4 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-emerald-500/10"
-                >
-                  <Mail className="h-6 w-6 text-gray-600 dark:text-gray-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" />
-                </Link>
-              )}
-            </motion.div>
-          </div>
-
-          {/* Right Side - Profile Image */}
-          <motion.div 
-            variants={itemVariants} 
-            className="flex justify-center lg:justify-end"
-          >
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 via-teal-500 to-amber-500 rounded-3xl blur-2xl opacity-20 animate-pulse" />
-              <div className="relative p-3 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-2xl">
-                <Image
-                  src={profile?.avatar || "/placeholder-user.jpg"}
-                  alt={profile?.name || "User"}
-                  width={300}
-                  height={300}
-                  className="rounded-2xl object-cover"
-                />
-              </div>
-              <div className="absolute -top-4 -right-4 flex items-center justify-center">
-                <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center shadow-lg">
-                  <div className="w-4 h-4 bg-white rounded-full animate-pulse" />
-                </div>
-              </div>
+          {/* Professional Welcome Badge */}
+          <motion.div variants={itemVariants} className="mb-8">
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full text-[#0E0E52] dark:text-[#6C63FF] text-sm font-semibold border border-white/30 shadow-lg">
+              <span className="text-xl">👋</span>
+              <span>Welcome to my digital portfolio</span>
             </div>
+          </motion.div>
+
+          {/* Hero Typography */}
+          <motion.h1
+            variants={itemVariants}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#0E0E52] dark:text-white leading-none tracking-tight mb-6"
+          >
+            <span className="block mb-4 text-gray-600 dark:text-gray-300 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium">Hi, I'm</span>
+            <span className="block bg-gradient-to-r from-[#0E0E52] via-[#6C63FF] to-[#0E0E52] dark:from-[#6C63FF] dark:via-white dark:to-[#6C63FF] bg-clip-text text-transparent">
+              Ariful Islam
+            </span>
+          </motion.h1>
+
+          <motion.div
+            variants={itemVariants}
+            className="mb-12"
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-700 dark:text-gray-300 mb-8">
+              Software Engineer
+            </h2>
+            <p className="max-w-3xl mx-auto text-xl text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
+              Designing intuitive digital experiences that transform complex problems into elegant, scalable solutions. 
+              Passionate about crafting code that makes a meaningful impact.
+            </p>
+          </motion.div>
+
+          {/* Professional CTA Buttons */}
+          <motion.div
+            variants={itemVariants}
+            className="mb-16 flex flex-wrap justify-center gap-6"
+          >
+            <Button
+              size="lg"
+              className="bg-[#0E0E52] hover:bg-[#0E0E52]/90 text-white rounded-3xl shadow-2xl hover:shadow-[#0E0E52]/25 transition-all duration-300 transform hover:scale-105 px-12 py-6 text-lg font-semibold"
+              asChild
+            >
+              <Link href="#projects">
+                View My Work <ArrowRight className="ml-3 h-5 w-5" />
+              </Link>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-3xl border-2 border-[#6C63FF] text-[#6C63FF] hover:bg-[#6C63FF] hover:text-white backdrop-blur-sm px-12 py-6 text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+              asChild
+            >
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download Resume <Download className="ml-3 h-5 w-5" />
+              </a>
+            </Button>
+          </motion.div>
+
+          {/* Professional Social Links */}
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center justify-center space-x-8"
+          >
+            <Link
+              href="https://github.com/arifulislam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
+            >
+              <Github className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
+            </Link>
+            <Link
+              href="https://linkedin.com/in/arifulislam"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
+            >
+              <Linkedin className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
+            </Link>
+            <Link
+              href="mailto:contact@arifulislam.dev"
+              className="group relative p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
+            >
+              <Mail className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
+            </Link>
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Modern Scroll Indicator */}
+      {/* Elegant Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+        transition={{ delay: 2, duration: 0.8 }}
+        className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
       >
-        <div className="flex flex-col items-center space-y-3 text-gray-400 dark:text-gray-500">
-          <span className="text-sm font-semibold">Discover more</span>
-          <div className="w-8 h-12 border-2 border-gray-300 dark:border-gray-600 rounded-2xl flex justify-center">
-            <div className="w-1.5 h-4 bg-gradient-to-b from-emerald-500 to-teal-500 rounded-full animate-bounce mt-2" />
+        <div className="flex flex-col items-center space-y-4 text-gray-500 dark:text-gray-400">
+          <span className="text-sm font-medium tracking-wide">Scroll to explore</span>
+          <div className="w-6 h-10 border-2 border-gray-300 dark:border-gray-600 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-[#6C63FF] rounded-full animate-bounce mt-2" />
           </div>
         </div>
       </motion.div>

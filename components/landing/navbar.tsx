@@ -64,9 +64,8 @@ export function Navbar() {
   const navLinks = [
     { href: "#about", label: "About", id: "about" },
     { href: "#skills", label: "Skills", id: "skills" },
-    { href: "#experience", label: "Journey", id: "experience" },
     { href: "#projects", label: "Work", id: "projects" },
-    { href: "#achievements", label: "Achievements", id: "achievements" },
+    { href: "#experience", label: "Experience", id: "experience" },
     { href: "#contact", label: "Contact", id: "contact" },
   ]
 
@@ -89,19 +88,18 @@ export function Navbar() {
             className="group flex items-center space-x-3 text-2xl font-black transition-all duration-300 hover:scale-105"
           >
             <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-emerald-500/25 transition-all duration-300">
-                <Sparkles className="w-5 h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
+              <div className="w-10 h-10 bg-gradient-to-br from-[#0E0E52] to-[#6C63FF] rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-[#6C63FF]/25 transition-all duration-300">
+                <div className="w-4 h-4 bg-white rounded-lg" />
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-400 rounded-full animate-pulse" />
             </div>
-            <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 dark:from-emerald-400 dark:via-teal-400 dark:to-emerald-300 bg-clip-text text-transparent">
-              devarif
+            <span className="bg-gradient-to-r from-[#0E0E52] to-[#6C63FF] bg-clip-text text-transparent">
+              Ariful Islam
             </span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center">
-            <div className="flex items-center space-x-1 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-2 border border-gray-200/50 dark:border-gray-700/50 shadow-xl shadow-gray-900/5">
+            <div className="flex items-center space-x-1 bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-2 border border-white/50 dark:border-gray-700/50 shadow-xl">
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.href}
@@ -114,15 +112,15 @@ export function Navbar() {
                     onClick={e => handleSmoothScroll(e, link.href)}
                     className={`relative px-5 py-3 text-sm font-semibold rounded-xl transition-all duration-300 ${
                       activeSection === link.id
-                        ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/25"
-                        : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-gray-700/80"
+                        ? "bg-[#0E0E52] text-white shadow-lg"
+                        : "text-gray-600 dark:text-gray-300 hover:text-[#0E0E52] dark:hover:text-[#6C63FF] hover:bg-white/80 dark:hover:bg-gray-700/80"
                     }`}
                   >
                     {link.label}
                     {activeSection === link.id && (
                       <motion.div
                         layoutId="activeSection"
-                        className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl -z-10"
+                        className="absolute inset-0 bg-[#0E0E52] rounded-xl -z-10"
                         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
@@ -159,9 +157,9 @@ export function Navbar() {
             {/* CTA Button */}
             <Button 
               asChild 
-              className="hidden md:flex bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-lg hover:shadow-xl hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105 px-6 font-semibold"
+              className="hidden md:flex bg-[#0E0E52] hover:bg-[#0E0E52]/90 text-white rounded-2xl shadow-lg hover:shadow-xl hover:shadow-[#6C63FF]/25 transition-all duration-300 transform hover:scale-105 px-6 font-semibold"
             >
-              <a href="#contact">Let's Connect</a>
+              <a href="#contact">Let's Talk</a>
             </Button>
 
             {/* Mobile Menu Toggle */}
@@ -222,9 +220,9 @@ export function Navbar() {
               <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-4">
                 <Button 
                   asChild 
-                  className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl shadow-lg font-semibold"
+                  className="w-full bg-[#0E0E52] hover:bg-[#0E0E52]/90 text-white rounded-xl shadow-lg font-semibold"
                 >
-                  <a href="#contact">Let's Connect</a>
+                  <a href="#contact">Let's Talk</a>
                 </Button>
               </div>
             </div>

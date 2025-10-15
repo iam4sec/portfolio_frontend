@@ -91,7 +91,7 @@ export function Skills() {
         title: "Frontend",
         skills: [
           { name: "React", level: "Expert", years: "3+" },
-          { name: "Next.js", level: "Advanced", years: "2+" },
+          { name: "Next.js", level: "Expert", years: "3+" },
           { name: "TypeScript", level: "Advanced", years: "2+" },
           { name: "JavaScript", level: "Expert", years: "3+" },
           { name: "Tailwind CSS", level: "Advanced", years: "2+" },
@@ -101,11 +101,11 @@ export function Skills() {
       {
         title: "Backend",
         skills: [
-          { name: "Node.js", level: "Advanced", years: "2+" },
+          { name: "Node.js", level: "Advanced", years: "3+" },
           { name: "Express", level: "Advanced", years: "2+" },
-          { name: "Python", level: "Intermediate", years: "1+" },
+          { name: "Python", level: "Advanced", years: "2+" },
           { name: "PostgreSQL", level: "Advanced", years: "2+" },
-          { name: "MongoDB", level: "Intermediate", years: "1+" },
+          { name: "MongoDB", level: "Advanced", years: "2+" },
           { name: "GraphQL", level: "Intermediate", years: "1+" },
         ],
       },
@@ -113,18 +113,18 @@ export function Skills() {
         title: "Tools & DevOps",
         skills: [
           { name: "Git", level: "Expert", years: "3+" },
-          { name: "Docker", level: "Intermediate", years: "1+" },
-          { name: "AWS", level: "Intermediate", years: "1+" },
-          { name: "Vercel", level: "Advanced", years: "2+" },
+          { name: "Docker", level: "Advanced", years: "2+" },
+          { name: "AWS", level: "Advanced", years: "2+" },
+          { name: "Figma", level: "Advanced", years: "2+" },
           { name: "VS Code", level: "Expert", years: "3+" },
-          { name: "Linux", level: "Intermediate", years: "2+" },
+          { name: "Linux", level: "Advanced", years: "2+" },
         ],
       },
     ],
     highlights: [
-      "Full-Stack Development",
-      "Modern JavaScript Frameworks",
-      "Cloud Architecture",
+      "UX Research & Prototyping",
+      "Accessibility Compliance",
+      "Motion Design",
       "Performance Optimization",
     ],
   }
@@ -152,13 +152,13 @@ export function Skills() {
   const getLevelColor = (level: string) => {
     switch (level) {
       case "Expert":
-        return "from-emerald-500 to-teal-600"
+        return "from-[#0E0E52] to-[#6C63FF]"
       case "Advanced":
-        return "from-teal-500 to-cyan-600"
+        return "from-[#6C63FF] to-[#0E0E52]"
       case "Intermediate":
-        return "from-amber-500 to-orange-600"
+        return "from-gray-400 to-gray-600"
       default:
-        return "from-gray-500 to-slate-600"
+        return "from-gray-300 to-gray-500"
     }
   }
 
@@ -178,8 +178,8 @@ export function Skills() {
   return (
     <SectionWrapper 
       id="skills" 
-      title="Technical Skills"
-      subtitle="Technologies and tools I use to bring ideas to life"
+      title="Skills & Expertise"
+      subtitle="Tools, technologies, and methodologies I use to craft exceptional digital experiences"
       centered
     >
       <div className="space-y-16">
