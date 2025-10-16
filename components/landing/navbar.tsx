@@ -18,6 +18,8 @@ export function Navbar() {
   useEffect(() => setMounted(true), [])
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
 
@@ -58,7 +60,9 @@ export function Navbar() {
       }
       setIsMobileMenuOpen(false)
     } else {
-      window.location.href = href
+      if (typeof window !== 'undefined') {
+        window.location.href = href
+      }
     }
   }
 

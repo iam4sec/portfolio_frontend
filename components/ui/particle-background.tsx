@@ -39,6 +39,7 @@ export function ParticleBackground({
     if (!ctx) return
 
     const resizeCanvas = () => {
+      if (typeof window === 'undefined') return
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
@@ -125,10 +126,14 @@ export function ParticleBackground({
     initParticles()
     animate()
 
-    window.addEventListener("resize", resizeCanvas)
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", resizeCanvas)
+    }
 
     return () => {
-      window.removeEventListener("resize", resizeCanvas)
+      if (typeof window !== 'undefined') {
+        window.removeEventListener("resize", resizeCanvas)
+      }
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }

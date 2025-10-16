@@ -9,6 +9,8 @@ export function MagneticCursor() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+    
     const mouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: e.clientX,

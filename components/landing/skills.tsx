@@ -26,7 +26,7 @@ import {
   SiPrisma,
   SiVercel,
   SiNetlify,
-  SiVscode,
+  SiVisualstudio,
   SiLinux,
 } from "react-icons/si"
 import { Code2, Zap, Database, Wrench, Star, TrendingUp } from "lucide-react"
@@ -55,7 +55,7 @@ const iconMap: { [key: string]: React.ElementType } = {
   AWS: SiAmazonaws,
   Vercel: SiVercel,
   Netlify: SiNetlify,
-  "VS Code": SiVscode,
+  "VS Code": SiVisualstudio,
   Linux: SiLinux,
   Figma: SiFigma,
 }

@@ -39,8 +39,8 @@ export function LoadingScreen() {
                 key={i}
                 className="absolute w-2 h-2 bg-white/20 rounded-full"
                 animate={{
-                  x: [0, Math.random() * window.innerWidth],
-                  y: [0, Math.random() * window.innerHeight],
+                  x: [0, Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000)],
+                  y: [0, Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800)],
                   opacity: [0, 1, 0],
                 }}
                 transition={{

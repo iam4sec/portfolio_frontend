@@ -6,6 +6,8 @@ export function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+    
     const toggleVisibility = () => {
       if (window.scrollY > 500) {
         setIsVisible(true)
@@ -20,6 +22,7 @@ export function ScrollToTopButton() {
   }, [])
 
   const scrollToTop = () => {
+    if (typeof window === 'undefined') return
     window.scrollTo({
       top: 0,
       behavior: "smooth"
