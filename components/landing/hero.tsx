@@ -17,6 +17,8 @@ import Link from "next/link"
 import { api } from "@/lib/api"
 import Image from "next/image"
 import { motion, Variants } from "framer-motion"
+import { TypewriterEffect } from "@/components/ui/typewriter-effect"
+import { TiltCard } from "@/components/ui/tilt-card"
 
 export function Hero() {
   const [profile, setProfile] = useState<any>(null)
@@ -140,7 +142,7 @@ export function Hero() {
             </div>
           </motion.div>
 
-          {/* Hero Typography */}
+          {/* Hero Typography with Typewriter Effect */}
           <motion.h1
             variants={itemVariants}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-[#0E0E52] dark:text-white leading-none tracking-tight mb-6"
@@ -155,9 +157,17 @@ export function Hero() {
             variants={itemVariants}
             className="mb-12"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-700 dark:text-gray-300 mb-8">
-              Software Engineer
-            </h2>
+            <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-700 dark:text-gray-300 mb-8 min-h-[3rem] flex items-center justify-center">
+              <TypewriterEffect 
+                words={[
+                  "Software Engineer",
+                  "Full Stack Developer", 
+                  "UI/UX Enthusiast",
+                  "Problem Solver"
+                ]}
+                className="text-2xl sm:text-3xl md:text-4xl font-bold"
+              />
+            </div>
             <p className="max-w-3xl mx-auto text-xl text-gray-600 dark:text-gray-400 leading-relaxed font-medium">
               Designing intuitive digital experiences that transform complex problems into elegant, scalable solutions. 
               Passionate about crafting code that makes a meaningful impact.
@@ -195,33 +205,42 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          {/* Professional Social Links */}
+          {/* Professional Social Links with Tilt Effect */}
           <motion.div
             variants={itemVariants}
             className="flex items-center justify-center space-x-8"
           >
-            <Link
-              href="https://github.com/arifulislam"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-            >
-              <Github className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
-            </Link>
-            <Link
-              href="https://linkedin.com/in/arifulislam"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-            >
-              <Linkedin className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
-            </Link>
-            <Link
-              href="mailto:contact@arifulislam.dev"
-              className="group relative p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 transform hover:scale-110 shadow-lg hover:shadow-xl"
-            >
-              <Mail className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
-            </Link>
+            <TiltCard className="group relative">
+              <Link
+                href="https://github.com/arifulislam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+                data-magnetic="true"
+              >
+                <Github className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
+              </Link>
+            </TiltCard>
+            <TiltCard className="group relative">
+              <Link
+                href="https://linkedin.com/in/arifulislam"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+                data-magnetic="true"
+              >
+                <Linkedin className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
+              </Link>
+            </TiltCard>
+            <TiltCard className="group relative">
+              <Link
+                href="mailto:contact@arifulislam.dev"
+                className="block p-5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/30 hover:border-[#0E0E52]/30 dark:hover:border-[#6C63FF]/30 transition-all duration-300 shadow-lg hover:shadow-xl"
+                data-magnetic="true"
+              >
+                <Mail className="h-7 w-7 text-gray-600 dark:text-gray-400 group-hover:text-[#0E0E52] dark:group-hover:text-[#6C63FF] transition-colors" />
+              </Link>
+            </TiltCard>
           </motion.div>
         </motion.div>
       </div>
@@ -231,7 +250,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 2, duration: 0.8 }}
-        className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
       >
         <div className="flex flex-col items-center space-y-4 text-gray-500 dark:text-gray-400">
           <span className="text-sm font-medium tracking-wide">Scroll to explore</span>

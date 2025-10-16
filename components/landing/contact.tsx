@@ -19,6 +19,8 @@ import {
 import { SectionWrapper } from "./section-wrapper"
 import { motion } from "framer-motion"
 import { api } from "@/lib/api"
+import { EnhancedContactForm } from "@/components/ui/enhanced-contact-form"
+import { TiltCard } from "@/components/ui/tilt-card"
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -187,7 +189,7 @@ export function Contact() {
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Enhanced Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -195,122 +197,11 @@ export function Contact() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-3"
           >
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6 p-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/50 dark:border-gray-700/50 rounded-3xl shadow-xl"
-            >
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label
-                    htmlFor="fullName"
-                    className="text-sm font-semibold text-[#0E0E52] dark:text-white"
-                  >
-                    Full Name
-                  </label>
-                  <Input
-                    id="fullName"
-                    name="fullName"
-                    type="text"
-                    placeholder="John Doe"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    required
-                    className="bg-white/50 dark:bg-gray-900/50 rounded-2xl border-2 border-gray-200 dark:border-gray-700 focus:border-[#6C63FF] dark:focus:border-[#6C63FF] transition-colors h-12"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label
-                    htmlFor="email"
-                    className="text-sm font-semibold text-[#0E0E52] dark:text-white"
-                  >
-                    Email Address
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="bg-white/50 dark:bg-gray-900/50 rounded-2xl border-2 border-gray-200 dark:border-gray-700 focus:border-[#6C63FF] dark:focus:border-[#6C63FF] transition-colors h-12"
-                  />
-                </div>
+            <TiltCard>
+              <div className="p-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/50 dark:border-gray-700/50 rounded-3xl shadow-xl" data-magnetic="true">
+                <EnhancedContactForm />
               </div>
-              
-              <div className="space-y-2">
-                <label
-                  htmlFor="subject"
-                  className="text-sm font-semibold text-[#0E0E52] dark:text-white"
-                >
-                  Subject
-                </label>
-                <Input
-                  id="subject"
-                  name="subject"
-                  type="text"
-                  placeholder="Project Inquiry"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  required
-                  className="bg-white/50 dark:bg-gray-900/50 rounded-2xl border-2 border-gray-200 dark:border-gray-700 focus:border-[#6C63FF] dark:focus:border-[#6C63FF] transition-colors h-12"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className="text-sm font-semibold text-[#0E0E52] dark:text-white"
-                >
-                  Message
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  placeholder="Tell me about your project or just say hello..."
-                  rows={6}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
-                  className="bg-white/50 dark:bg-gray-900/50 rounded-2xl border-2 border-gray-200 dark:border-gray-700 focus:border-[#6C63FF] dark:focus:border-[#6C63FF] transition-colors resize-none"
-                />
-              </div>
-              
-              <Button
-                type="submit"
-                className="w-full bg-[#0E0E52] hover:bg-[#0E0E52]/90 text-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 py-6 text-lg font-semibold"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                ) : (
-                  <Send className="mr-2 h-5 w-5" />
-                )}
-                Send Message
-              </Button>
-              
-              {submitStatus === "success" && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center justify-center text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 p-4 rounded-2xl"
-                >
-                  <CheckCircle className="mr-2 h-5 w-5" />
-                  <p>Thank you! I'll get back to you within 24 hours.</p>
-                </motion.div>
-              )}
-              
-              {submitStatus === "error" && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center justify-center text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-4 rounded-2xl"
-                >
-                  <AlertCircle className="mr-2 h-5 w-5" />
-                  <p>Something went wrong. Please try again or contact me directly.</p>
-                </motion.div>
-              )}
-            </form>
+            </TiltCard>
           </motion.div>
         </div>
       </div>

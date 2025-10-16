@@ -30,6 +30,9 @@ import {
   SiLinux,
 } from "react-icons/si"
 import { Code2, Zap, Database, Wrench, Star, TrendingUp } from "lucide-react"
+import { AnimatedProgress } from "@/components/ui/animated-progress"
+import { CircularProgress } from "@/components/ui/circular-progress"
+import { TiltCard } from "@/components/ui/tilt-card"
 
 const iconMap: { [key: string]: React.ElementType } = {
   React: SiReact,
@@ -162,16 +165,16 @@ export function Skills() {
     }
   }
 
-  const getLevelWidth = (level: string) => {
+  const getLevelPercentage = (level: string) => {
     switch (level) {
       case "Expert":
-        return "w-full"
+        return 95
       case "Advanced":
-        return "w-4/5"
+        return 80
       case "Intermediate":
-        return "w-3/5"
+        return 65
       default:
-        return "w-2/5"
+        return 40
     }
   }
 
@@ -212,91 +215,95 @@ export function Skills() {
           </motion.div>
         )}
 
-        {/* Skills Categories */}
+        {/* Skills Categories with Enhanced Progress */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.categories.map((category: any, categoryIndex: number) => {
             const CategoryIcon = categoryIcons[category.title as keyof typeof categoryIcons] || Code2
             return (
-              <motion.div
-                key={categoryIndex}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                className="group relative"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/15 to-teal-500/15 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
-                <div className="relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-3xl p-8 hover:border-emerald-300/50 dark:hover:border-emerald-600/50 transition-all duration-300 h-full hover:shadow-xl hover:shadow-emerald-500/10 hover:-translate-y-1">
-                  {/* Category Header */}
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl shadow-lg">
-                      <CategoryIcon className="w-6 h-6 text-white" />
+              <TiltCard key={categoryIndex}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                  className="group relative h-full"
+                  data-magnetic="true"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#6C63FF]/15 to-[#0E0E52]/15 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100" />
+                  <div className="relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-3xl p-8 hover:border-[#6C63FF]/30 dark:hover:border-[#6C63FF]/50 transition-all duration-300 h-full hover:shadow-xl hover:shadow-[#6C63FF]/10">
+                    {/* Category Header */}
+                    <div className="flex items-center gap-4 mb-8">
+                      <div className="p-3 bg-gradient-to-br from-[#0E0E52] to-[#6C63FF] rounded-2xl shadow-lg">
+                        <CategoryIcon className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                        {category.title}
+                      </h3>
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
-                      {category.title}
-                    </h3>
-                  </div>
 
-                  {/* Skills List */}
-                  <div className="space-y-4">
-                    {category.skills.map((skill: any, skillIndex: number) => {
-                      const skillName = typeof skill === "string" ? skill : skill.name
-                      const skillLevel = typeof skill === "object" ? skill.level : "Intermediate"
-                      const skillYears = typeof skill === "object" ? skill.years : "1+"
-                      const Icon = iconMap[skillName]
-                      const isHovered = hoveredSkill === `${categoryIndex}-${skillIndex}`
+                    {/* Skills List with Enhanced Progress */}
+                    <div className="space-y-6">
+                      {category.skills.map((skill: any, skillIndex: number) => {
+                        const skillName = typeof skill === "string" ? skill : skill.name
+                        const skillLevel = typeof skill === "object" ? skill.level : "Intermediate"
+                        const skillYears = typeof skill === "object" ? skill.years : "1+"
+                        const Icon = iconMap[skillName]
+                        const isHovered = hoveredSkill === `${categoryIndex}-${skillIndex}`
+                        const percentage = getLevelPercentage(skillLevel)
 
-                      return (
-                        <motion.div
-                          key={skillIndex}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.5, delay: skillIndex * 0.1 }}
-                          className="group/skill relative p-4 bg-gray-50/50 dark:bg-gray-900/50 rounded-2xl hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-300 cursor-pointer hover:shadow-lg hover:-translate-y-0.5"
-                          onMouseEnter={() => setHoveredSkill(`${categoryIndex}-${skillIndex}`)}
-                          onMouseLeave={() => setHoveredSkill(null)}
-                        >
-                          <div className="flex items-center gap-3">
-                            {Icon && (
-                              <div className="relative">
-                                <Icon className="w-8 h-8 text-emerald-600 dark:text-emerald-400 group-hover/skill:scale-110 transition-transform duration-300" />
-                                {isHovered && (
-                                  <div className="absolute inset-0 bg-emerald-500/20 rounded-full animate-ping" />
-                                )}
-                              </div>
-                            )}
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="font-bold text-gray-800 dark:text-gray-200 truncate">
-                                  {skillName}
-                                </span>
-                                <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">
-                                  {skillYears}
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <div className="flex-1 h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                  <motion.div
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: "100%" }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1, delay: skillIndex * 0.1 }}
-                                    className={`h-full bg-gradient-to-r ${getLevelColor(skillLevel)} ${getLevelWidth(skillLevel)} rounded-full shadow-sm`}
-                                  />
+                        return (
+                          <motion.div
+                            key={skillIndex}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: skillIndex * 0.1 }}
+                            className="group/skill relative p-4 bg-gray-50/50 dark:bg-gray-900/50 rounded-2xl hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-300 cursor-pointer hover:shadow-lg"
+                            onMouseEnter={() => setHoveredSkill(`${categoryIndex}-${skillIndex}`)}
+                            onMouseLeave={() => setHoveredSkill(null)}
+                          >
+                            <div className="flex items-center gap-4">
+                              {Icon && (
+                                <div className="relative flex-shrink-0">
+                                  <Icon className="w-8 h-8 text-[#6C63FF] dark:text-[#6C63FF] group-hover/skill:scale-110 transition-transform duration-300" />
+                                  {isHovered && (
+                                    <div className="absolute inset-0 bg-[#6C63FF]/20 rounded-full animate-ping" />
+                                  )}
                                 </div>
-                                <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold min-w-fit">
-                                  {skillLevel}
-                                </span>
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between mb-3">
+                                  <span className="font-bold text-gray-800 dark:text-gray-200 truncate">
+                                    {skillName}
+                                  </span>
+                                  <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">
+                                    {skillYears}
+                                  </span>
+                                </div>
+                                <AnimatedProgress
+                                  value={percentage}
+                                  color={getLevelColor(skillLevel)}
+                                  duration={1.5}
+                                  delay={skillIndex * 0.1}
+                                  showPercentage={false}
+                                />
+                                <div className="flex justify-between items-center mt-1">
+                                  <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold">
+                                    {skillLevel}
+                                  </span>
+                                  <span className="text-xs text-[#6C63FF] font-bold">
+                                    {percentage}%
+                                  </span>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </motion.div>
-                      )
-                    })}
+                          </motion.div>
+                        )
+                      })}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </TiltCard>
             )
           })}
         </div>

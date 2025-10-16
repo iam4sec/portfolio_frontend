@@ -5,6 +5,8 @@ import { api } from "@/lib/api"
 import { Code2, Palette, Zap, Award, Target, Sparkles, Heart, Coffee, Users } from "lucide-react"
 import { SectionWrapper } from "./section-wrapper"
 import { motion } from "framer-motion"
+import { AnimatedCounter } from "@/components/ui/animated-counter"
+import { TiltCard } from "@/components/ui/tilt-card"
 
 export function About() {
   const [aboutData, setAboutData] = useState<any>(null)
@@ -27,10 +29,10 @@ export function About() {
   }, [])
 
   const stats = [
-    { value: "3+", label: "Years Experience", icon: Award },
-    { value: "25+", label: "Projects Delivered", icon: Target },
-    { value: "15+", label: "Technologies", icon: Code2 },
-    { value: "100%", label: "Client Satisfaction", icon: Heart },
+    { value: 3, suffix: "+", label: "Years Experience", icon: Award },
+    { value: 25, suffix: "+", label: "Projects Delivered", icon: Target },
+    { value: 15, suffix: "+", label: "Technologies", icon: Code2 },
+    { value: 100, suffix: "%", label: "Client Satisfaction", icon: Heart },
   ]
 
   const values = [
@@ -103,7 +105,7 @@ export function About() {
           </div>
         </motion.div>
 
-        {/* Stats Grid */}
+        {/* Stats Grid with Animated Counters */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -114,26 +116,33 @@ export function About() {
           {stats.map((stat, index) => {
             const IconComponent = stat.icon
             return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group p-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/50 dark:border-gray-700/50 hover:border-[#6C63FF]/30 dark:hover:border-[#6C63FF]/50 transition-all duration-300 hover:shadow-2xl hover:shadow-[#6C63FF]/10 hover:-translate-y-2 text-center"
-              >
-                <div className="mb-4 flex justify-center">
-                  <div className="p-4 bg-gradient-to-br from-[#0E0E52] to-[#6C63FF] rounded-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    <IconComponent className="w-6 h-6 text-white" />
+              <TiltCard key={index}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group p-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl border border-white/50 dark:border-gray-700/50 hover:border-[#6C63FF]/30 dark:hover:border-[#6C63FF]/50 transition-all duration-300 hover:shadow-2xl hover:shadow-[#6C63FF]/10 text-center h-full"
+                  data-magnetic="true"
+                >
+                  <div className="mb-4 flex justify-center">
+                    <div className="p-4 bg-gradient-to-br from-[#0E0E52] to-[#6C63FF] rounded-2xl group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <IconComponent className="w-6 h-6 text-white" />
+                    </div>
                   </div>
-                </div>
-                <div className="text-4xl font-black bg-gradient-to-r from-[#0E0E52] to-[#6C63FF] bg-clip-text text-transparent mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-sm font-semibold text-gray-600 dark:text-gray-400">
-                  {stat.label}
-                </div>
-              </motion.div>
+                  <div className="text-4xl font-black bg-gradient-to-r from-[#0E0E52] to-[#6C63FF] bg-clip-text text-transparent mb-2">
+                    <AnimatedCounter 
+                      to={stat.value}
+                      suffix={stat.suffix}
+                      duration={2.5}
+                      className="text-4xl font-black bg-gradient-to-r from-[#0E0E52] to-[#6C63FF] bg-clip-text text-transparent"
+                    />
+                  </div>
+                  <div className="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              </TiltCard>
             )
           })}
         </motion.div>

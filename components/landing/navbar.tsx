@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Menu, X, Moon, Sun, Sparkles } from "lucide-react"
 import { useTheme } from "next-themes"
 import { motion, AnimatePresence } from "framer-motion"
+import { ScrollProgress } from "@/components/ui/scroll-progress"
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -70,16 +71,18 @@ export function Navbar() {
   ]
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed w-full top-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/20 dark:border-slate-700/20 shadow-lg shadow-slate-900/5"
-          : "bg-transparent"
-      }`}
-    >
+    <>
+      <ScrollProgress />
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200/20 dark:border-slate-700/20 shadow-lg shadow-slate-900/5"
+            : "bg-transparent"
+        }`}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18">
           {/* Modern Logo */}
@@ -229,6 +232,7 @@ export function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+      </motion.nav>
+    </>
   )
 }
