@@ -1,4 +1,5 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1"
+// Production API will use 13.233.237.62 as set in .env.production
 
 export interface ApiResponse<T = any> {
   success: boolean
